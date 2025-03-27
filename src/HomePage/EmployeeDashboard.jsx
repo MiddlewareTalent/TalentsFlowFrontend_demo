@@ -68,10 +68,10 @@ useEffect(()=>{
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">{initials}
               </div>
               <div>
-                <p className="text-xl font-semibold text-gray-800">{state.firstName+" "+state.lastName||'employeeName not available'}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{state.jobRole}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Employee ID: {state.employeeId||'employee Id not available'}</p>
-                <p className="text-sm text-blue-600 dark:text-blue-400">{state.email || 'Email not available'}</p>
+                <p className="text-xl font-semibold text-gray-1000">{state.firstName+" "+state.lastName||'employeeName not available'}</p>
+                <p className="text-lg text-gray-900 dark:text-gray-900">{state.jobRole}</p>
+                <p className="text-lg text-gray-900 dark:text-gray-900">Employee ID: {state.employeeId||'employee Id not available'}</p>
+                <p className="text-lg text-blue-900 dark:text-blue-900">{state.email || 'Email not available'}</p>
               </div>
             </div>
 
@@ -105,9 +105,34 @@ useEffect(()=>{
 </div>
 
 
+<<<<<<< HEAD
 <div className="rounded-lg bg-white p-6 shadow-lg" style={{ height: '400px' }}>
     <Holiday/>
 </div>
+=======
+        {/* Current Projects */}
+        <div className="rounded-lg bg-white p-6 shadow-lg">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-1300">Current Projects</h2>
+            <BriefcaseIcon className="h-5 w-7 text-gray-900 dark:text-gray-900" />
+          </div>
+          <ul className="space-y-2">
+            <li className="flex items-center justify-between text-sm">
+              <span className="text-gray-1200">Website Redesign</span>
+              <span className="rounded-full bg-yellow-100 px-2 py-1 text-base font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">In Progress</span>
+            </li>
+            <li className="flex items-center justify-between text-sm">
+              <span className="text-gray-1600">Mobile App Development</span>
+              <span className="rounded-full bg-green-100 px-2 py-1 text-base font-medium text-green-800 dark:bg-green-900 dark:text-green-200">On Track</span>
+            </li>
+            <li className="flex items-center justify-between text-sm">
+              <span className="text-gray-1200">Customer Feedback Analysis</span>
+              <span className="rounded-full bg-red-100 px-2 py-1 text-base font-medium text-red-800 dark:bg-red-900 dark:text-red-200">Delayed</span>
+            </li>
+          </ul>
+        </div>
+
+>>>>>>> e74e2610e5ba8bc451ea123c41144808b4fcf804
         {/* Quick Links */}
         
       </div>

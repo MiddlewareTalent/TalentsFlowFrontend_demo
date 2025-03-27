@@ -17,7 +17,7 @@ const ProfessionalDetailsForm = ({
       const token = localStorage.getItem("token");
       try {
         const response = await fetch(
-          "https://msquirebackend.azurewebsites.net/api/v1/employeeManager/employees",
+          "https://msquirebackend.azurewebsites.net/api/v1/employeeManager/AdminsAndManagers",
           {
             method: "GET",
             headers: {
@@ -323,7 +323,7 @@ const ProfessionalDetailsForm = ({
                   <option value="CEO">CEO</option>
                   <option value="Software Developer">Software Developer</option>
                   <option value="Product Manager">Product Manager</option>
-                  <option value="Designe">Designer</option>
+                  <option value="Designer">Designer</option>
                   <option value="HR">HR</option>
                 </select>
                 {errors.jobRole && (
