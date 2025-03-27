@@ -133,7 +133,7 @@ const Holiday = () => {
 
     return (
         <div className="relative lg:row-span-2 p-6" style={{ height: '380px' }}>
-            <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
+            <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem] border border-gray-200"></div>
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
                 <h3 className="text-2xl font-semibold text-gray-900 ml-5">Upcoming Holiday</h3>
                 <p className="mt-2 text-lg text-gray-700">Stay updated on your upcoming holidays.</p>
@@ -211,7 +211,7 @@ const Holiday = () => {
                         </div>
                     </div>
                 )}
-               
+
                 {/* Modal for View More */}
                 {isModalOpen && (
                     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
