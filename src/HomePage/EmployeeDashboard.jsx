@@ -102,14 +102,12 @@ useEffect(()=>{
         {/* Team Members */}
         <div className="rounded-lg bg-white p-6 shadow-lg" style={{ height: '400px' }}>
     <Notification />
-</div>
+      </div>
 
-
-<<<<<<< HEAD
 <div className="rounded-lg bg-white p-6 shadow-lg" style={{ height: '400px' }}>
     <Holiday/>
 </div>
-=======
+
         {/* Current Projects */}
         <div className="rounded-lg bg-white p-6 shadow-lg">
           <div className="mb-4 flex items-center justify-between">
@@ -132,7 +130,7 @@ useEffect(()=>{
           </ul>
         </div>
 
->>>>>>> e74e2610e5ba8bc451ea123c41144808b4fcf804
+
         {/* Quick Links */}
         
       </div>
