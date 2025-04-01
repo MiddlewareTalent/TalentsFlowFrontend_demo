@@ -11,6 +11,7 @@ import Pagination, { getPaginationData } from "./Pagination";
 import LeaveRequestForm from "./LeaveForm.jsx";
 import Loader from "../Assets/Loader";
 import Empty from "../Assets/Empty.svg";
+import url from "../UniversalApi.jsx";
 
 export default function LeaveEmployee() {
     const [leaveRequests, setLeaveRequests] = useState([]);
@@ -43,7 +44,7 @@ export default function LeaveEmployee() {
             const token = localStorage.getItem("token");
             console.log(token);
             const response = await axios.get(
-                `https://msquirebackend.azurewebsites.net/api/leaves/employee/${employeeId}`,
+                `${url}/api/leaves/employee/${employeeId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -191,7 +192,7 @@ export default function LeaveEmployee() {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.get(
-                `https://msquirebackend.azurewebsites.net/api/leaves/employee/${employeeId}`,
+                `${url}/api/leaves/employee/${employeeId}`,
                 {
                     method: "GET",
                     headers: {
@@ -227,7 +228,7 @@ export default function LeaveEmployee() {
             // Proceed with deletion
             const token = localStorage.getItem("token");
             await axios.delete(
-                `https://msquirebackend.azurewebsites.net/api/leaves/delete/${deleteRequestId}`,
+                `${url}/api/leaves/delete/${deleteRequestId}`,
                 {
                     method: "GET",
                     headers: {
@@ -239,7 +240,7 @@ export default function LeaveEmployee() {
             try {
                 const token = localStorage.getItem("token");
                 const response = await axios.get(
-                    `https://msquirebackend.azurewebsites.net/api/leaves/employee/${employeeId}`,
+                    `${url}/api/leaves/employee/${employeeId}`,
                     {
                         method: "GET",
                         headers: {

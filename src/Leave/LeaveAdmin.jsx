@@ -5,6 +5,7 @@ import axios from "axios";
 import Pagination, { getPaginationData } from "./Pagination";
 import Loader from "../Assets/Loader";
 import Empty from "../Assets/Empty.svg";
+import url from "../UniversalApi";
 
 export default function LeaveApprovalDashboard() {
   const [Data, setData] = useState([]);
@@ -48,7 +49,7 @@ export default function LeaveApprovalDashboard() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-            `https://msquirebackend.azurewebsites.net/api/leaves/manager/${managerId}`,
+            `${url}/api/leaves/manager/${managerId}`,
             {
               method: "GET",
               headers: {
@@ -92,14 +93,14 @@ export default function LeaveApprovalDashboard() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`https://msquirebackend.azurewebsites.net/api/leaves/approve/${id}`, null, {
+      await axios.put(`${url}/api/leaves/approve/${id}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
       const response = await axios.get(
-          `https://msquirebackend.azurewebsites.net/api/leaves/manager/${managerId}`,
+          `${url}/api/leaves/manager/${managerId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -145,7 +146,7 @@ export default function LeaveApprovalDashboard() {
       //const encodedReason = encodeURIComponent(rejectionReason);
       const token = localStorage.getItem("token");
       await axios.put(
-          `https://msquirebackend.azurewebsites.net/api/leaves/reject/${selectedLeaveId}/${rejectionReason}`,
+          `${url}/api/leaves/reject/${selectedLeaveId}/${rejectionReason}`,
           null,
           {
             headers: {
@@ -155,7 +156,7 @@ export default function LeaveApprovalDashboard() {
           }
       );
       const response = await axios.get(
-          `https://ssitcloudbackend.azurewebsites.net/api/leaves/manager/${managerId}`,
+          `${url}/api/leaves/manager/${managerId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

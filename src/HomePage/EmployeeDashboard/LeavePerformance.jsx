@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import { MyContext } from "../../MyProvider/MyProvider";
+import url from "../../UniversalApi";
 const LeavePerformance = () => {
   const [performanceData, setPerformanceData] = useState({
     pending: 0,
@@ -16,7 +17,7 @@ const LeavePerformance = () => {
       const employeeId = localStorage.getItem('employeeId');
       console.log(employeeId);
       try {
-        const response = await axios.get(`https://msquirebackend.azurewebsites.net/api/leaves/getStatus/${employeeId}`, {
+        const response = await axios.get(`${url}/api/leaves/getStatus/${employeeId}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }

@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import NewsCarousel from "./NewsCarousel";
 import { MyContext } from "../../MyProvider/MyProvider";
+import url from "../../UniversalApi";
  
 const CompanyNews = () => {
     const [tab, setTab]=useState("View News");
@@ -12,7 +13,7 @@ const CompanyNews = () => {
     const postNews = async () => {
         const token=localStorage.getItem("token");
         try {
-            const response = await axios.post("https://msquirebackend.azurewebsites.net/apis/employees/companyNews/addNews", {
+            const response = await axios.post(`${url}/apis/employees/companyNews/addNews`, {
                 userName: state.firstName+" "+state.lastName,
                 userId: state.employeeId,
                 userEmail: localStorage.getItem('email'),

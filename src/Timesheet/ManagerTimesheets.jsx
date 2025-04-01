@@ -7,6 +7,7 @@ import { MdOutlineFileDownload } from 'react-icons/md';
 import 'react-calendar/dist/Calendar.css';
 import {ChevronLeftIcon,ChevronRightIcon} from '@heroicons/react/20/solid';
 import "jspdf-autotable";
+import url from "../UniversalApi.jsx";
  
 const ManagerTimesheets = () => {
   const [submissions, setSubmissions] = useState([]);
@@ -35,13 +36,13 @@ const ManagerTimesheets = () => {
     if (!employeeId) return;
  
     try {
-      let url = `https://msquirebackend.azurewebsites.net/api/timesheets/list/manager/${employeeId}`;
+      let api = `${url}/api/timesheets/list/manager/${employeeId}`;
        
       if (startDate && endDate) {
-        url = `https://msquirebackend.azurewebsites.net/api/timesheets/totalList/startDate/${startDate}/endDate/${endDate}`;
+        api = `${url}/api/timesheets/totalList/startDate/${startDate}/endDate/${endDate}`;
       }
  
-      const response = await axios.get(url, {
+      const response = await axios.get(api, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -88,7 +89,7 @@ const ManagerTimesheets = () => {
     setLoading(true);
     console.log(token); // Make sure the token is valid here
     try {
-      await axios.put(`https://msquirebackend.azurewebsites.net/api/timesheets/Approve/${id}/status/APPROVED`, null, {
+      await axios.put(`${url}/api/timesheets/Approve/${id}/status/APPROVED`, null, {
         headers: {
           "Authorization": `Bearer ${token}`,  // Ensure token is valid
         },
@@ -102,7 +103,7 @@ const ManagerTimesheets = () => {
     }
     try{
       console.log(submissions.employeeId);
-      await axios.post("https://msquirebackend.azurewebsites.net/apis/employees/notifications",{
+      await axios.post(`${url}/apis/employees/notifications`,{
         "notificationType":"TimesheetManage",
         "notification":"Your Timesheet has been Approved, tap to see details",
         "notificationTo":aproveEmployeeId,
@@ -125,7 +126,7 @@ const ManagerTimesheets = () => {
     setLoading(true);
     console.log(rejectEmployeeId);
     try {
-      await axios.put(`https://msquirebackend.azurewebsites.net/api/timesheets/reject/${currentId}/status/REJECTED/comments/${comments}`, null, {
+      await axios.put(`${url}/api/timesheets/reject/${currentId}/status/REJECTED/comments/${comments}`, null, {
         headers: {
           "Authorization": `Bearer ${token}`,  // Ensure the token is valid
         } // Ensure credentials (cookies) are sent
@@ -138,7 +139,7 @@ const ManagerTimesheets = () => {
       setLoading(false);
     }
     try{
-      await axios.post("https://msquirebackend.azurewebsites.net/apis/employees/notifications",{
+      await axios.post(`${url}/apis/employees/notifications`,{
         "notificationType":"TimesheetManage",
         "notification":"Your Timesheet has been Rejected, tap to see details",
         "notificationTo":rejectEmployeeId,

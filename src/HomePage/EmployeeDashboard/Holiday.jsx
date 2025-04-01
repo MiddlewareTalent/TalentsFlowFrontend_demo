@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import url from "../../UniversalApi";
 
 const Holiday = () => {
     const [tab, setTab] = useState("View Holiday");
@@ -14,7 +15,7 @@ const Holiday = () => {
         const fetchHolidays = async () => {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.get(`https://msquirebackend.azurewebsites.net/api/holiday/getAllHolidays`, {
+                const response = await axios.get(`${url}/api/holiday/getAllHolidays`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -63,7 +64,7 @@ const Holiday = () => {
     
         try {
             const response = await axios.post(
-                'https://msquirebackend.azurewebsites.net/api/holiday/holiday',
+                `${url}/api/holiday/holiday`,
                 {
                     name: newHoliday,
                     date: formattedDate,  // Send the formatted date
@@ -106,7 +107,7 @@ const Holiday = () => {
     
         try {
             // Send DELETE request to backend to delete the holiday
-            await axios.delete(`https://msquirebackend.azurewebsites.net/api/holiday/deleteHolidayById/${id}`, {
+            await axios.delete(`${url}/api/holiday/deleteHolidayById/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',

@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../../Assets/Loader';
 import Empty from '../../Assets/Empty.svg';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import url from '../../UniversalApi';
 
 const AssignedTasks = (props) => {
   const [data, setData] = useState([]);
@@ -32,26 +33,26 @@ const AssignedTasks = (props) => {
   useEffect(() => {
     const fetchData = async () => {
 
-      let url;
+      let api;
 
       if (taskType === "allTasks") {
-        url = `https://msquirebackend.azurewebsites.net/apis/employees/tasksAssignedBy/${employeeId}`;
+        api = `${url}/apis/employees/tasksAssignedBy/${employeeId}`;
       } else if (taskType === "overdueTasks") {
-        url = `https://msquirebackend.azurewebsites.net/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
+        api = `${url}/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
       }
       else if(taskType==="pendingTasks"){
-        url=`https://msquirebackend.azurewebsites.net/apis/employees/PendingTasks/AssignedFrom/${employeeId}`;
+        api=`${url}/apis/employees/PendingTasks/AssignedFrom/${employeeId}`;
         console.log(2);
       }
       else if(taskType==="completedTasks"){
-        url=`https://msquirebackend.azurewebsites.net/apis/employees/CompletedTasks/AssignedFrom/${employeeId}`;
+        api=`${url}/apis/employees/CompletedTasks/AssignedFrom/${employeeId}`;
         console.log(2);
       }
 
       try {
           // Retrieve the token from localStorage
         
-        const response = await axios.get(url, {
+        const response = await axios.get(api, {
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }
@@ -87,7 +88,7 @@ const AssignedTasks = (props) => {
   const confirmDelete = async () => {
     setLoading(true);
     const id = deleteId;
-    await axios.delete(`https://msquirebackend.azurewebsites.net/apis/employees/tasks/${id}`,{
+    await axios.delete(`${url}/apis/employees/tasks/${id}`,{
       headers: {
         "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
       }
@@ -96,16 +97,16 @@ const AssignedTasks = (props) => {
     // Refresh data after deletion
     const fetchData = async () => {
 
-      let url;
+      let api;
 
       if (taskType === "allTasks") {
-        url = `https://msquirebackend.azurewebsites.net/apis/employees/tasksAssignedBy/${employeeId}`;
+        api = `${url}/apis/employees/tasksAssignedBy/${employeeId}`;
       } else if (taskType === "overdueTasks") {
-        url = `https://msquirebackend.azurewebsites.net/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
+        api = `${url}/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
       }
 
       try {
-        const response = await axios.get(url,{
+        const response = await axios.get(api,{
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }
@@ -125,7 +126,7 @@ const AssignedTasks = (props) => {
     setLoading(true);
     if (!isOpen) {
       try {
-        const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/tasks/${taskId}`,{
+        const response = await axios.get(`${url}/apis/employees/tasks/${taskId}`,{
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }
@@ -140,16 +141,16 @@ const AssignedTasks = (props) => {
     } else {
       const fetchData = async () => {
 
-        let url;
+        let api;
 
         if (taskType === "allTasks") {
-          url = `https://msquirebackend.azurewebsites.net/apis/employees/tasksAssignedBy/${employeeId}`;
+          api = `${url}/apis/employees/tasksAssignedBy/${employeeId}`;
         } else if (taskType === "overdueTasks") {
-          url = `https://msquirebackend.azurewebsites.net/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
+          api = `${url}/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
         }
 
         try {
-          const response = await axios.get(url,{
+          const response = await axios.get(api,{
             headers: {
               "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
             }
@@ -186,21 +187,21 @@ const AssignedTasks = (props) => {
       setTaskType(event.target.value);
       setCurrentPage(1);
 
-        let url;
+        let api;
       if(event.target.value==="allTasks"){
-        url=`https://msquirebackend.azurewebsites.net/apis/employees/tasksAssignedBy/${employeeId}`;
+        api=`${url}/apis/employees/tasksAssignedBy/${employeeId}`;
         console.log(1);
       }
       else if(event.target.value==="overdueTasks"){
-        url=`https://msquirebackend.azurewebsites.net/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
+        api=`${url}/apis/employees/OverdueTasks/AssignedFrom/${employeeId}`;
         console.log(2);
       }
       else if(event.target.value==="pendingTasks"){
-        url=`https://msquirebackend.azurewebsites.net/apis/employees/PendingTasks/AssignedFrom/${employeeId}`;
+        api=`${url}/apis/employees/PendingTasks/AssignedFrom/${employeeId}`;
         console.log(2);
       }
       else if(event.target.value==="completedTasks"){
-        url=`https://msquirebackend.azurewebsites.net/apis/employees/CompletedTasks/AssignedFrom/${employeeId}`;
+        api=`${url}/apis/employees/CompletedTasks/AssignedFrom/${employeeId}`;
         console.log(2);
       }
       console.log(taskType);
@@ -208,7 +209,7 @@ const AssignedTasks = (props) => {
 
 
       try {
-        const response = await axios.get(url,{
+        const response = await axios.get(api,{
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }

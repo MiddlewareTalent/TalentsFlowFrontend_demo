@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import url from '../UniversalApi';
 
 const ChangePassword = () => {
     const navigate = useNavigate();
@@ -59,7 +60,7 @@ const ChangePassword = () => {
             }
 
             await axios.post(
-                `https://msquirebackend.azurewebsites.net/api/v1/employeeManager/change-password`,
+                `${url}/api/v1/employeeManager/change-password`,
                 {
                     email: formData.email,
                     oldPassword: formData.oldPassword,

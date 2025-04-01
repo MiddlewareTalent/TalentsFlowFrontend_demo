@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import axios from 'axios';
+import url from "../UniversalApi";
 
 
 const DocumentUploadForm = ({ formData, onNext, onBack, onCancel, onFormDataChange,handleLoading }) => {
@@ -52,6 +53,7 @@ const DocumentUploadForm = ({ formData, onNext, onBack, onCancel, onFormDataChan
         // Add checks for other required documents if necessary
 
         if (formHasError) {
+            handleLoading();
             return;
         }
 
@@ -66,7 +68,7 @@ const DocumentUploadForm = ({ formData, onNext, onBack, onCancel, onFormDataChan
         try {
             const token = localStorage.getItem('token');
             console.log("str"+documents.identityCard);
-            const response = await axios.post('https://msquirebackend.azurewebsites.net/api/v1/employeeManager/add', formDataToSend, {
+            const response = await axios.post(`${url}/api/v1/employeeManager/add`, formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
 

@@ -7,6 +7,7 @@ import TeamMember from "./TeamMember";
 import Modal from 'react-modal';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Loader from "../../Assets/Loader";
+import url from "../../UniversalApi";
 
 const EmployeesList = props => {
   const [employees, setEmployees] = useState([]);
@@ -24,7 +25,7 @@ const EmployeesList = props => {
 
       try {
         const employeeId=localStorage.getItem("employeeId");
-        const response = await fetch(`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/getEmployeesForTasks/${employeeId}`, {
+        const response = await fetch(`${url}/api/v1/employeeManager/getEmployeesForTasks/${employeeId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 // import { set } from 'react-datepicker/dist/date_utils';
 import { useNavigate } from "react-router-dom";
+import url from "../UniversalApi";
 
 const LeaveSheet = () => {
     // State to manage the inputs
@@ -27,7 +28,7 @@ const LeaveSheet = () => {
     const fetchLeaveSheet = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await axios.get("https://msquirebackend.azurewebsites.net/api/getSheets", {
+            const response = await axios.get(`${url}/api/getSheets`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -60,7 +61,7 @@ const LeaveSheet = () => {
             const token = localStorage.getItem("token");
             if (isSubmitted && leaveId) {
                 const response = await axios.put(
-                    `https://msquirebackend.azurewebsites.net/api/updateSheet/${leaveId}`,
+                    `${url}/api/updateSheet/${leaveId}`,
                     leaveData,
                     {
                         headers: {
@@ -75,7 +76,7 @@ const LeaveSheet = () => {
                 // If no data exists, create a new leave sheet
                 const token = localStorage.getItem("token");
                 const response = await axios.post(
-                    "https://msquirebackend.azurewebsites.net/api/submitSheet",
+                    `${url}/api/submitSheet`,
                     leaveData,
                     {
                         headers: {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import url from "../UniversalApi";
 
 const ProfessionalDetailsForm = ({
   formData,
@@ -17,7 +18,7 @@ const ProfessionalDetailsForm = ({
       const token = localStorage.getItem("token");
       try {
         const response = await fetch(
-          "https://msquirebackend.azurewebsites.net/api/v1/employeeManager/AdminsAndManagers",
+          `${url}/api/v1/employeeManager/AdminsAndManagers`,
           {
             method: "GET",
             headers: {
@@ -146,7 +147,7 @@ const ProfessionalDetailsForm = ({
       try {
         // Send the request to check if Employee ID exists
         const response = await fetch(
-          `https://msquirebackend.azurewebsites.net/api/v1/employeeManager/exists/${formData.employeeId}`,
+          `${url}/api/v1/employeeManager/exists/${formData.employeeId}`,
           {
             method: "GET",
             headers: {

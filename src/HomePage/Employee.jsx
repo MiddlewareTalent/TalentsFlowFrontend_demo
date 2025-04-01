@@ -13,6 +13,7 @@ import MultiStepForm from '../EmployeeComponents/MultiStepForm';
 import Loader from "../Assets/Loader";
 import UpdateEmployeeModal from './EmployeeUpdate/UpdateEmployeeModal';
 import ChangePass from '../HomePage/ChangePass'
+import url from '../UniversalApi';
 
 
 export default function Employee() {
@@ -41,12 +42,12 @@ export default function Employee() {
             const token = localStorage.getItem('token');
             setIsUpdateModalOpen(false)
             setLoading(true);
-            let url='https://msquirebackend.azurewebsites.net/api/v1/employeeManager/employeesByOrder';
+            let api=`${url}/api/v1/employeeManager/employeesByOrder`;
             if (filterCountry!==""){
-                url=`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/getEmployeesByWorkingCountry/${filterCountry}`;
+                api=`${url}/api/v1/employeeManager/getEmployeesByWokingCountry/${filterCountry}`;
             }
             try {
-                const response = await fetch(url, {
+                const response = await fetch(api, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -93,12 +94,12 @@ export default function Employee() {
         const token = localStorage.getItem('token');
         setIsUpdateModalOpen(false)
         setLoading(true);
-        let url='https://msquirebackend.azurewebsites.net/api/v1/employeeManager/employeesByOrder';
+        let api=`${url}/api/v1/employeeManager/employeesByOrder`;
         if (filterCountry!==""){
-            url=`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/getEmployeesByWorkingCountry/${filterCountry}`;
+            api=`${url}/api/v1/employeeManager/getEmployeesByWokingCountry/${filterCountry}`;
         }
         try {
-            const response = await fetch(url, {
+            const response = await fetch(api, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -148,7 +149,7 @@ export default function Employee() {
         }
 
         try {
-            const response = await fetch(`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/employees/${employeeId}`, {
+            const response = await fetch(`${url}/api/v1/employeeManager/employees/${employeeId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

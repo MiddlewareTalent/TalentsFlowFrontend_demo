@@ -1,6 +1,7 @@
 import axios from 'axios';
+import url from '../../UniversalApi';
  
-const BASE_URL = 'https://msquirebackend.azurewebsites.net/api/v1/employeeManager';
+const BASE_URL = `${url}/api/v1/employeeManager`;
  
 export const getEmployeeDetails = async (employeeId) => {
    

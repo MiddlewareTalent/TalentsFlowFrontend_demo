@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom';
 import Loader from '../../Assets/Loader';
 import Empty from '../../Assets/Empty.svg';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import url from '../../UniversalApi';
 
 const MyTasks = props => {
   const [data, setData] = useState([]);
@@ -21,7 +22,7 @@ const MyTasks = props => {
     const fetchData = async () => {
 
       try {
-        const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/tasksAssignedTo/${employeeId}`,{
+        const response = await axios.get(`${url}/apis/employees/tasksAssignedTo/${employeeId}`,{
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }
@@ -60,20 +61,20 @@ const MyTasks = props => {
     setCurrentPage(1); // Reset to the first page when task type changes
 
 
-    let url;
+    let api;
 
     if (event.target.value === "allTasks") {
-      url = `https://msquirebackend.azurewebsites.net/apis/employees/tasksAssignedTo/${employeeId}`;
+      api = `${url}/apis/employees/tasksAssignedTo/${employeeId}`;
     } else if (event.target.value === "overdueTasks") {
-      url = `https://msquirebackend.azurewebsites.net/apis/employees/OverdueTasks/PersonId/${employeeId}`;
+      api = `${url}/apis/employees/OverdueTasks/PersonId/${employeeId}`;
     } else if (event.target.value === "pendingTasks") {
-      url = `https://msquirebackend.azurewebsites.net/apis/employees/PendingTasks/PersonId/${employeeId}`;
+      api = `${url}/apis/employees/PendingTasks/PersonId/${employeeId}`;
     } else if (event.target.value === "completedTasks") {
-      url = `https://msquirebackend.azurewebsites.net/apis/employees/CompletedTasks/PersonId/${employeeId}`;
+      api = `${url}/apis/employees/CompletedTasks/PersonId/${employeeId}`;
     }
 
     try {
-      const response = await axios.get(url,{
+      const response = await axios.get(api,{
         headers: {
           "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
         }

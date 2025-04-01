@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import { MyContext } from "../../MyProvider/MyProvider";
+import url from "../../UniversalApi";
 
 
 const Performance = () => {
@@ -19,7 +20,7 @@ const Performance = () => {
     const fetchData = async () => {
       const employeeId = localStorage.getItem('employeeId');
       try {
-        const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/TasksDetails/PersonId/${employeeId}`, {
+        const response = await axios.get(`${url}/apis/employees/TasksDetails/PersonId/${employeeId}`, {
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../SharedCSS/SharedCss.css';
 import axios from "axios";
 import Loader from "../Assets/Loader"; // Ensure Loader is correctly imported
+import url from '../UniversalApi';
 
 const Register = () => {
     const [employee_name, setEmployeename] = useState("");
@@ -95,7 +96,7 @@ const Register = () => {
 
         try {
             console.log("Sending registration request to API"); // Debug message
-            const response = await axios.post("https://msquirebackend.azurewebsites.net/api/v1/employeeManager/register", formData, {
+            const response = await axios.post(`${url}/api/v1/employeeManager/register`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

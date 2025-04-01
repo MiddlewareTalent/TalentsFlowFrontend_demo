@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { MyContext } from "../../MyProvider/MyProvider";
 import { useContext } from "react";
+import url from "../../UniversalApi";
 
 const TimesheetPerformance = () => {
   const [performanceData, setPerformanceData] = useState({
@@ -20,7 +21,7 @@ const TimesheetPerformance = () => {
       const employeeId = localStorage.getItem('employeeId');
       console.log(employeeId);
       try {
-        const response = await axios.get(`https://msquirebackend.azurewebsites.net/api/timesheets/employeeId/${employeeId}/total/timesheets`, {
+        const response = await axios.get(`${url}/api/timesheets/employeeId/${employeeId}/total/timesheets`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }

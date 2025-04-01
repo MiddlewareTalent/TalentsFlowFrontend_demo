@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import Loader from '../../Assets/Loader';
+import url from '../../UniversalApi';
 
 export default function AddTask(props) {
   const { taskCreate, personToAddTask } = props;
@@ -39,7 +40,7 @@ export default function AddTask(props) {
     if (taskName !== "" && taskDetails !== "") {
       setIsLoading(true);
       try {
-        axios.post("https://msquirebackend.azurewebsites.net/apis/employees/tasks", {
+        axios.post(`${url}/apis/employees/tasks`, {
           taskAssignedById: localStorage.getItem("employeeId"),
           taskAssignedByName: localStorage.getItem('firstName') + " " + localStorage.getItem('lastName'),
           taskAssignedByEmail: localStorage.getItem('email'),
@@ -74,7 +75,7 @@ export default function AddTask(props) {
 
 
       try{
-        await axios.post("https://msquirebackend.azurewebsites.net/apis/employees/notifications",{
+        await axios.post(`${url}/apis/employees/notifcations`,{
           "notificationType":"tasks",
           "notification": `${localStorage.getItem('firstName')} ${localStorage.getItem('lastName')} has been assigned a new task. Click here to see the full details.`,
           "notificationTo":personId,

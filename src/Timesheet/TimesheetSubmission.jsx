@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Loader from "./loader.js";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import url from '../UniversalApi.jsx';
  
 const TimesheetSubmission = ({ setSubmissions }) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const TimesheetSubmission = ({ setSubmissions }) => {
         SubmissionDate: new Date().toISOString(),
       };
  
-      const response = await axios.post("https://msquirebackend.azurewebsites.net/api/timesheets", newFormData, {
+      const response = await axios.post(`${url}/api/timesheets`, newFormData, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -63,7 +64,7 @@ const TimesheetSubmission = ({ setSubmissions }) => {
   }
  
     try{
-      await axios.post("https://msquirebackend.azurewebsites.net/apis/employees/notifications",{
+      await axios.post(`${url}/apis/employees/notifications`,{
         "notificationType":"TimesheetManage",
         "notification":formData.employeeName+" has submitted new timesheet, tap to see details",
         // "notification":"Tap to view the details of "+formData.employeeName+"'s recently submitted timesheet.",

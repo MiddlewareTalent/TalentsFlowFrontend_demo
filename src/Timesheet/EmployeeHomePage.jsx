@@ -7,6 +7,7 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import { MdOutlineFileDownload } from "react-icons/md";
 import "jspdf-autotable";
 import {ChevronLeftIcon,ChevronRightIcon} from '@heroicons/react/20/solid';
+import url from "../UniversalApi.jsx";
  
 const EmployeeHomePage = ({ submissions, setSubmissions }) => {
   const navigate = useNavigate();
@@ -35,13 +36,13 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
     setLoading(true);
     const fetchSubmissions = async () => {
       try {
-        let url = `https://msquirebackend.azurewebsites.net/api/timesheets/list/${employeeId}`;
+        let api = `${url}/api/timesheets/list/${employeeId}`;
  
         if (startDate && endDate) {
-          url = `https://msquirebackend.azurewebsites.net/api/timesheets/totalList/employeeId/${employeeId}/startDate/${startDate}/endDate/${endDate}`;
+          api = `${url}/api/timesheets/totalList/employeeId/${employeeId}/startDate/${startDate}/endDate/${endDate}`;
         }
  
-        const response = await axios.get(url, {
+        const response = await axios.get(api, {
           
           headers: {
             "Authorization": `Bearer ${token}`
@@ -74,7 +75,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
   const handleDeleteTimesheet = async () => {
     setLoading(true);
     try {
-      await axios.delete(`https://msquirebackend.azurewebsites.net/api/timesheets/delete/${selectedSubmissionId}`, {
+      await axios.delete(`${url}/api/timesheets/delete/${selectedSubmissionId}`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }

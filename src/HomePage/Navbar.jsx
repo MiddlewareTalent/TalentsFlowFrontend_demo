@@ -7,6 +7,8 @@ import MTLogo from "../Assets/MTlogo.svg";
 import axios from "axios";
 import Loader from "../Assets/Loader";
 import { MyContext } from "../MyProvider/MyProvider";
+import url from "../UniversalApi";
+import TalentFlowLogo from "../Assets/TalentFlowLogo.png"
 
 
 function classNames(...classes) {
@@ -52,7 +54,7 @@ export default function Navbar() {
         console.log(token);
         console.log("upto");
 
-        const response = await axios.get(`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/getEmployee/${employeeId}`, {
+        const response = await axios.get(`${url}/api/v1/employeeManager/getEmployee/${employeeId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -155,7 +157,7 @@ if (role === "admin" || role === "Admin") {
         <div className="flex lg:flex-1">
           <Link to="/dashboard" className="-m-1.5 p-1.5">
             <span className="sr-only">Middleware</span>
-            <img className="h-20 w-auto" src={MTLogo} alt="Middleware" />
+            <img className="h-20 w-auto" src={TalentFlowLogo} alt="Logo" />
           </Link>
         </div>
         <div className="flex lg:hidden">

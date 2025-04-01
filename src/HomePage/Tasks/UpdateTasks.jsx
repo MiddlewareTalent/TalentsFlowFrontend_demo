@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from "axios";
 import Loader from '../../Assets/Loader';
+import url from '../../UniversalApi';
 
 
 export default function UpdateTasks(props) {
@@ -30,7 +31,7 @@ export default function UpdateTasks(props) {
 
       if(taskName!=="" && taskDetails!==""){
         setIsError(false)
-        await axios.put(`https://msquirebackend.azurewebsites.net/apis/employees/tasks/${taskId}`, {
+        await axios.put(`${url}/apis/employees/tasks/${taskId}`, {
         taskId:taskId,
         taskAssignedBy:localStorage.getItem('email'),
         personName:personName,
@@ -53,7 +54,7 @@ export default function UpdateTasks(props) {
       }
 
       try{
-        await axios.post("https://middlewaretalentsbackend.azurewebsites.net/apis/employees/notifications",{
+        await axios.post(`${url}/apis/employees/notifications`,{
           "notificationType":"tasks",
           "notification": `Your ${taskName} task has been updated. Please click here to see the full details.`,
           "notificationTo":personId,

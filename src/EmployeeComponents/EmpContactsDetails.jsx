@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
+import url from '../UniversalApi';
 
 const EmpContactsDetails = () => {
     const [formData, setFormData] = useState({
@@ -37,7 +38,7 @@ const EmpContactsDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/contacts/contacts/${contactId}`,{
+                const response = await axios.get(`${url}/apis/employees/contacts/contacts/${contactId}`,{
                     headers: {
                       "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
                     }

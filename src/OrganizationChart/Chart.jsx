@@ -12,6 +12,7 @@ import { motion } from "framer-motion"
 import Loader from "../Assets/Loader";
 import { MyContext } from "../MyProvider/MyProvider";
 import { useNavigate } from "react-router-dom";
+import url from "../UniversalApi";
  
  
 export default function Chart() {
@@ -43,7 +44,7 @@ export default function Chart() {
           const token = localStorage.getItem('token')
           console.log(token)
           const [originResponse] = await Promise.all([
-            axios.get(`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/origin/${employeeId}`, {
+            axios.get(`${url}/api/v1/employeeManager/origin/${employeeId}`, {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -70,7 +71,7 @@ export default function Chart() {
           const token = localStorage.getItem('token')
           console.log(token)
           const [reportingResponse] = await Promise.all([
-            axios.get(`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/reporting-to/${employeeId}/${filterCountry}`, {
+            axios.get(`${url}/api/v1/employeeManager/reporting-to/${employeeId}/${filterCountry}`, {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -98,7 +99,7 @@ export default function Chart() {
           const token = localStorage.getItem('token')
           console.log(token)
           const [employeesResponse] = await Promise.all([
-            axios.get("https://msquirebackend.azurewebsites.net/api/v1/employeeManager/employees", {
+            axios.get(`${url}/api/v1/employeeManager/employees`, {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -133,7 +134,7 @@ export default function Chart() {
           const token = localStorage.getItem('token')
           console.log(token)
           const [workingWithResponse] = await Promise.all([
-            axios.get(`https://msquirebackend.azurewebsites.net/api/v1/employeeManager/alsoWorkingWith/${employeeId}/${filterCountry}`, {
+            axios.get(`${url}/api/v1/employeeManager/alsoWorkingWith/${employeeId}/${filterCountry}`, {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,

@@ -5,6 +5,7 @@ import EmpContactsItem from './EmpContactsItem';
 // import { FaSearch } from 'react-icons/fa';
 import Loader from '../Assets/Loader';
 import Empty from '../Assets/Empty.svg';
+import url from '../UniversalApi';
 
 
 const EmpContacts=(props)=>{
@@ -22,7 +23,7 @@ const EmpContacts=(props)=>{
 
             
           try {
-            const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/contacts/contactsBy/${employeeId}`,{
+            const response = await axios.get(`${url}/apis/employees/contacts/contactsBy/${employeeId}`,{
               headers: {
                 "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
               }

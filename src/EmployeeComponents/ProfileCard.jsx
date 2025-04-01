@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 import Loader from "../Assets/Loader";
 import Contacts from "../HomePage/MyContacts/Contacts";
+import url from "../UniversalApi";
  
 const Badge = ({ children, variant, className }) => (
     <span className={`inline-flex items-center rounded-full px-3 py-2 text-xs font-medium ${variant === 'outline' ? 'border' : 'bg-gray-100'} ${className}`}>
@@ -54,7 +55,7 @@ export default function ProfileCard() {
                 
                 console.log(token);
                 console.log("upto");
-                const response = await axios.get(`https://msquirebackend.azurewebsites.net/api/v1/employeeManager//getEmployee//${employeeId}`,{
+                const response = await axios.get(`${url}/api/v1/employeeManager//getEmployee//${employeeId}`,{
                     method:'GET',
                     headers:{
                         'Authorization':`Bearer ${token}`,
@@ -70,7 +71,7 @@ export default function ProfileCard() {
                 console.error("Error fetching employee data:", error);
             }
             try {
-                const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/contacts/contactsBy/${employeeId}`,{
+                const response = await axios.get(`${url}/apis/employees/contacts/contactsBy/${employeeId}`,{
                   headers: {
                     "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
                   }

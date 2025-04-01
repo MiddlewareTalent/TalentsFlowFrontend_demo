@@ -1,6 +1,7 @@
 import NotificationItem from "./NotificationItem";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import url from "../../UniversalApi";
 
 const Notification = () => {
     const [notificationsData, setNotificationsData] = useState(null);
@@ -10,7 +11,7 @@ const Notification = () => {
             const employeeId = localStorage.getItem('employeeId');
             const token=localStorage.getItem("token");
             try {
-                const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/notificationsTo/${employeeId}`, {
+                const response = await axios.get(`${url}/apis/employees/notificationsTo/${employeeId}`, {
                     headers: {
                       "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
                     }

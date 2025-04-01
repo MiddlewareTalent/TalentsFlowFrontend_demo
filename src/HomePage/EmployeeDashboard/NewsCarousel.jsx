@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import axios from 'axios'
 import { MyContext } from '../../MyProvider/MyProvider';
+import url from '../../UniversalApi';
 
 // Sample news data
 
@@ -16,7 +17,7 @@ export default function NewsCarousel() {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await axios.get('https://msquirebackend.azurewebsites.net/apis/employees/companyNews/getAllNews', {
+        const response = await axios.get(`${url}/apis/employees/companyNews/getAllNews`, {
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }
@@ -53,7 +54,7 @@ export default function NewsCarousel() {
   const deleteNews=async(id)=>{
     const token = localStorage.getItem("token");
     try{
-      axios.delete(`https://msquirebackend.azurewebsites.net/apis/employees/companyNews/deleteNewsById/${id}`, {
+      axios.delete(`${url}/apis/employees/companyNews/deleteNewsById/${id}`, {
         headers: {
           "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
         }
@@ -67,7 +68,7 @@ export default function NewsCarousel() {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await axios.get('https://msquirebackend.azurewebsites.net/apis/employees/companyNews/getAllNews', {
+        const response = await axios.get(`${url}/apis/employees/companyNews/getAllNews`, {
           headers: {
             "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
           }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import Loader from '../../Assets/Loader';
 import { useNavigate } from 'react-router-dom';
+import url from '../../UniversalApi';
 
 const NewContacts = () => {
     const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ const NewContacts = () => {
         if(formData.personName!=="" && formData.personMobile!==""){
             setIsError(false);
             setIsAdding(true);
-        await axios.post("https://msquirebackend.azurewebsites.net/apis/employees/contacts/contacts", formData,{
+        await axios.post(`${url}/apis/employees/contacts/contacts`, formData,{
             headers: {
               "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
             }

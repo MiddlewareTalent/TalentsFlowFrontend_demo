@@ -1,5 +1,6 @@
 import { useState } from "react"
 import axios from "axios";
+import url from "../UniversalApi";
  
 const ChangePasswordModal = ({ isOpen, onClose, id }) => {
     console.log(id);
@@ -23,7 +24,7 @@ const ChangePasswordModal = ({ isOpen, onClose, id }) => {
     try {
         // Perform the API request to change the password
         const response = await axios.post(
-            `https://msquirebackend.azurewebsites.net/api/v1/employeeManager/reset-password/${employeeId}/${newPassword}`,
+            `${url}/api/v1/employeeManager/reset-password/${employeeId}/${newPassword}`,
             
             {
                 headers: {

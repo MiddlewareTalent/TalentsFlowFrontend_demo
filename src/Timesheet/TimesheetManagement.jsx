@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import url from "../UniversalApi";
 
 const FormField = ({
   label,
@@ -118,7 +119,7 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
         console.log("Fetching data with token:", token);  // Log token for debugging
 
         const response = await axios.get(
-          `https://msquirebackend.azurewebsites.net/api/v1/employeeManager/getEmployee/${employeeId}`,
+          `${url}/api/v1/employeeManager/getEmployee/${employeeId}`,
           {
             method: 'GET',
             headers: {
@@ -148,7 +149,7 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
         console.log("Fetching data with token:", token);  // Log token for debugging
 
         const response = await axios.get(
-          `https://msquirebackend.azurewebsites.net/api/v1/employeeManager/getEmployee/${formData.managerId}`,
+          `${url}/api/v1/employeeManager/getEmployee/${formData.managerId}`,
           {
             method: 'GET',
             headers: {

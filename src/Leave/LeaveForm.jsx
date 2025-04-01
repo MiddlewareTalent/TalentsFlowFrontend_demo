@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
+import url from "../UniversalApi";
 
 function LeaveRequestForm(props) {
     const navigate = useNavigate();
@@ -67,7 +68,7 @@ function LeaveRequestForm(props) {
 
                 const [originResponse] = await Promise.all([
                     axios.get(
-                        `https://msquirebackend.azurewebsites.net/api/v1/employeeManager/origin/${employeeId}`,
+                        `${url}/api/v1/employeeManager/origin/${employeeId}`,
                         {
                             method: "GET",
                             headers: {
@@ -122,7 +123,7 @@ function LeaveRequestForm(props) {
                 const token = localStorage.getItem("token");
                 console.log(token);
                 const response = await axios.get(
-                    "https://msquirebackend.azurewebsites.net/api/leaves/remaining-leaves",
+                    `${url}/api/leaves/remaining-leaves`,
                     {
                         method: "GET",
                         headers: {
@@ -306,16 +307,16 @@ function LeaveRequestForm(props) {
         try {
             const token = localStorage.getItem("token");
             console.log(formData);
-            const url = isEditing
-                ? `https://msquirebackend.azurewebsites.net/api/leaves/update/${formData.id}`
-                : `https://msquirebackend.azurewebsites.net/api/leaves/submit`;
+            const api = isEditing
+                ? `${url}/api/leaves/update/${formData.id}`
+                : `${url}/api/leaves/submit`;
 
             let response;
             if (!isEditing) {
                 console.log("POST Request:", formData);
                 response = await axios({
                     method: "POST",
-                    url,
+                    api,
                     data,
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -325,7 +326,7 @@ function LeaveRequestForm(props) {
                 console.log("PUT Request:", formData);
                 response = await axios({
                     method: "PUT",
-                    url,
+                    api,
                     data: formData,
                     // headers : {
                     //   'Content-Type' :  'multipart/form-data',
@@ -376,7 +377,7 @@ function LeaveRequestForm(props) {
             const token = localStorage.getItem("token");
             console.log(token);
             const response = await axios.get(
-                "https://msquirebackend.azurewebsites.net/api/leaves/remaining-leaves",
+                `${url}/api/leaves/remaining-leaves`,
                 {
                     method: "GET",
                     headers: {

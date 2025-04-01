@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../Assets/Loader';
+import url from '../../UniversalApi';
 
 const UpdateContacts = () => {
     const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ const UpdateContacts = () => {
         const fetchData = async () => {
 
           try {
-            const response = await axios.get(`https://msquirebackend.azurewebsites.net/apis/employees/contacts/contacts/${contactId}`,{
+            const response = await axios.get(`${url}/apis/employees/contacts/contacts/${contactId}`,{
                 headers: {
                   "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
                 }
@@ -61,7 +62,7 @@ const UpdateContacts = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setIsAdding(true);
-        await axios.put(`https://msquirebackend.azurewebsites.net/apis/employees/contacts/contacts/${contactId}`, formData,{
+        await axios.put(`${url}/apis/employees/contacts/contacts/${contactId}`, formData,{
             headers: {
               "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
             }

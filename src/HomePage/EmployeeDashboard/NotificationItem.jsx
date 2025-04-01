@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import url from "../../UniversalApi";
 
 const NotificationItem=(props)=>{
     const {notificationId, notificationType, notification, notificationTo, isRead}=props.each;
@@ -18,7 +19,7 @@ const NotificationItem=(props)=>{
         const token=localStorage.getItem("token");
         try {
             const response = await axios.put(
-                `https://msquirebackend.azurewebsites.net/apis/employees/notificationUpdate/${notificationId}`, 
+                `${url}/apis/employees/notificationUpdate/${notificationId}`, 
                 {
                     notificationId: notificationId,
                     notificationType: notificationType,

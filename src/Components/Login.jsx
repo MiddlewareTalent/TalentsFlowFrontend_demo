@@ -3,6 +3,8 @@ import '../SharedCSS/SharedCss.css';
 import { useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../Assets/Loader'; // Ensure you have the Loader component imported correctly
+import url from "../UniversalApi";
+import TalentFlowLogo from "../Assets/TalentFlowLogo.png";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -31,7 +33,7 @@ const Login = () => {
 
         try {
             // Send login request to the backend
-            const response = await axios.post('https://msquirebackend.azurewebsites.net/api/v1/employeeManager/login', {
+            const response = await axios.post(`${url}/api/v1/employeeManager/login`, {
                 email: email,
                 password: password,
             }
@@ -131,10 +133,8 @@ const Login = () => {
                     Not a member? <Link to="/register">Register</Link>
                 </p>
             </main>
-            <div className="welcome-container">
-                <h1 className="heading-secondary">
-                    Welcome to <span className="lg">MT Buddy!</span>
-                </h1>
+            <div className="welcome-container bg-white animate-slide-right">
+                <img className='h-full ' src={TalentFlowLogo} alt='Logo'/>
             </div>
         </div>
     );
