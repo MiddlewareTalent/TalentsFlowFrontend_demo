@@ -224,9 +224,13 @@ if (role === "admin" || role === "Admin") {
                                     alt=""
                                 /> */}
                 {/* <Bars3Icon className="h-9 w-9 " aria-hidden="true" /> */}
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">
-                  {initials}
-                </div>
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">
+              <img
+                className="h-full w-full object-cover rounded-full"
+                src={employee.profilePhoto}
+                alt={initials}
+              />
+            </div>
               </Menu.Button>
             </div>
             <Transition
