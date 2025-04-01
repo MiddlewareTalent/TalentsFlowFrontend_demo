@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
-import url from "../UniversalApi";
+import api from "../UniversalApi";
 
 function LeaveRequestForm(props) {
     const navigate = useNavigate();
@@ -68,7 +68,7 @@ function LeaveRequestForm(props) {
 
                 const [originResponse] = await Promise.all([
                     axios.get(
-                        `${url}/api/v1/employeeManager/origin/${employeeId}`,
+                        `${api}/api/v1/employeeManager/origin/${employeeId}`,
                         {
                             method: "GET",
                             headers: {
@@ -123,7 +123,7 @@ function LeaveRequestForm(props) {
                 const token = localStorage.getItem("token");
                 console.log(token);
                 const response = await axios.get(
-                    `${url}/api/leaves/remaining-leaves`,
+                    `${api}/api/leaves/remaining-leaves`,
                     {
                         method: "GET",
                         headers: {
@@ -242,7 +242,7 @@ function LeaveRequestForm(props) {
         event.preventDefault();
         setLeaveError(""); // Reset error messages
         setErrors(false); // Reset error state
-
+ 
         // Validation: Check for medical document if leave type is "SICK" and duration > 2
         if (
             formData.leaveType === "SICK" &&
@@ -253,22 +253,22 @@ function LeaveRequestForm(props) {
             setLeaveError("Please upload a document");
             return;
         }
-
+ 
         // Validation: Check if all required fields are filled
         const requiredFields = ["leaveStartDate", "leaveEndDate", "leaveType"];
-
+ 
         const hasEmptyFields = requiredFields.some((field) => !formData[field]);
         console.log("Checking required fields:", requiredFields);
         requiredFields.forEach((field) => {
             console.log(`${field}: ${formData[field]}`);
         });
-
+ 
         if (hasEmptyFields) {
             setLeaveError("");
             setErrors(true);
             return;
         }
-
+ 
         // Check if Start Date is after End Date
         if (new Date(formData.leaveStartDate) > new Date(formData.leaveEndDate)) {
             setLeaveError(
@@ -277,7 +277,7 @@ function LeaveRequestForm(props) {
             setErrors(true);
             return;
         }
-
+ 
         // Check if LOP is required but not acknowledged
         if (
             remainingLeaveDays === "You don't have enough remaining leave days." &&
@@ -287,7 +287,7 @@ function LeaveRequestForm(props) {
             setErrors(true);
             return;
         }
-
+ 
         // Prepare FormData for submission
         const data = new FormData();
         for (const key in formData) {
@@ -301,22 +301,22 @@ function LeaveRequestForm(props) {
         } else if (location.state?.medicalDocument) {
             data.append("medicalDocument", location.state.medicalDocument); // Keep the previous document if editing
         }
-
+ 
         setLoading(true); // Indicate loading state
-
+ 
         try {
             const token = localStorage.getItem("token");
             console.log(formData);
-            const api = isEditing
-                ? `${url}/api/leaves/update/${formData.id}`
-                : `${url}/api/leaves/submit`;
-
+            const url = isEditing
+                ? `${api}/api/leaves/update/${formData.id}`
+                : `${api}/api/leaves/submit`;
+ 
             let response;
             if (!isEditing) {
                 console.log("POST Request:", formData);
                 response = await axios({
                     method: "POST",
-                    api,
+                    url,
                     data,
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -326,7 +326,7 @@ function LeaveRequestForm(props) {
                 console.log("PUT Request:", formData);
                 response = await axios({
                     method: "PUT",
-                    api,
+                    url,
                     data: formData,
                     // headers : {
                     //   'Content-Type' :  'multipart/form-data',
@@ -337,7 +337,7 @@ function LeaveRequestForm(props) {
                     },
                 });
             }
-
+ 
             // Handle success
             if (response.status === 200) {
                 if (isEditing) {
@@ -360,12 +360,13 @@ function LeaveRequestForm(props) {
                 setLeaveError(error.response.data || "Error occurred");
             }
             console.log(error.response.data);
-
+ 
             setErrors(true);
         } finally {
             setLoading(false); // Reset loading state
         }
     };
+ 
 
     const fetchRemainingLeaveDays = async (
         employeeId,
@@ -377,7 +378,7 @@ function LeaveRequestForm(props) {
             const token = localStorage.getItem("token");
             console.log(token);
             const response = await axios.get(
-                `${url}/api/leaves/remaining-leaves`,
+                `${api}/api/leaves/remaining-leaves`,
                 {
                     method: "GET",
                     headers: {
