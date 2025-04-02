@@ -133,19 +133,25 @@ export default function ProfileCard() {
                 <main className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div className="bg-white shadow-md rounded-lg overflow-hidden">
                         <div className="p-8 space-y-8">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                               <div className="flex h-80 w-80 items-center justify-center rounded-full">
+                                <img
+                                    className="h-full w-full object-cover rounded-full"
+                                    src={employee.profilePhoto}
+                                    alt={employee.name ? `Profile photo of ${employee.name}` : 'Profile photo not available'}
+                                />
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-96 gap-y-10">
                                 <InfoItem icon={<UserCircleIcon />} label="Full name" value={`${employee.firstName || 'N/A'} ${employee.lastName || ''}`} />
                                 {/* <InfoItem icon={<BuildingOfficeIcon />} label="Company Name" value={employee.companyName || "N/A"} highlight={true} /> */}
                                 <InfoItem icon={<IdentificationIcon />} label="Employee ID" value={employee.employeeId || "N/A"} />
-                                <InfoItem icon={<EnvelopeIcon />} label="Personal Email" value={employee.email || "N/A"} />
                                 <InfoItem icon={<EnvelopeIcon />} label="Corporate Email" value={employee.corporateEmail || "N/A"} />
                                 <InfoItem icon={<UserGroupIcon />} label="Reporting to" value={employee.reportingTo || "N/A"} />
                                 {/* <InfoItem icon={<UserGroupIcon />} label="Reporting to" value={employee.employeeId || "N/A"} /> */}
                                 <InfoItem icon={<CalendarDaysIcon/> } label="Date of Birth" value={employee.dateOfBirth || "N/A"} />
                                 <InfoItem icon={<CalendarIcon/> } label="Date of joining" value={employee.dateOfJoining || "N/A"} />
-                                 <InfoItem icon={<GlobeAmericasIcon />} label="Working Country" value={employee.workingCountry || "N/A"} />
+                                <InfoItem icon={<GlobeAmericasIcon />} label="Working Country" value={employee.workingCountry || "N/A"} />
                                 <InfoItem icon={<BriefcaseIcon />} label="Job role" value={employee.jobRole || "N/A"} />
-                                
                                 <InfoItem
                                     icon={<ClockIcon />}
                                     label="Employee Status"
@@ -157,10 +163,11 @@ export default function ProfileCard() {
                                     
                                 />
                                 <InfoItem icon={<CreditCardIcon />} label="National Id Number" value={employee.nationalInsuranceNumber || "N/A"} />
+                                </div>
                             </div>
                             <Separator />
                             <div>
-                                <InfoItem icon={<MapPinIcon />} label="Address" value={`${employee.streetAddress || ''}, ${employee.city || ''}, ${employee.region || ''} - ${employee.postalCode || ''}`} fullWidth />
+                                <InfoItem1 icon={<MapPinIcon />} label="Address" value={`${employee.streetAddress || ''}, ${employee.city || ''}, ${employee.region || ''} - ${employee.postalCode || ''}`} fullWidth />
                             </div>
                             <Separator />
                             <div>
@@ -197,9 +204,23 @@ export default function ProfileCard() {
     );
 }
  
-function InfoItem({ icon, label, value, fullWidth = false, highlight = false }) {
+function InfoItem({ icon, label, value, fullWidth = false, highlight = false}) {
     return (
-        <div className={`flex items-start space-x-4 ${fullWidth ? 'col-span-full' : ''} ${highlight ? 'bg-blue-50 p-4 rounded-md' : ''}`}>
+        <div className={`flex items-start w-80 space-x-4  ${fullWidth ? 'col-span-full' : ''} ${highlight ? 'bg-blue-50 p-4 rounded-md' : ''}`}>
+            <div className="flex-shrink-0 mt-1">
+                {React.cloneElement(icon, { className: `h-10 w-10 ${highlight ? 'text-blue-500' : 'text-gray-400'}` })}
+            </div>
+            <div className="flex-grow">
+                <p className={`text-xl font-medium ${highlight ? 'text-blue-600' : 'text-gray-500'}`}>{label}</p>
+                <div className={`mt-1 text-xl ${highlight ? 'text-blue-700 font-semibold' : 'text-gray-900'}`}>{value}</div>
+            </div>
+        </div>
+    );
+}
+
+function InfoItem1({ icon, label, value, fullWidth = false, highlight = false}) {
+    return (
+        <div className={`flex items-start space-x-4  ${fullWidth ? 'col-span-full' : ''} ${highlight ? 'bg-blue-50 p-4 rounded-md' : ''}`}>
             <div className="flex-shrink-0 mt-1">
                 {React.cloneElement(icon, { className: `h-10 w-10 ${highlight ? 'text-blue-500' : 'text-gray-400'}` })}
             </div>
