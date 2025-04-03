@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {Link} from "react-router-dom";
 import {
     UserCircleIcon,
@@ -15,10 +15,12 @@ import {
     CalendarIcon,
     CreditCardIcon,
     GlobeAmericasIcon,
-} from "@heroicons/react/20/solid";
+    PencilIcon,
+} from "@heroicons/react/20/solid"; 
 import axios from "axios";
 import Loader from "../Assets/Loader";
 import Contacts from "../HomePage/MyContacts/Contacts";
+import UpdateEmployeeModal from "../HomePage/EmployeeUpdate/UpdateEmployeeModal";
 import url from "../UniversalApi";
  
 const Badge = ({ children, variant, className }) => (
@@ -46,11 +48,14 @@ export default function ProfileCard() {
     const [isLoading, setIsLoading]=useState(true);
     const employeeId=localStorage.getItem("employeeId");
     const token= localStorage.getItem('token');
+      const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+        const [updateEmployeeId, setUpdateEmployeeId] = useState(null);
     
  
-    useEffect(() => {
-        const fetchEmployee = async () => {
+        const fetchEmployee = useCallback(async () => {
+            setIsUpdateModalOpen(false)
             setIsLoading(true);
+
             try {
                 
                 console.log(token);
@@ -82,11 +87,25 @@ export default function ProfileCard() {
               } catch (error) {
                 
                 console.error('Error fetching data:', error);
-              }
+              } finally {
+                
+                setIsUpdateModalOpen(false)
+            }
             
-        };
+        }, [employeeId, token]);
+       
+        // fetchEmployee();
+   
+
+
+    useEffect(() => {
         fetchEmployee();
-    }, [employeeId, token]);
+    }, [fetchEmployee]);
+
+    const updateEmployeeDetails = (id) => {
+        setUpdateEmployeeId(id);
+        setIsUpdateModalOpen(true)
+    }
  
     if (!employee) {
         return <div className="flex justify-center items-center h-screen"><Loader /></div>;
@@ -126,6 +145,14 @@ export default function ProfileCard() {
             <header className="bg-white shadow-sm w-full">
                 <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                     <h1 className="text-4xl font-semibold text-gray-900">My Information</h1>
+                    <button
+                          onClick={() => updateEmployeeDetails(employee.employeeId)}
+                                      className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
+                                  aria-label="Edit employee">
+                                               
+                                                      <PencilIcon className="h-5 w-5" />   
+                        
+                                                    </button>
                     
                 </div>
             </header>
@@ -200,6 +227,13 @@ export default function ProfileCard() {
                     </div>
                 </main>
             </ScrollArea>
+                        {updateEmployeeId && (
+                            <UpdateEmployeeModal
+                                isOpen={isUpdateModalOpen}
+                                onClose={() =>  fetchEmployee ()}
+                                employeeId={updateEmployeeId}
+                            />
+                        )}
         </div>
     );
 }

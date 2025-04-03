@@ -128,7 +128,10 @@ export default function EmployeeDetails() {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <header className="bg-white shadow-sm w-full">
                 <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                    <div>
                     <h1 className="text-4xl font-semibold text-gray-900">Employee Information</h1>
+                   
+                    </div>
                     <Badge variant="outline" className="text-lg px-5 py-3">
                         <ShieldCheckIcon className="w-10 h-10 mr-2 text-green-600" />
                         <span className="font-bold">{employee.role || "N/A"}</span>

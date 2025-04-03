@@ -87,9 +87,6 @@ export default function Employee() {
         );
     }
 
-
-
-
     const fetchEmployees = async () => {
         const token = localStorage.getItem('token');
         setIsUpdateModalOpen(false)
