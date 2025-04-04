@@ -254,6 +254,7 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
     setLoading(true);
 
     navigate("/timesheet-submission", { state: { formData } });
+    setLoading(false);
   };
   
 

@@ -3,14 +3,18 @@ import axios from "axios";
 import NewsCarousel from "./NewsCarousel";
 import { MyContext } from "../../MyProvider/MyProvider";
 import url from "../../UniversalApi";
+import Loader from "../../Timesheet/loader";
+
  
 const CompanyNews = () => {
     const [tab, setTab]=useState("View News");
     const [news, setNews]=useState("");
     const [newsHeading, setNewsHeading]=useState("");
+    const [loading,setLoading]=useState(false);
     const {state}=useContext(MyContext);
  
     const postNews = async () => {
+        setLoading(true);
         const token=localStorage.getItem("token");
         try {
             const response = await axios.post(`${url}/apis/employees/companyNews/addNews`, {
@@ -31,6 +35,8 @@ const CompanyNews = () => {
             
             // You can also handle the response here, if necessary
             console.log("News posted successfully:", response.data);
+             alert("News posted successfully");
+             setLoading(false);
     
         } catch (error) {
             // Handle errors
@@ -52,6 +58,7 @@ const CompanyNews = () => {
             setNews("");
             setNewsHeading("");
         }
+        setTab("View News");
     };
     
  
@@ -59,6 +66,7 @@ const CompanyNews = () => {
  
     return (
         <div className="relative lg:row-span-2 p-6" style={{ height: '380px' }}> {/* Added padding for spacing */}
+        {loading && <Loader/>}
             <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
                 <h3 className="text-2xl font-semibold text-gray-900 ml-5">Company News</h3> {/* Increased text size */}
