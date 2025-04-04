@@ -7,7 +7,7 @@ const Holiday = () => {
     const [newHoliday, setNewHoliday] = useState("");
     const [date, setDate] = useState("");
     const [AllHolidays, setAllHolidays] = useState([]);
-    const [upcomingHoliday, setUpcomingHoliday] = useState(null);
+    //const [upcomingHoliday, setUpcomingHoliday] = useState(null);
 
     // Fetch holidays from the API
     const fetchHolidays = async () => {
@@ -43,9 +43,9 @@ const Holiday = () => {
 
         // Set the first upcoming holiday
         if (sortedUpcomingHolidays.length > 0) {
-            setUpcomingHoliday(sortedUpcomingHolidays[0]);
+           // setUpcomingHoliday(sortedUpcomingHolidays[0]);
         } else {
-            setUpcomingHoliday(null); // No upcoming holidays
+          //  setUpcomingHoliday(null); // No upcoming holidays
         }
     }, [AllHolidays]); // This effect depends on AllHolidays
 
@@ -89,6 +89,7 @@ const Holiday = () => {
 
             // Change the tab back to 'View Holiday' after posting
             setTab("View Holiday");
+            fetchHolidays()
 
         } catch (error) {
             console.log("Error posting holiday:", error);
@@ -136,7 +137,7 @@ const Holiday = () => {
                         <div className="col-start-1 col-end-3 mt-5">
                             {tab === "Post Holiday" && (
                                 <button
-                                    className="mr-5 border border-solid border-black rounded-md w-40"
+                                    className="mr-5 border border-solid border-black rounded-md w-56 "
                                     onClick={() => { setTab("View Holiday"); }}
                                 >
                                     View Holidays
@@ -150,20 +151,13 @@ const Holiday = () => {
                                     Post Holiday
                                 </button>
                             )}
-                            {tab === "Post Holiday" && (
-                                <button
-                                    className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                    onClick={postHoliday} // Call the postHoliday function when clicked
-                                >
-                                    Post
-                                </button>
-                            )}
+                            
                         </div>
                     )}
                 </div>
 
                 <hr className="border-gray-300 my-4" />
-
+                    
                 {tab === "Post Holiday" && (
                     <div className="p-4">
                         <input
@@ -179,13 +173,19 @@ const Holiday = () => {
                             className="w-full border border-gray-300 rounded-lg p-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             type='date'
                         />
+                         <button onClick={postHoliday} className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4">
+                        Post
+                    </button>
+                         
                     </div>
                 )}
-
+                <div className="flex-1 overflow-y-auto" style={{ height: 'calc(100vh - 250px)' }}> 
+                {localStorage.getItem("role") !== "employee" && (
+                    <div>
                 {tab === "View Holiday" && (
-                    <div className="flex-1 overflow-y-auto" style={{ height: 'calc(100vh - 250px)' }}>
+                    <div className="">
                         {AllHolidays.map((holiday, index) => (
-                            <li key={index} className="flex justify-between text-lg text-gray-700">
+                            <li key={index} className="flex justify-between text-lg text-black-700">
                                 {holiday.name} - {new Date(holiday.date).toLocaleDateString()}
                                 {localStorage.getItem("role") !== "employee" && (
                                     <button className="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-2 "
@@ -197,6 +197,23 @@ const Holiday = () => {
                         ))}
                     </div>
                 )}
+                </div>
+            )}
+            </div>
+            {localStorage.getItem("role") === "employee" && (
+                    <div>
+                {tab === "View Holiday" && (
+                    <div className="flex-1 overflow-y-auto " style={{ height: 'calc(100vh - 250px)' }}>
+                        {AllHolidays.map((holiday, index) => (
+                            <li key={index} className="flex justify-between text-lg text-black-700 mt-7">
+                                {holiday.name} - {new Date(holiday.date).toLocaleDateString()}
+                               
+                            </li>
+                        ))}
+                    </div>
+                )}
+                </div>
+            )}
             </div>
         </div>
     );
