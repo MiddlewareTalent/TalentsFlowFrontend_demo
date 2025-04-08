@@ -1,3 +1,4 @@
+//EmployeeHomePage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +9,8 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import "jspdf-autotable";
 import {ChevronLeftIcon,ChevronRightIcon} from '@heroicons/react/20/solid';
 import url from "../UniversalApi.jsx";
+import TimesheetManagement from "./TimesheetManagement.jsx";
+import EditTimesheetModal from "./EditTimesheetModal";
  
 const EmployeeHomePage = ({ submissions, setSubmissions }) => {
   const navigate = useNavigate();
@@ -26,9 +29,11 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedSubmissionId, setSelectedSubmissionId] = useState(null);
   const [loading,setLoading]= useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // New state for edit modal
+  const [selectedTimesheet, setSelectedTimesheet] = useState(null);
   const token=localStorage.getItem("token");
   
- 
   useEffect(() => {
     
     const employeeId = localStorage.getItem("employeeId");
@@ -67,10 +72,105 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
  
     fetchSubmissions();
   }, [setSubmissions, startDate, endDate]);
+  
+
+  const handleEditTimesheet = (submission) => {
+    setSelectedTimesheet(submission); // Set selected timesheet to edit
+    setIsEditModalOpen(true); // Open the edit modal
+  };
+
+  const handleCloseEditModal = () => {
+    const employeeId = localStorage.getItem("employeeId");
+    const token=localStorage.getItem("token");
+    setLoading(true);
+    const fetchSubmissions = async () => {
+      try {
+        let api = `${url}/api/timesheets/list/${employeeId}`;
  
-  const handleCreateTimesheet = () => navigate("/timesheet-management");
-  const handleEditTimesheet = (submission) =>
-    navigate("/timesheet-management", { state: { submission } });
+        if (startDate && endDate) {
+          api = `${url}/api/timesheets/totalList/employeeId/${employeeId}/startDate/${startDate}/endDate/${endDate}`;
+        }
+ 
+        const response = await axios.get(api, {
+          
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        setCurrentPage(1);
+        const data = response.data.reverse();
+        setSubmissions(data);
+        setFilteredSubmissions(data);
+        setCounts({
+          total: data.length,
+          pending: data.filter((sub) => sub.status === "PENDING").length,
+          approved: data.filter((sub) => sub.status === "APPROVED").length,
+          rejected: data.filter((sub) => sub.status === "REJECTED").length,
+        });
+      } catch (error) {
+        console.error("Error fetching submissions:", error);
+      }finally{
+        setLoading(false);
+      }
+    };
+ 
+    fetchSubmissions();
+    setIsEditModalOpen(false); // Close the edit modal
+    setSelectedTimesheet(null); // Reset selected timesheet
+  };
+
+  // Function to open the modal
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    const employeeId = localStorage.getItem("employeeId");
+    const token=localStorage.getItem("token");
+    setLoading(true);
+    const fetchSubmissions = async () => {
+      try {
+        let api = `${url}/api/timesheets/list/${employeeId}`;
+ 
+        if (startDate && endDate) {
+          api = `${url}/api/timesheets/totalList/employeeId/${employeeId}/startDate/${startDate}/endDate/${endDate}`;
+        }
+ 
+        const response = await axios.get(api, {
+          
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        setCurrentPage(1);
+        const data = response.data.reverse();
+        setSubmissions(data);
+        setFilteredSubmissions(data);
+        setCounts({
+          total: data.length,
+          pending: data.filter((sub) => sub.status === "PENDING").length,
+          approved: data.filter((sub) => sub.status === "APPROVED").length,
+          rejected: data.filter((sub) => sub.status === "REJECTED").length,
+        });
+      } catch (error) {
+        console.error("Error fetching submissions:", error);
+      }finally{
+        setLoading(false);
+      }
+    };
+ 
+    fetchSubmissions();
+    setIsModalOpen(false);
+  };
+
+  // Create timesheet function (triggered from within modal or from a button)
+const handleCreateTimesheet = () => {
+  navigate("/timesheet-management");  // Navigating after creating the timesheet
+};
+
+  // const handleEditTimesheet = (submission) =>
+  //   navigate("/timesheet-management", { state: { submission } });
  
   const handleDeleteTimesheet = async () => {
     setLoading(true);
@@ -107,6 +207,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
     setCurrentPage(1);
   };
  
+  
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const totalPages = Math.ceil(filteredSubmissions.length / submissionsPerPage);
   const currentSubmissions = filteredSubmissions.slice(
@@ -256,7 +357,8 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
  
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
               <button
-                onClick={handleCreateTimesheet}
+                // onClick={handleCreateTimesheet}
+                onClick={handleOpenModal}
                 className="col-span-1 bg-blue-600 text-white rounded-lg shadow-md py-3 px-6 hover:bg-blue-700 transition duration-300 ease-in-out"
               >
                 Create Timesheet
@@ -288,37 +390,42 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
             </div>
  
             <div className="mb-10">
-              <label className="block text-lg font-medium text-gray-700">Filter by Date Range</label>
-              <div className="flex gap-4">
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <button
-                  onClick={handleApplyDateRange}
-                  className={`bg-blue-500 text-white py-2 px-4 rounded-md ${!startDate || !endDate ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  disabled={!startDate || !endDate} 
-                  title={(!startDate || !endDate) ? "The button is disabled because the date range has not been applied yet." : ""}
-                >
-                  Download
-                </button>
-                <button
-                  onClick={handleShowAll}
-                  className="bg-gray-400 text-white py-2 px-4 rounded-md ml-4 hover:bg-gray-500"
-                >
-                  Show All
-                </button>
-              </div>
-            </div>
- 
+  <label className="block text-lg font-medium text-gray-700">Filter by Date Range</label>
+  <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex gap-4 w-full md:w-auto">
+      <input
+        type="date"
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+        className="p-2 border border-gray-300 rounded-md w-full"
+      />
+      <input
+        type="date"
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
+        className="p-2 border border-gray-300 rounded-md w-full"
+      />
+    </div>
+
+    <div className="flex gap-4 mt-4 md:mt-0">
+      <button
+        onClick={handleApplyDateRange}
+        className={`bg-blue-500 text-white py-2 px-4 rounded-md ${!startDate || !endDate ? 'opacity-50 cursor-not-allowed' : ''}`}
+        disabled={!startDate || !endDate} 
+        title={(!startDate || !endDate) ? "The button is disabled because the date range has not been applied yet." : ""}
+      >
+        Download
+      </button>
+      <button
+        onClick={handleShowAll}
+        className="bg-gray-400 text-white py-2 px-4 rounded-md ml-4 hover:bg-gray-500"
+      >
+        Show All
+      </button>
+    </div>
+  </div>
+</div>
+
             {currentSubmissions.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -400,6 +507,18 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
                 Download All Timesheets
               </button>
             )}
+
+            {/* Modal (Conditional Rendering) */}
+      {isModalOpen && (
+        <>
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 z-40"onClick={handleCreateTimesheet} ></div> {/* Backdrop */}
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div>
+              <TimesheetManagement onClose={handleCloseModal} /> {/* Pass the close function as a prop */}
+            </div>
+          </div>
+        </>
+      )}
  
             {/* Pagination */}
             <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
@@ -486,6 +605,15 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
           </div>
         </div>
       </div>
+
+      {/* Edit Timesheet Modal */}
+      {isEditModalOpen && (
+        <EditTimesheetModal
+          submission={selectedTimesheet} // Pass selected timesheet data
+          onClose={handleCloseEditModal} // Close handler
+        />
+      )}
+
     </div>
   );
 };

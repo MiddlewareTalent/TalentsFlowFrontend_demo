@@ -321,36 +321,41 @@ const ManagerTimesheets = () => {
             </div>
  
             <div className="mb-10">
-              <label className="block text-lg font-medium text-gray-700">Filter by Date Range</label>
-              <div className="flex gap-4">
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <button
-                  onClick={handleApplyDateRange}
-                  className={`bg-blue-500 text-white py-2 px-4 rounded-md ${!startDate || !endDate ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  disabled={!startDate || !endDate}
-                  title={(!startDate || !endDate ? "The button is disabled because the date range has not been applied yet.":"")}
-                >
-                  Download
-                </button>
-                <button
-                  onClick={handleShowAll}
-                  className="bg-gray-400 text-white py-2 px-4 rounded-md ml-4 hover:bg-gray-500"
-                >
-                  Show All
-                </button>
-              </div>
-            </div>
+  <label className="block text-lg font-medium text-gray-700">Filter by Date Range</label>
+  <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex gap-4 w-full md:w-auto">
+      <input
+        type="date"
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+        className="p-2 border border-gray-300 rounded-md w-full"
+      />
+      <input
+        type="date"
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
+        className="p-2 border border-gray-300 rounded-md w-full"
+      />
+    </div>
+
+    <div className="flex gap-4 mt-4 md:mt-0">
+      <button
+        onClick={handleApplyDateRange}
+        className={`bg-blue-500 text-white py-2 px-4 rounded-md ${!startDate || !endDate ? 'opacity-50 cursor-not-allowed' : ''}`}
+        disabled={!startDate || !endDate} 
+        title={(!startDate || !endDate) ? "The button is disabled because the date range has not been applied yet." : ""}
+      >
+        Download
+      </button>
+      <button
+        onClick={handleShowAll}
+        className="bg-gray-400 text-white py-2 px-4 rounded-md ml-4 hover:bg-gray-500"
+      >
+        Show All
+      </button>
+    </div>
+  </div>
+</div>
  
             {currentEmployees.length ? (
               <div className="overflow-x-auto">
