@@ -272,6 +272,47 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     navigate('/TimesheetManage'); 
   }
 
+  try{
+    const token =localStorage.getItem("token");
+    await axios.post(`${url}/apis/employees/notifications`,{
+      "notificationType":"TimesheetManage",
+      "notification":formData.employeeName+" has submitted new timesheet, tap to see details",
+      // "notification":"Tap to view the details of "+formData.employeeName+"'s recently submitted timesheet.",
+      "notificationTo":formData.managerId,
+      "isRead":false
+    }
+    , {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
+  }catch (error) {
+    console.log("Error submitting timesheet:", error);
+
+    // Check if the error has response data
+    const errorData = error.response?.data;
+    console.log(error.response?.data);
+    // Initialize the error message variable
+    let errorMessage = '';
+
+    // Check for missing or invalid fields and add specific messages
+        if (!errorData.managerId) {
+            errorMessage += 'managerId cannot be null or empty. ';
+        }
+        else if(!errorData.employeeId) {
+            errorMessage += 'employeeId cannot be null or empty. ';
+        }
+        else if(!errorData.employeeName) {
+            errorMessage += 'employeeName cannot be null or empty. ';
+        }
+        else if(!errorData.emailId) {
+          errorMessage += 'emailId cannot be null or empty. ';
+      }
+    // If no specific error was found, set the default error message
+    setErrors(errorMessage || 'Error occurred');
+    console.log("Error response data:", errorData);
+}
+
   };
   
 
