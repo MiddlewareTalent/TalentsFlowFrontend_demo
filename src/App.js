@@ -37,6 +37,7 @@ import EmpContactsDetails from './EmployeeComponents/EmpContactsDetails.jsx';
 import MyTeam from './HomePage/MyTeam.jsx';
 import { MyProvider } from './MyProvider/MyProvider.jsx';
 import NotFound from './Components/NotFound.jsx';
+import MyColleague from './HomePage/MyColleague.jsx';
 
 function App() {
 const [submissions, setSubmissions] = useState([]);
@@ -102,6 +103,7 @@ function Main({ submissions, setSubmissions }) {
         <Route path='/ProfileCard' element={<ProfileCard/>} />
         <Route path='/EmpContactsDetails/:contactId' element={<EmpContactsDetails/>} />
         <Route path='/MyTeam' element={<MyTeam/>} />
+        <Route path='/MyColleague' element={<MyColleague/>}/>
         <Route path='/*' element={<NotFoundPage/>} />
       </Routes>
     </>

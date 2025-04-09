@@ -168,7 +168,7 @@ export default function ProfileCard() {
                                     alt={employee.name ? `Profile photo of ${employee.name}` : 'Profile photo not available'}
                                 />
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-96 gap-y-10">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-96 gap-y-10 ">
                                 <InfoItem icon={<UserCircleIcon />} label="Full name" value={`${employee.firstName || 'N/A'} ${employee.lastName || ''}`} />
                                 {/* <InfoItem icon={<BuildingOfficeIcon />} label="Company Name" value={employee.companyName || "N/A"} highlight={true} /> */}
                                 <InfoItem icon={<IdentificationIcon />} label="Employee ID" value={employee.employeeId || "N/A"} />
@@ -182,6 +182,7 @@ export default function ProfileCard() {
                                 <InfoItem
                                     icon={<ClockIcon />}
                                     label="Employee Status"
+                                   
                                     value={
                                         <Badge variant="secondary" className="text-lg px-3 py-1">
                                             {employee.employmentStatus || "N/A"}
