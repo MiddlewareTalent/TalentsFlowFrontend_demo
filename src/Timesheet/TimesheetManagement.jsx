@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+//TimesheetManagement.jsx
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import url from "../UniversalApi";
+import{MyContext} from "../MyProvider/MyProvider"
 
 const FormField = ({
   label,
@@ -50,14 +52,15 @@ const FormField = ({
 );
 
 
-const TimesheetManagement = ({ setSubmissions, employeeId }) => {
+const TimesheetManagement = ({ onClose, timesheetData}) => {
+  const {state}=useContext(MyContext);
   const firstName = localStorage.getItem('firstName');
   const lastName = localStorage.getItem('lastName');
   const fullName = firstName + " " + lastName;
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [formData, setFormData] = useState({
     employeeId: localStorage.getItem("employeeId"),
-    managerId: "",
+    managerId: state.reportingTo,
     employeeName: fullName,// employeeName: "Anitha",
     startDate: "",
     endDate: "",
@@ -75,7 +78,6 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
   const navigate = useNavigate();
   const location = useLocation();
   const [employeeData, setEmployeeData] = useState(null)
@@ -166,19 +168,11 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
       } catch (error) {
         console.error("Error fetching the employee data", error.response || error.message);
       }
-
-      
     };
 
     fetchData();
   }, [employeeData, formData.managerId]);
 
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({ ...prevData, [name]: value }));
-  //   setErrors(null); // Clear errors when input is updated
-  // };
   const handleChange = (e) => {
     const { name, value, type } = e.target;
 
@@ -201,12 +195,12 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
   };
 
 
-  const handleCloseForm = () => {
-    setIsFormVisible(false); // Set form visibility to false
-    navigate('/TimesheetManage');
-  };
+  // const handleCloseForm = () => {
+  //   setIsFormVisible(false); // Set form visibility to false
+  //   navigate('/TimesheetManage');
+  //   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(errors);
     let formErrors = {};
@@ -250,11 +244,75 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
       setErrors(formErrors);  // Set errors state here
       return;  // Prevent form submission if there are errors
     }
-    
-    setLoading(true);
 
-    navigate("/timesheet-submission", { state: { formData } });
+    
+    console.log(formData);
+    setLoading(true);
+    try {
+      const token =localStorage.getItem("token");
+ 
+      const response = await axios.post(`${url}/api/timesheets`, formData, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      console.log(response.data);
+      // fetchTimesheets();
+      setIsFormVisible(false);  // Or call onClose if you are passing that as a prop
+      setLoading(true);
+      onClose(); 
+      setLoading(false);
+      navigate("/EmployeeHomePage"); 
+ 
+    } catch (error) {
+      console.log("Error submitting timesheet:", error);
+      setLoading(false);
+  }finally {
     setLoading(false);
+    navigate('/TimesheetManage'); 
+  }
+
+  try{
+    const token =localStorage.getItem("token");
+    await axios.post(`${url}/apis/employees/notifications`,{
+      "notificationType":"TimesheetManage",
+      "notification":formData.employeeName+" has submitted new timesheet, tap to see details",
+      // "notification":"Tap to view the details of "+formData.employeeName+"'s recently submitted timesheet.",
+      "notificationTo":formData.managerId,
+      "isRead":false
+    }
+    , {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
+  }catch (error) {
+    console.log("Error submitting timesheet:", error);
+
+    // Check if the error has response data
+    const errorData = error.response?.data;
+    console.log(error.response?.data);
+    // Initialize the error message variable
+    let errorMessage = '';
+
+    // Check for missing or invalid fields and add specific messages
+        if (!errorData.managerId) {
+            errorMessage += 'managerId cannot be null or empty. ';
+        }
+        else if(!errorData.employeeId) {
+            errorMessage += 'employeeId cannot be null or empty. ';
+        }
+        else if(!errorData.employeeName) {
+            errorMessage += 'employeeName cannot be null or empty. ';
+        }
+        else if(!errorData.emailId) {
+          errorMessage += 'emailId cannot be null or empty. ';
+      }
+    // If no specific error was found, set the default error message
+    setErrors(errorMessage || 'Error occurred');
+    console.log("Error response data:", errorData);
+}
+
   };
   
 
@@ -291,11 +349,11 @@ const TimesheetManagement = ({ setSubmissions, employeeId }) => {
   if (!isFormVisible) return null;
 
   return (
-    <div className="mx-auto py-8 px-4  w-8/12 text-2xl ">
+    <div className="mx-auto py-8 px-4  w-max h-5/6 text-2xl ">
       <div className="bg-white shadow-md rounded-lg p-6 border border-gray-300">
-        <div className="flex justify-between text-3xl font-semibold mb-6 bg-gray-100 p-2 rounded-t-sm">
+        <div className="flex justify-between text-2xl font-semibold mb-6 bg-gray-100 p-2 rounded-t-sm">
           {isEditing ? "Edit Timesheet" : "Submit Timesheet"}
-          <button onClick={handleCloseForm} className="text-gray-400 hover:text-gray-500">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-500">
             <IoCloseCircleOutline className="h-8 w-8" />
           </button>
         </div>
