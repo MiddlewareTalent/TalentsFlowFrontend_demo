@@ -377,7 +377,9 @@ if (role === "admin" || role === "Admin") {
               </div>
               <div className="py-6">
                 <Link
+                  
                   to="/ProfileCard"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
                 >
                   Profile Card
@@ -385,7 +387,10 @@ if (role === "admin" || role === "Admin") {
               </div>
               <div className="py-6">
                 <Link
-                  onClick={handleChange}
+                  // onClick={handleChange}
+                 
+                   to="/ChangePassword"
+                   onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
                 >
                   Change Password
