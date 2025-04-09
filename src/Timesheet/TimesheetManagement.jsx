@@ -77,7 +77,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [employeeData, setEmployeeData] = useState(null)
@@ -87,7 +86,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
 
     if (location.state?.submission) {
       setFormData(location.state.submission);
-      setIsEditing(true);
     } else if (location.state?.formData) {
       setFormData(location.state.formData);
     }
@@ -335,7 +333,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     "office",
     "home",
     "client",
-    "co-working Space",
     "field",
     "hybrid",
     "on-Site",
@@ -352,7 +349,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     <div className="mx-auto py-8 px-4  w-max h-5/6 text-2xl ">
       <div className="bg-white shadow-md rounded-lg p-6 border border-gray-300">
         <div className="flex justify-between text-2xl font-semibold mb-6 bg-gray-100 p-2 rounded-t-sm">
-          {isEditing ? "Edit Timesheet" : "Submit Timesheet"}
+          Submit Timesheet
           <button onClick={onClose} className="text-gray-400 hover:text-gray-500">
             <IoCloseCircleOutline className="h-8 w-8" />
           </button>
@@ -465,11 +462,9 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
           <button
             disabled={loading}
             type="submit"
-            className={`py-2 px-4 rounded-lg text-white ${isEditing ? "bg-yellow-500" : "bg-blue-500"
-              } hover:${isEditing ? "bg-yellow-600" : "bg-blue-600"
-              } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+            className="py-2 px-4 rounded-lg text-white bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            {isEditing ? "Update Timesheet" : "Submit Timesheet"}
+            Submit Timesheet
           </button>
         </form>
       </div>
