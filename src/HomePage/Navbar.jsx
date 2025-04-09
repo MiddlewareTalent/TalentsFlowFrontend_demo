@@ -124,7 +124,7 @@ export default function Navbar() {
   ];
 
   const employeeNavItems = [
-    { name: "Tasks", href: "/tasks", access:"task"},
+    { name: "My Colleague", href: "/MyColleague", access:"task"},
     { name: "Organization Chart", href: "/OrgChart", access:"organizationChart"},
     { name: "Timesheet", href: "/TimesheetManage", access:"timeSheet"},
     { name: "Leave Management", href: "/LeaveManagement", access:"leaveManagement"},
@@ -192,6 +192,7 @@ if (role === "admin" || role === "Admin") {
             >
               My Team
             </Link>}
+           
           {navItems.length!==0 && navItems.map((item) => (
             employee[item.access] && <Link
               key={item.name}
