@@ -48,7 +48,7 @@ const ManagerTimesheets = () => {
           "Authorization": `Bearer ${token}`
         }
       });
-      setCurrentPage(1);
+      // setCurrentPage(1);
       const data = response.data.reverse();
       console.log(data);
       setSubmissions(data);

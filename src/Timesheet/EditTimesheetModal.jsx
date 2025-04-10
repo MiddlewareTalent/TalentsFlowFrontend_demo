@@ -171,7 +171,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               name="startDate"
               value={editedTimesheet.startDate}
               onChange={handleChange}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md "
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md "
             />
             {errors.startDate && (
               <div className="text-red-500 text-lg mt-1">
@@ -190,7 +190,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               name="endDate"
               value={editedTimesheet.endDate}
               onChange={handleChange}
-              className="p-2 w-full border border-gray-300 rounded-md"
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             />
             {errors.endDate && (
               <div className="text-red-500 text-lg mt-1">{errors.endDate}</div>
@@ -207,7 +207,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               name="numberOfHours"
               value={editedTimesheet.numberOfHours}
               onChange={handleChange}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md "
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             />
             {errors.numberOfHours && (
               <div className="text-red-500 text-lg mt-1">
@@ -226,7 +226,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               name="extraHours"
               value={editedTimesheet.extraHours}
               onChange={handleChange}
-              className="p-2 w-full border border-gray-300 rounded-md"
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             />
           </div>
 
@@ -240,7 +240,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               name="clientName"
               value={editedTimesheet.clientName}
               onChange={handleChange}
-              className="p-2 w-full border border-gray-300 rounded-md"
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             />
             {errors.clientName && (
               <div className="text-red-500 text-lg mt-1">
@@ -259,7 +259,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               name="projectName"
               value={editedTimesheet.projectName}
               onChange={handleChange}
-              className="p-2 w-full border border-gray-300 rounded-md"
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             />
             {errors.projectName && (
               <div className="text-red-500 text-lg mt-1">
@@ -270,14 +270,14 @@ const EditTimesheetModal = ({ submission, onClose }) => {
 
           {/* Task Type */}
           <div className="mb-4">
-            <label className="flex flex-row min-w-40 gap-5 text-xl py-2 text-black-700">
+            <label className="flex flex-row min-w-40 gap-1 text-xl py-2 text-black-700">
               Task Type <span className="text-red-500 text-2xl">*</span>
             </label>
             <select
               name="taskType"
               value={editedTimesheet.taskType }
               onChange={handleChange}
-              className="p-2 w-full border border-gray-300 rounded-md"
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             >
               {taskTypes.map((type, index) => (
                 <option
@@ -296,10 +296,10 @@ const EditTimesheetModal = ({ submission, onClose }) => {
 
           {/* Work Location */}
           <div className="mb-4">
-            <label className="flex flex-row min-w-40 gap-5 text-xl py-2 text-black-700">
+            <label className="flex flex-row min-w-40 gap-1 text-xl py-2 text-black-700">
               Work Mode <span className="text-red-500 text-2xl">*</span>
             </label>
-            <select name="workLocation" value={editedTimesheet.workLocation} onChange={handleChange} className="p-2 w-full border border-gray-300 rounded-md" >
+            <select name="workLocation" value={editedTimesheet.workLocation} onChange={handleChange} className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md" >
               {workLocations.map((location, index) => (
                 <option key={index} value={location}  
                 label={location.charAt(0).toUpperCase() + location.slice(1)}
@@ -312,14 +312,14 @@ const EditTimesheetModal = ({ submission, onClose }) => {
 
           {/* On-Call Support */}
           <div className="mb-4">
-            <label className="flex flex-row min-w-40 gap-5 text-xl py-2 text-black-700">
+            <label className="flex flex-row min-w-40 gap-1 text-xl py-2 text-black-700">
               On-Call Support <span className="text-red-500 text-2xl">*</span>
             </label>
             <select
               name="onCallSupport"
               value={editedTimesheet.onCallSupport || "selectOption"}
               onChange={handleChange}
-              className="p-2 w-full border border-gray-300 rounded-md"
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             >
               {onCallOptions.map((option, index) => (
                 <option key={index} value={option.value}>
@@ -343,7 +343,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               name="taskDescription"
               value={editedTimesheet.taskDescription}
               onChange={handleChange}
-              className="p-2 w-full border border-gray-300 rounded-md"
+              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
             />
           </div>
         </div>
