@@ -167,6 +167,7 @@ const ManagerTimesheets = () => {
     doc.text("Timesheets", 20, 20);
  
     const columns = [
+      { title: "Employee Name", dataKey:"employeeName"},
       { title: "Client", dataKey: "clientName" },
       { title: "Project", dataKey: "projectName" },
       { title: "Date Range", dataKey: "dateRange" },
@@ -175,9 +176,10 @@ const ManagerTimesheets = () => {
     ];
  
     const rows = filteredSubmissions.map(submission => ({
+      employeeName: submission.employeeName,
       clientName: submission.clientName,
       projectName: submission.projectName,
-      dateRange: `${submission.startDate} - ${submission.endDate}`,
+      dateRange: `${submission.startDate} to ${submission.endDate}`,
       totalNumberOfHours: submission.totalNumberOfHours,
       status: submission.status,
     }));
@@ -185,6 +187,7 @@ const ManagerTimesheets = () => {
     doc.autoTable({
       head: [columns.map(col => col.title)],
       body: rows.map(row => [
+        row.employeeName,
         row.clientName,
         row.projectName,
         row.dateRange,
@@ -211,8 +214,10 @@ const ManagerTimesheets = () => {
     doc.text(`Timesheet for ${submission.clientName}`, 20, 20);
  
     const tableData = [
+      ["Employee Name", submission.employeeName],
+      ["Client Name", submission.clientName],
       ["Project", submission.projectName],
-      ["Date Range", `${submission.startDate} - ${submission.endDate}`],
+      ["Date Range", `${submission.startDate} to ${submission.endDate}`],
       ["Total Hours", submission.totalNumberOfHours],
       ["Status", submission.status],
     ];
