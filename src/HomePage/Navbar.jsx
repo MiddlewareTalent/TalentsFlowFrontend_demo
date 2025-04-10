@@ -124,7 +124,7 @@ export default function Navbar() {
   ];
 
   const employeeNavItems = [
-    { name: "My Colleague", href: "/MyColleague", access:"task"},
+    { name: "Tasks", href: "/tasks", access:"task" },
     { name: "Organization Chart", href: "/OrgChart", access:"organizationChart"},
     { name: "Timesheet", href: "/TimesheetManage", access:"timeSheet"},
     { name: "Leave Management", href: "/LeaveManagement", access:"leaveManagement"},
@@ -191,6 +191,14 @@ if (role === "admin" || role === "Admin") {
               className="text-2xl font-semibold leading-6 text-gray-900"
             >
               My Team
+            </Link>}
+
+            {employee.role==="employee" && <Link
+              key="My Colleague"
+              to="/MyColleague"
+              className="text-2xl font-semibold leading-6 text-gray-900"
+            >
+              My Colleagues
             </Link>}
            
           {navItems.length!==0 && navItems.map((item) => (

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import { MyContext } from '../MyProvider/MyProvider';
 import {
@@ -23,6 +23,38 @@ export default function MyColleague() {
     const managerId=state["reportingTo"];
     console.log(managerId)
 
+
+    const fetchEmployees = useCallback(() => {
+      const token = localStorage.getItem('token');
+      
+      setLoading(true);
+      
+      
+      fetch(`${url}/api/v1/employeeManager/myColleague/${managerId}`, {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => {
+          console.log(response);
+          if (!response.ok) {
+              throw new Error('Failed to fetch employees');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log(data);
+          setEmployees(data);
+      })
+      .catch(error => {
+          console.error(error);
+      })
+      .finally(() => {
+          setLoading(false);
+      });
+  }, [managerId]);
  
  
     useEffect(() => {
@@ -37,39 +69,15 @@ export default function MyColleague() {
         } else {
             console.error("Manager ID is not defined");
         }
-    }, [navigate, managerId]);
+    }, [navigate, managerId, fetchEmployees]);
     
  
  
  
-    const fetchEmployees = async () => {
-        const token = localStorage.getItem('token');
-        
-        setLoading(true);
-        console.log("hi")
-        const employeeId=localStorage.getItem("employeeId");
-        try {
-            const response = await fetch(`${url}/api/v1/employeeManager/myColleague/${managerId}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log(response);
-            if (!response.ok) {
-                throw new Error('Failed to fetch employees');
-            }
-            const data = await response.json();
-            console.log(data);
-            setEmployees(data);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-            
-        }
-    };
+
+  // Dependencies can be adjusted based on the variables used in the callback
+
+
  
     const totalEmployees = employees.length;
  
