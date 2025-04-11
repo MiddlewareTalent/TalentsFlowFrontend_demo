@@ -55,8 +55,6 @@ const EditTimesheetModal = ({ submission, onClose }) => {
     if (!editedTimesheet.projectName) {
       validationErrors.projectName = "Project Name is required";
     }
-
-    // Add validation for select options (Task Type, Work Location, On-Call Support)
     if (
       editedTimesheet.taskType === "selectOption" ||
       !editedTimesheet.taskType
@@ -112,7 +110,6 @@ const EditTimesheetModal = ({ submission, onClose }) => {
     }
   };
 
-  // Options for dropdowns (Same options from TimesheetManagement.jsx)
   const taskTypes = [
     "Select Option",
     "development",
@@ -159,7 +156,6 @@ const EditTimesheetModal = ({ submission, onClose }) => {
           </button>
         </div>
 
-        {/* Form container with flexbox for responsive layout */}
         <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           {/* Start Date */}
           <div className="mb-4">

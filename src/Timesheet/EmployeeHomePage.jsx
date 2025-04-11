@@ -99,7 +99,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setCurrentPage(1);
+        // setCurrentPage(1);
         const data = response.data.reverse();
         setSubmissions(data);
         setFilteredSubmissions(data);
@@ -144,7 +144,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setCurrentPage(1);
+        // setCurrentPage(1);
         const data = response.data.reverse();
         setSubmissions(data);
         setFilteredSubmissions(data);
@@ -231,6 +231,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
 
     // Define the table columns and headers
     const columns = [
+      {title: "Manager Name", dataKey:"reportingManager"},
       { title: "Client", dataKey: "clientName" },
       { title: "Project", dataKey: "projectName" },
       { title: "Date Range", dataKey: "dateRange" },
@@ -240,9 +241,10 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
 
     // Map the filtered submissions into rows for the table
     const rows = currentSubmissions.map((submission) => ({
+      reportingManager : submission.reportingManager,
       clientName: submission.clientName,
       projectName: submission.projectName,
-      dateRange: `${submission.startDate} - ${submission.endDate}`,
+      dateRange: `${submission.startDate} to ${submission.endDate}`,
       totalNumberOfHours: submission.totalNumberOfHours,
       status: submission.status,
     }));
@@ -251,6 +253,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
     doc.autoTable({
       head: [columns.map((col) => col.title)], // Table headers
       body: rows.map((row) => [
+        row.reportingManager,
         row.clientName,
         row.projectName,
         row.dateRange,
@@ -280,8 +283,10 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
 
     // Table data
     const tableData = [
+      ["Manager Name", submission.reportingManager],
+      ["Client Name", submission.clientName],
       ["Project", submission.projectName],
-      ["Date Range", `${submission.startDate}-${submission.endDate}`],
+      ["Date Range", `${submission.startDate} to ${submission.endDate}`],
       ["Total Hours", submission.totalNumberOfHours],
       ["Status", submission.status],
     ];
