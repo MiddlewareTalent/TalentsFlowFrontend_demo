@@ -263,13 +263,13 @@ export default function Chart() {
             <div className="flex flex-row justify-center">
             <div >
               <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search employees..."
-                value={search}
-                onChange={handleSearch}
-                className="pl-10 pr-4 py-2 w-96 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+                <input
+                  type="text"
+                  placeholder="Search employees..."
+                  value={search}
+                  onChange={handleSearch}
+                  className="pl-10 pr-4 py-2 w-96 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
             </div>
             <div className="ml-10">
               <select
@@ -347,30 +347,34 @@ export default function Chart() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
-                            className=" mx-auto bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl shadow-lg overflow-hidden"
+                            className=" mx-auto bg-white rounded-xl shadow-lg overflow-hidden"
                           >
                             <div className="p-6">
                               <div className="flex items-center mb-6">
-                                <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mr-4">
-                                  {highlightedData.firstName.charAt(0).toUpperCase()}
-                                  {highlightedData.lastName.charAt(0).toUpperCase()}
+                                <div className="w-20 h-20 bg-gradient-to-br rounded-full flex items-center justify-center text-white text-3xl font-bold mr-4">
+                                  <img
+                                       
+                                       className="h-full w-full object-cover rounded-full cursor-pointer"
+                                       src={highlightedData.profilePhoto}
+                                       alt={highlightedData.name ? `Profile photo of ${highlightedData.name}` : 'Profile photo not available'}
+                                   />
                                 </div>
                                 <div>
                                   <h2 className="text-3xl font-bold text-gray-800">
                                     {highlightedData.firstName.charAt(0).toUpperCase() + highlightedData.firstName.slice(1).toLowerCase()} {highlightedData.lastName.charAt(0).toUpperCase() + highlightedData.lastName.slice(1).toLowerCase()}
                                   </h2>
-                                  <p className="text-xl text-purple-600 font-semibold">{highlightedData.jobRole}</p>
+                                  <p className="text-xl text-black-600 font-semibold">{highlightedData.jobRole}</p>
                                 </div>
                               </div>
                               <div className="space-y-4">
                                 <div className="flex items-center">
-                                  <FaMapMarkerAlt className="text-purple-500 mr-3 text-xl" />
+                                  <FaMapMarkerAlt className="text-black-500 mr-3 text-xl" />
                                   <p className="text-gray-600 text-lg">
                                     {highlightedData.city}, {highlightedData.country}
                                   </p>
                                 </div>
                                 <div className="flex items-center">
-                                  <FaEnvelope className="text-purple-500 mr-3 text-xl" />
+                                  <FaEnvelope className="text-black-500 mr-3 text-xl" />
                                   <p className="text-gray-600 text-lg">{highlightedData.corporateEmail}</p>
                                   <CopyToClipboard text={highlightedData.corporateEmail}>
                                     <motion.button
@@ -378,7 +382,7 @@ export default function Chart() {
                                       whileTap={{ scale: 0.9 }}
                                       className="ml-3 p-2 rounded-full bg-purple-200 hover:bg-purple-300 transition-colors duration-200"
                                     >
-                                      <FaCopy className="text-purple-600" />
+                                      <FaCopy className="text-black-600" />
                                     </motion.button>
                                   </CopyToClipboard>
                                 </div>
@@ -401,18 +405,18 @@ export default function Chart() {
                   <h2 className="text-2xl font-semibold text-blue-800 mb-4">Reporting Employees</h2>
                   <div className="grid grid-cols-2 lg:grid-cols-2 gap-5">
  
-                    {reportingEmployees.map((each) => (
-                      <ChartNode
-                        key={each.employeeId} // Ensure the key is unique for reporting employees
-                        employee={{
-                          ...each,
-                          firstName: each.firstName.charAt(0).toUpperCase() + each.firstName.slice(1).toLowerCase(),
-                          lastName: each.lastName.charAt(0).toUpperCase() + each.lastName.slice(1).toLowerCase(),
-                        }}
-                        changeEmployee={changeEmployee}
-                        isHighlighted={highlightedId === each.employeeId} // Highlight reporting employees
-                      />
-                    ))}
+                      {reportingEmployees.map((each) => (
+                        <ChartNode
+                          key={each.employeeId} // Ensure the key is unique for reporting employees
+                          employee={{
+                            ...each,
+                            firstName: each.firstName.charAt(0).toUpperCase() + each.firstName.slice(1).toLowerCase(),
+                            lastName: each.lastName.charAt(0).toUpperCase() + each.lastName.slice(1).toLowerCase(),
+                          }}
+                          changeEmployee={changeEmployee}
+                          isHighlighted={highlightedId === each.employeeId} // Highlight reporting employees
+                        />
+                      ))}
                   </div>
                 </div>
               ) : (
