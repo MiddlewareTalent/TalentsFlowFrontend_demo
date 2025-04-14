@@ -194,7 +194,7 @@ export default function MyTeam() {
                       </span>{" "}
                       of{" "}
                       <span className="font-medium">
-                        {totalEmployees.length}
+                        {totalEmployees}
                       </span>{" "}
                       results
                     </p>

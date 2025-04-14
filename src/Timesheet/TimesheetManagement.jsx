@@ -61,7 +61,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
   const [formData, setFormData] = useState({
     employeeId: localStorage.getItem("employeeId"),
     managerId: state.reportingTo,
-    employeeName: fullName,// employeeName: "Anitha",
+    employeeName: fullName,
     startDate: "",
     endDate: "",
     numberOfHours: "",
@@ -89,7 +89,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     } else if (location.state?.formData) {
       setFormData(location.state.formData);
     }
-    // }, [location.state]);
 
     setFormData(prevData => ({
       ...prevData,
@@ -192,15 +191,8 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     }));
   };
 
-
-  // const handleCloseForm = () => {
-  //   setIsFormVisible(false); // Set form visibility to false
-  //   navigate('/TimesheetManage');
-  //   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(errors);
     let formErrors = {};
 
     // Validation logic for each field
@@ -255,7 +247,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
         }
       });
       console.log(response.data);
-      // fetchTimesheets();
       setIsFormVisible(false);  // Or call onClose if you are passing that as a prop
       setLoading(true);
       onClose(); 
@@ -275,7 +266,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     await axios.post(`${url}/apis/employees/notifications`,{
       "notificationType":"TimesheetManage",
       "notification":formData.employeeName+" has submitted new timesheet, tap to see details",
-      // "notification":"Tap to view the details of "+formData.employeeName+"'s recently submitted timesheet.",
       "notificationTo":formData.managerId,
       "isRead":false
     }
