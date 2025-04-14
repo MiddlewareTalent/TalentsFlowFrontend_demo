@@ -1,0 +1,122 @@
+name: Email Notification.
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    types: [opened, closed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Email Recipients
+        id: set_emails
+        run: |
+          echo "PUSHER=${{ github.actor }}"
+          if [ "${{ github.actor }}" = "eashwar-git" ]; then
+            echo "TO=Eashwar@example.com,Yaswanth@middlewaretalents.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "samhitha2002-hope" ]; then
+            echo "TO=Yaswanth@middlewaretalents.com,Veda@middlewaretalents.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "AdharshMiddlewareTalents" ]; then
+            echo "TO=Adharsh@example.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "Anithanagelli" ]; then
+            echo "TO=Anithanagelli@example.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "Harshavardhanch15" ]; then
+            echo "TO=Harshavardhanch15@example.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "Mounika-1716" ]; then
+            echo "TO=Mounika@example.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "Naveen Kammampati4" ]; then
+            echo "TO=Naveen@example.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "SekharUmmadisetti" ]; then
+            echo "TO=SekharUmmadisetti@example.com" >> $GITHUB_ENV
+          elif [ "${{ github.actor }}" = "swappy-1234" ]; then
+            echo "TO=swappy@example.com" >> $GITHUB_ENV
+          else
+            echo "TO=Dhanasekhar@middlewaretalents.com" >> $GITHUB_ENV
+          fi
+
+      - name: Send Email on Commit
+        if: github.event_name == 'push'
+        run: |
+          if [[ "${{ github.ref }}" != "refs/heads/main" ]]; then
+            echo "Sending email to ${TO} for commit"
+            # Using the action to send email
+            uses: dawidd6/action-send-mail@v3
+            with:
+              server_address: smtp.gmail.com
+              server_port: 587
+              username: yaswanthkumarch2001@gmail.com
+              password: ${{ secrets.EMAIL_PASSWORD }}
+              subject: "🚀 Code committed to ${{ github.repository }}"
+              body: |
+                🔔 New Commit Alert
+                👤 Committer: ${{ github.actor }}
+                💬 Message: ${{ github.event.head_commit.message }}
+                🌿 Branch: ${{ github.ref }}
+                🕓 Time: ${{ github.event.head_commit.timestamp }}
+                Keep rocking! 🚀
+              to: ${{ env.TO }}
+              from: GitHub Notifier
+
+      - name: Send Email on Push to Main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "Sending email to ${TO} (committer, Yaswanth) for push to main"
+          uses: dawidd6/action-send-mail@v3
+          with:
+            server_address: smtp.gmail.com
+            server_port: 587
+            username: yaswanthkumarch2001@gmail.com
+            password: ${{ secrets.EMAIL_PASSWORD }}
+            subject: "🚀 Code pushed to Main Branch"
+            body: |
+              🔔 Push to Main Alert
+              👤 Pusher: ${{ github.actor }}
+              🌿 Branch: ${{ github.ref }}
+              🕓 Time: ${{ github.event.head_commit.timestamp }}
+            to: ${{ env.TO }}
+            from: GitHub Notifier
+
+      - name: Send Email on PR Opened
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        run: |
+          echo "Sending email to ${TO} for PR opened"
+          uses: dawidd6/action-send-mail@v3
+          with:
+            server_address: smtp.gmail.com
+            server_port: 587
+            username: yaswanthkumarch2001@gmail.com
+            password: ${{ secrets.EMAIL_PASSWORD }}
+            subject: "📢 New PR Opened"
+            body: |
+              🔔 Pull Request Opened
+              👤 Created by: ${{ github.actor }}
+              📝 PR Title: ${{ github.event.pull_request.title }}
+              🌿 Branch: ${{ github.event.pull_request.head.ref }}
+              🕓 Time: ${{ github.event.pull_request.created_at }}
+            to: ${{ env.TO }}
+            from: GitHub Notifier
+
+      - name: Send Email on PR Merged
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        run: |
+          echo "Sending email to ${TO} for PR merged"
+          uses: dawidd6/action-send-mail@v3
+          with:
+            server_address: smtp.gmail.com
+            server_port: 587
+            username: yaswanthkumarch2001@gmail.com
+            password: ${{ secrets.EMAIL_PASSWORD }}
+            subject: "🎉 PR Merged Successfully"
+            body: |
+              🔔 Pull Request Merged
+              👤 Merged by: ${{ github.actor }}
+              📝 PR Title: ${{ github.event.pull_request.title }}
+              🌿 Branch Merged From: ${{ github.event.pull_request.head.ref }}
+              🌿 Branch Merged To: ${{ github.event.pull_request.base.ref }}
+              🕓 Time: ${{ github.event.pull_request.merged_at }}
+            to: ${{ env.TO }}
+            from: GitHub Notifier
