@@ -44,7 +44,7 @@ export default function Employee() {
             setLoading(true);
             let api=`${url}/api/v1/employeeManager/employeesByOrder`;
             if (filterCountry!==""){
-                api=`${url}/api/v1/employeeManager/getEmployeesByWokingCountry/${filterCountry}`;
+                api=`${url}/api/v1/employeeManager/getEmployeesByWorkingCountry/${filterCountry}`;
             }
             try {
                 const response = await fetch(api, {
@@ -93,7 +93,7 @@ export default function Employee() {
         setLoading(true);
         let api=`${url}/api/v1/employeeManager/employeesByOrder`;
         if (filterCountry!==""){
-            api=`${url}/api/v1/employeeManager/getEmployeesByWokingCountry/${filterCountry}`;
+            api=`${url}/api/v1/employeeManager/getEmployeesByWorkingCountry/${filterCountry}`;
         }
         try {
             const response = await fetch(api, {
