@@ -373,7 +373,7 @@ export default function Employee() {
                             </div>
 
                             {/* Pagination */}
-                            {/* <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                             {/* <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                                 <div className="flex-1 flex justify-between sm:hidden">
                                     <button
                                         onClick={() => paginate(currentPage - 1)}
@@ -429,7 +429,7 @@ export default function Employee() {
                                         </nav>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>  */}
                             <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                               <div className="flex-1 flex justify-between sm:hidden">
                                 <button
@@ -459,7 +459,7 @@ export default function Employee() {
                                     <span className="font-medium">
                                       {Math.min(indexOfLastEmployee, totalEmployees)}
                                     </span>{" "}
-                                    of <span className="font-medium">{totalEmployees.length}</span>{" "}
+                                    of <span className="font-medium">{totalEmployees}</span>{" "}
                                     results
                                   </p>
                                 </div>
@@ -476,8 +476,6 @@ export default function Employee() {
                                       <span className="sr-only">Previous</span>
                                       <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
                                     </button>
-                                    
-                                    {/* Generate the visible pages */}
                                     {[...Array(5)].map((_, index) => {
                                       const pageNumber = Math.floor((currentPage - 1) / 5) * 5 + (index + 1);
                                       if (pageNumber <= totalPages) {

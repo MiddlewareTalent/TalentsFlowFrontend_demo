@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import url from "../UniversalApi.jsx";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoCloseCircleOutline } from "react-icons/io5";   
 
 const EditTimesheetModal = ({ submission, onClose }) => {
   const [editedTimesheet, setEditedTimesheet] = useState({ ...submission });
@@ -9,25 +9,26 @@ const EditTimesheetModal = ({ submission, onClose }) => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-
-    // Reset errors on change
+  
+    // Reset errors hhh h 
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
     }));
-
-    if (type === "number") {
+  
+    if (name === "onCallSupport") {
+      let boolVal = value === "true" ? true : value === "false" ? false : "selectOption";
+      setEditedTimesheet((prev) => ({
+        ...prev,
+        [name]: boolVal,
+      }));
+    } else if (type === "number") {
       if (value === "" || /^[0-9]+(\.[0-9]*)?$/.test(value)) {
         setEditedTimesheet((prev) => ({
           ...prev,
           [name]: value,
         }));
       }
-    } else if (type === "date") {
-      setEditedTimesheet((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
     } else {
       setEditedTimesheet((prev) => ({
         ...prev,
@@ -35,6 +36,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
       }));
     }
   };
+  
 
   const handleSave = async () => {
     // Basic validation
@@ -69,10 +71,12 @@ const EditTimesheetModal = ({ submission, onClose }) => {
     }
     if (
       editedTimesheet.onCallSupport === "selectOption" ||
-      !editedTimesheet.onCallSupport
+      editedTimesheet.onCallSupport === undefined ||
+      editedTimesheet.onCallSupport === null
     ) {
       validationErrors.onCallSupport = "On-Call Support is required";
     }
+    
 
     setErrors(validationErrors);
 
@@ -142,7 +146,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
     { value: "true", label: "Yes" },
     { value: "false", label: "No" },
   ];
-
+  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -312,17 +316,23 @@ const EditTimesheetModal = ({ submission, onClose }) => {
               On-Call Support <span className="text-red-500 text-2xl">*</span>
             </label>
             <select
-              name="onCallSupport"
-              value={editedTimesheet.onCallSupport || "selectOption"}
-              onChange={handleChange}
-              className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
-            >
-              {onCallOptions.map((option, index) => (
-                <option key={index} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+  name="onCallSupport"
+  value={
+    editedTimesheet.onCallSupport === true
+      ? "true"
+      : editedTimesheet.onCallSupport === false
+      ? "false"
+      : "selectOption"
+  }
+  onChange={handleChange}
+  className="mt-1 p-2 text-xl block w-full border border-gray-300 rounded-md"
+>
+  {onCallOptions.map((option, index) => (
+    <option key={index} value={option.value}>
+      {option.label}
+    </option>
+  ))}
+</select>
             {errors.onCallSupport && (
               <div className="text-red-500 text-lg mt-1">
                 {errors.onCallSupport}

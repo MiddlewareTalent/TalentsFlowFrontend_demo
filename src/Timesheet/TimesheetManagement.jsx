@@ -61,7 +61,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
   const [formData, setFormData] = useState({
     employeeId: localStorage.getItem("employeeId"),
     managerId: state.reportingTo,
-    employeeName: fullName,// employeeName: "Anitha",
+    employeeName: fullName,
     startDate: "",
     endDate: "",
     numberOfHours: "",
@@ -79,7 +79,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [employeeData, setEmployeeData] = useState(null)
+  const [employeeData, setEmployeeData] = useState(null); 
 
   useEffect(() => {
     const employeeId = localStorage.getItem('employeeId');
@@ -89,7 +89,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     } else if (location.state?.formData) {
       setFormData(location.state.formData);
     }
-    // }, [location.state]);
 
     setFormData(prevData => ({
       ...prevData,
@@ -192,15 +191,8 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     }));
   };
 
-
-  // const handleCloseForm = () => {
-  //   setIsFormVisible(false); // Set form visibility to false
-  //   navigate('/TimesheetManage');
-  //   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(errors);
     let formErrors = {};
 
     // Validation logic for each field
@@ -255,7 +247,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
         }
       });
       console.log(response.data);
-      // fetchTimesheets();
       setIsFormVisible(false);  // Or call onClose if you are passing that as a prop
       setLoading(true);
       onClose(); 
@@ -275,7 +266,6 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     await axios.post(`${url}/apis/employees/notifications`,{
       "notificationType":"TimesheetManage",
       "notification":formData.employeeName+" has submitted new timesheet, tap to see details",
-      // "notification":"Tap to view the details of "+formData.employeeName+"'s recently submitted timesheet.",
       "notificationTo":formData.managerId,
       "isRead":false
     }
@@ -286,9 +276,9 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     })
   }catch (error) {
     console.log("Error submitting timesheet:", error);
-
     // Check if the error has response data
     const errorData = error.response?.data;
+    
     console.log(error.response?.data);
     // Initialize the error message variable
     let errorMessage = '';
@@ -305,7 +295,9 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
         }
         else if(!errorData.emailId) {
           errorMessage += 'emailId cannot be null or empty. ';
-      }
+      }else if(!errorData.emailId) {
+        errorMessage += 'Manager Name cannot be null or empty. ';
+    }
     // If no specific error was found, set the default error message
     setErrors(errorMessage || 'Error occurred');
     console.log("Error response data:", errorData);
