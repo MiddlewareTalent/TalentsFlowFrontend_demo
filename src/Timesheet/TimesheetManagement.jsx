@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import url from "../UniversalApi";
-import{MyContext} from "../MyProvider/MyProvider"
+import{MyContext} from "../MyProvider/MyProvider";
 
 const FormField = ({
   label,
@@ -456,7 +456,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
             type="submit"
             className="py-2 px-4 rounded-lg text-white bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            Submit Timesheet
+            {loading ? "Submitting..." : "Submit Timesheet"}
           </button>
         </form>
       </div>
