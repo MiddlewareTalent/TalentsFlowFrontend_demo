@@ -79,7 +79,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [employeeData, setEmployeeData] = useState(null)
+  const [employeeData, setEmployeeData] = useState(null);
 
   useEffect(() => {
     const employeeId = localStorage.getItem('employeeId');
@@ -276,9 +276,9 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     })
   }catch (error) {
     console.log("Error submitting timesheet:", error);
-
     // Check if the error has response data
     const errorData = error.response?.data;
+    
     console.log(error.response?.data);
     // Initialize the error message variable
     let errorMessage = '';
@@ -295,7 +295,9 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
         }
         else if(!errorData.emailId) {
           errorMessage += 'emailId cannot be null or empty. ';
-      }
+      }else if(!errorData.emailId) {
+        errorMessage += 'Manager Name cannot be null or empty. ';
+    }
     // If no specific error was found, set the default error message
     setErrors(errorMessage || 'Error occurred');
     console.log("Error response data:", errorData);
