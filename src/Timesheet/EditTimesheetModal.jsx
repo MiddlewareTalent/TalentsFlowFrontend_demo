@@ -10,8 +10,8 @@ const EditTimesheetModal = ({ submission, onClose }) => {
   const handleChange = (e) => {
     const { name, value, type } = e.target;
   
-    // Reset errors  all error rectified 
-    
+    // Reset errors  
+
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
