@@ -6,11 +6,13 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 const EditTimesheetModal = ({ submission, onClose }) => {
   const [editedTimesheet, setEditedTimesheet] = useState({ ...submission });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
   
-    // Reset errors hhh h 
+    // Reset errors  
+
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
@@ -79,9 +81,9 @@ const EditTimesheetModal = ({ submission, onClose }) => {
     
 
     setErrors(validationErrors);
-
     // If no errors, proceed with the save
     if (Object.keys(validationErrors).length === 0) {
+      setLoading(true);
       try {
         await axios.put(
           `${url}/api/timesheets/update/${editedTimesheet.id}`,
@@ -109,6 +111,8 @@ const EditTimesheetModal = ({ submission, onClose }) => {
         onClose(); // Close the modal after saving
       } catch (error) {
         console.error("Error saving timesheet:", error);
+      } finally{
+        setLoading(false);
       }
       
     }
@@ -356,9 +360,10 @@ const EditTimesheetModal = ({ submission, onClose }) => {
 
         <button
           onClick={handleSave}
+          disabled={loading}
           className="bg-yellow-500 text-white px-4 py-2 rounded-md"
         >
-          Update Timesheet
+          {loading ? "Updating..." : "Update Timesheet"}
         </button>
       </div>
     </div>
