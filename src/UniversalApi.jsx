@@ -1,2 +1,2 @@
-const url="https://msquirebackend.azurewebsites.net";
+const url="https://mtldemobackend.azurewebsites.net";
 export default url;
