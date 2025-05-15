@@ -8,6 +8,7 @@ import Notification from './EmployeeDashboard/Notification'
 import { motion } from "framer-motion"
 import { MyContext } from '../MyProvider/MyProvider'
 import Holiday from './EmployeeDashboard/Holiday'
+import MessageBox from './MessageBox'
 
 
 export default function EnhancedDashboard() {
@@ -25,6 +26,8 @@ export default function EnhancedDashboard() {
 
   const [initials, setInitials] = useState('');  // New state to store initials
   const { state } = useContext(MyContext);
+
+  console.log("state data: ", state);
 
   useEffect(() => {
 
@@ -79,6 +82,11 @@ export default function EnhancedDashboard() {
 
         </div>
 
+
+        
+         <MessageBox state={state} />
+       
+        
         {/* Performance Metrics */}
         <div className="rounded-lg bg-white p-6 shadow-lg">
 
@@ -112,10 +120,17 @@ export default function EnhancedDashboard() {
 
         {/* Current Projects */}
 
+        
+          
+        
+
 
 
         {/* Quick Links */}
 
+      </div>
+      <div className='flex flex justify-center'>
+        
       </div>
     </motion.div>
   )
