@@ -13,6 +13,7 @@ import Loader from "../Assets/Loader";
 import { MyContext } from "../MyProvider/MyProvider";
 import { useNavigate } from "react-router-dom";
 import url from "../UniversalApi";
+import profileLogo from '../Assets/profileLogo.jpg'
  
  
 export default function Chart() {
@@ -357,6 +358,7 @@ export default function Chart() {
                                        className="h-full w-full object-cover rounded-full cursor-pointer"
                                        src={highlightedData.profilePhoto}
                                        alt={highlightedData.name ? `Profile photo of ${highlightedData.name}` : 'Profile photo not available'}
+                                       onError={(e) => { e.currentTarget.src = profileLogo; }}
                                    />
                                 </div>
                                 <div>
