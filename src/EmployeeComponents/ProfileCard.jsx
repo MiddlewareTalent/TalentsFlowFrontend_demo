@@ -223,6 +223,7 @@ const handleFileChange = async (e) => {
             setCrop({ x: 0, y: 0 });       // ❗ Reset crop
             setZoom(1);
             setCroppedAreaPixels(null);
+            window.location.reload();
            
             console.log('Profile photo updated!');
             console.log("output : ", res)
@@ -256,6 +257,7 @@ const handleFileChange = async (e) => {
       setNewImgSelected(false);
       //    setImageSrc(null);
       setIsModalOpen(false);
+       window.location.reload();
       // Refresh employee data (optional but recommended)
       fetchEmployee();
     } else {
