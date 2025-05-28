@@ -8,6 +8,7 @@ import Notification from './EmployeeDashboard/Notification'
 import { motion } from "framer-motion"
 import { MyContext } from '../MyProvider/MyProvider'
 import Holiday from './EmployeeDashboard/Holiday'
+import profileLogo from '../Assets/profileLogo.jpg'
 
 
 export default function EnhancedDashboard() {
@@ -66,6 +67,7 @@ export default function EnhancedDashboard() {
                 className="h-full w-full object-cover rounded-full"
                 src={state.profilePhoto}
                 alt={initials}
+                onError={(e) => { e.currentTarget.src = profileLogo; }}
               />
             </div>
 
