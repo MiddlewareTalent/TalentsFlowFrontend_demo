@@ -368,7 +368,7 @@ const ManagerTimesheets = () => {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      {["Start Date", "End Date", "Employee Name", "Client Name", "Project Name", "Total Hours", "Status", "Actions"].map((col) => (
+                      {["Start Date", "End Date", "Employee Name", "Client Name", "Project Name", "Hours", "Extra Hours", "Status", "Actions"].map((col) => (
                         <th
                           key={col}
                           className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
@@ -386,7 +386,8 @@ const ManagerTimesheets = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{submission.employeeName}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{submission.clientName}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{submission.projectName}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{submission.totalNumberOfHours}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{submission.numberOfHours}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{submission.extraHours}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
                             className={`px-2 inline-flex text-lg leading-5 font-semibold rounded-full ${
