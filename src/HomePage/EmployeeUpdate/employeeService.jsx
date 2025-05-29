@@ -12,7 +12,8 @@ export const getEmployeeDetails = async (employeeId) => {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Tenant-ID':localStorage.getItem('company')
         }
     });
     
@@ -42,7 +43,8 @@ export const updateEmployeeDetails = async (employeeId, employeeData) => {
             headers: {
                 'Content-Type': 'multipart/form-data',
 
-                'Authorization': `Bearer ${token}` // Add Authorization header with JWT token
+                'Authorization': `Bearer ${token}`,
+                'X-Tenant-ID':localStorage.getItem('company')
 
             }
 

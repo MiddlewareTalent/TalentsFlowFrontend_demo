@@ -51,7 +51,8 @@ export default function Employee() {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Tenant-ID':localStorage.getItem('company')
                     }
                 });
                 console.log(response.data);

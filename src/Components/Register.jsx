@@ -12,10 +12,15 @@ const Register = () => {
     const [lastNameError, setLastNameError] = useState(""); // Added specific error state for last name
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
+    const [company, setCompany] = useState("");
+    const [companyError, setCompanyError] = useState("");
+    const [employeeId, setEmployeeId] = useState("");
+    const [employeeIdError, setEmployeeIdError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [loading, setLoading] = useState(false);
     const [emailExistsError, setEmailExistsError] = useState("");
+    
 
     const navigate = useNavigate();
 
@@ -61,6 +66,20 @@ const Register = () => {
             setEmailError("");
         }
 
+        if (!company) {
+            setCompanyError("* Please fill in the company.");
+            isValid = false;
+        } else {
+            setCompanyError("");
+        }
+
+         if (!employeeId) {
+            setEmployeeIdError("* Please fill in the employee id.");
+            isValid = false;
+        } else {
+            setEmployeeIdError("");
+        }
+
         if (!password) {
             setPasswordError("* Please fill in the password.");
             isValid = false;
@@ -93,10 +112,11 @@ const Register = () => {
         formData.append("lastName", last_name);
         formData.append("email", email);
         formData.append("password", password);
+        formData.append("employeeId", employeeId)
 
         try {
             console.log("Sending registration request to API"); // Debug message
-            const response = await axios.post(`${url}/api/v1/employeeManager/register`, formData, {
+            const response = await axios.post(`${url}/api/v1/employeeManager/register/${company}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -154,6 +174,24 @@ const Register = () => {
                         </label>
                         {emailError && <p className="error-message">{emailError}</p>}
                         {emailExistsError && <p className="error-message">{emailExistsError}</p>}
+
+                        <label className="inp">
+                            <input type="text" className="input-text" placeholder="&nbsp;"
+                                   value={company}
+                                   onChange={(e) => setCompany(e.target.value)} />
+                            <span className="label">Company</span>
+                            <span className="input-icon"></span>
+                        </label>
+                        {companyError && <p className="error-message">{companyError}</p>}
+
+                        <label className="inp">
+                            <input type="text" className="input-text" placeholder="&nbsp;"
+                                   value={employeeId}
+                                   onChange={(e) => setEmployeeId(e.target.value)} />
+                            <span className="label">Employee Id</span>
+                            <span className="input-icon"></span>
+                        </label>
+                        {employeeIdError && <p className="error-message">{employeeIdError}</p>}
 
                         <label className="inp">
                             <input type="password" className="input-text" placeholder="&nbsp;"

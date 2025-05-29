@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import Navbar from './HomePage/Navbar';
 import Login from './Components/Login';
 import Register from './Components/Register';
@@ -41,6 +41,8 @@ import MyColleague from './HomePage/MyColleague.jsx';
 
 function App() {
 const [submissions, setSubmissions] = useState([]);
+const { company } = useParams();
+console.log(company);
 
   
 
@@ -50,8 +52,8 @@ const [submissions, setSubmissions] = useState([]);
     <MyProvider>
       <Router>
       <Routes>
-        <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />} />
-        <Route path="/register" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/:company/login" element={isLoggedIn ? <Navigate to="/:company/dashboard" /> : <Login />} />
+        <Route path="/register" element={isLoggedIn ? <Navigate to="/:company/dashboard" /> : <Register />} />
         {/* Redirect to login if not logged in */}
         <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
         <Route path="/*" element={<Main submissions={submissions} setSubmissions={setSubmissions} />} />
@@ -72,7 +74,7 @@ function Main({ submissions, setSubmissions }) {
       {showNavbar && <Navbar />}
       <TokenExpirationCheck />
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/:company/dashboard" element={<Dashboard />} />
         <Route path="/employee" element={<Employee />} />
         {/* Add more routes as needed */}
         <Route path="/employeedetails/:id/:employeeId" element={<EmployeeDetails />} />

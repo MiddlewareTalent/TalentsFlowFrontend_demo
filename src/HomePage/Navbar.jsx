@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Dialog, Popover, Transition, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,8 @@ function classNames(...classes) {
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [role, setRole] = useState(null);
-  const {updateState } = useContext(MyContext);
+  const {updateState, tenantId } = useContext(MyContext);
+  const { company } = useParams();
 
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ export default function Navbar() {
   const [loading, setLoading]=useState(true);
    const employeeId=localStorage.getItem("employeeId");
   
-
+console.log(tenantId);
   useEffect(() => {
     // Retrieve the user role from localStorage
     const storedRole = localStorage.getItem("role");
@@ -58,7 +59,8 @@ export default function Navbar() {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "X-Tenant-ID":localStorage.getItem('company') 
           }
         });
 

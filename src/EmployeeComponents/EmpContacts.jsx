@@ -25,7 +25,8 @@ const EmpContacts=(props)=>{
           try {
             const response = await axios.get(`${url}/apis/employees/contacts/contactsBy/${employeeId}`,{
               headers: {
-                "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+                "Authorization": `Bearer ${token}`,  // Add the token to the Authorization header
+                "X-Tenant-ID":localStorage.getItem('company')
               }
             });
             console.log(response.data);
