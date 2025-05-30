@@ -74,6 +74,7 @@ function LeaveRequestForm(props) {
                             headers: {
                                 Authorization: `Bearer ${token}`,
                                 "Content-Type": "application/json",
+                                 "X-Tenant-ID":localStorage.getItem('company')
                             },
                         }
                     ),
@@ -129,6 +130,7 @@ function LeaveRequestForm(props) {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                         },
                         params: {employeeId, leaveType, leaveStartDate, leaveEndDate},
                     }
@@ -320,6 +322,7 @@ function LeaveRequestForm(props) {
                     data,
                     headers: {
                         Authorization: `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
                     },
                 });
             } else {
@@ -334,6 +337,7 @@ function LeaveRequestForm(props) {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                     },
                 });
             }
@@ -384,6 +388,7 @@ function LeaveRequestForm(props) {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                     },
                     params: {employeeId, leaveType, leaveStartDate, leaveEndDate},
                 }

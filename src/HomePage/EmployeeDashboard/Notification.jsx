@@ -13,7 +13,8 @@ const Notification = () => {
             try {
                 const response = await axios.get(`${url}/apis/employees/notificationsTo/${employeeId}`, {
                     headers: {
-                      "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+                      "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
                     }
                   });
                 console.log(response);

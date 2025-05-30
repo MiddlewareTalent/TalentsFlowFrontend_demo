@@ -83,7 +83,7 @@ if (message === 'Email not exists') {
 
     // Navigate to the dashboard page and trigger updates across components
     updateTenantId(company);
-    navigate(`/${company}/dashboard`);
+    navigate('/dashboard');
     window.dispatchEvent(new Event('storage')); // To trigger updates across components
 } else {
     setError('* Incorrect email or password');

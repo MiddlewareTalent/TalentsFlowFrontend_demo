@@ -13,7 +13,7 @@ const ChangePasswordModal = ({ isOpen, onClose, id }) => {
     e.preventDefault();
  
     // Get the token from localStorage
-    const token = localStorage.getItem("token");
+    
    
     // Make sure newPassword is not empty
     if (!newPassword) {
@@ -28,8 +28,8 @@ const ChangePasswordModal = ({ isOpen, onClose, id }) => {
             
             {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+            "X-Tenant-ID":localStorage.getItem('company')
                 }
             }
         );

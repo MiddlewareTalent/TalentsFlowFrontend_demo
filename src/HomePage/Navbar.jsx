@@ -78,14 +78,14 @@ console.log(tenantId);
           localStorage.removeItem("firstName");
           localStorage.removeItem("lastName");
           localStorage.removeItem("token");
-          navigate("/login");
+          navigate(`/${company}/login`);
         }
         setLoading(false);
       }
     };
 
     fetchEmployee();
-  }, [employeeId, navigate]);
+  }, [employeeId, navigate, company]);
 
   if(!loading){
     updateState(employee);
@@ -101,7 +101,7 @@ console.log(tenantId);
     localStorage.removeItem("employeeId");
     localStorage.clear();
 
-    navigate("/login");
+    navigate(`/${localStorage.getItem('company')}/login`);
     window.location.reload();
   };
 

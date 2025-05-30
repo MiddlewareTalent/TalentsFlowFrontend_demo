@@ -25,6 +25,7 @@ export default function ProfessionalInfoModal({
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
             },
           }
         );

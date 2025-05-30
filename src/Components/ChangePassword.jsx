@@ -65,10 +65,16 @@ const ChangePassword = () => {
                     email: formData.email,
                     oldPassword: formData.oldPassword,
                     newPassword: formData.newPassword
+                },{
+                headers: {
+                    
+                    'Content-Type': 'application/json',
+            "X-Tenant-ID":localStorage.getItem('company')
                 }
+            }
             );
 
-            navigate('/login'); // Navigate to Dashboard upon success
+            navigate(`/${localStorage.getItem('company')}/login`); // Navigate to Dashboard upon success
         } catch (error) {
             console.log(error);
             console.log(error.response.status);

@@ -54,7 +54,8 @@ export default function AddTask(props) {
           taskStatus: false,
         }, {
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')
           }
         })
         .then(response => {
@@ -83,7 +84,8 @@ export default function AddTask(props) {
         }
         , {
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')
           }
         })
       }

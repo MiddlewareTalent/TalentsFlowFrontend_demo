@@ -124,6 +124,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
+            "X-Tenant-ID":localStorage.getItem('company')
             },
           }
         );
@@ -154,6 +155,7 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
+            "X-Tenant-ID":localStorage.getItem('company')
             },
           }
         );
@@ -243,7 +245,8 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
  
       const response = await axios.post(`${url}/api/timesheets`, formData, {
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
         }
       });
       console.log(response.data);
@@ -271,7 +274,8 @@ const TimesheetManagement = ({ onClose, timesheetData}) => {
     }
     , {
       headers: {
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
       }
     })
   }catch (error) {

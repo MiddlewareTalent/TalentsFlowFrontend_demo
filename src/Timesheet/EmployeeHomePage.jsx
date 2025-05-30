@@ -55,6 +55,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
           },
         });
         setCurrentPage(1);
@@ -97,6 +98,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
           },
         });
         // setCurrentPage(1);
@@ -142,6 +144,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
           },
         });
         // setCurrentPage(1);
@@ -181,6 +184,7 @@ const EmployeeHomePage = ({ submissions, setSubmissions }) => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
           },
         }
       );

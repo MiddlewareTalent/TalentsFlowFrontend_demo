@@ -74,7 +74,7 @@ function Main({ submissions, setSubmissions }) {
       {showNavbar && <Navbar />}
       <TokenExpirationCheck />
       <Routes>
-        <Route path="/:company/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/employee" element={<Employee />} />
         {/* Add more routes as needed */}
         <Route path="/employeedetails/:id/:employeeId" element={<EmployeeDetails />} />

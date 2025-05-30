@@ -25,7 +25,8 @@ const TimesheetSubmission = ({ setSubmissions }) => {
  
       const response = await axios.post(`${url}/api/timesheets`, newFormData, {
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
         }
       });
       console.log(response.data);
@@ -73,7 +74,8 @@ const TimesheetSubmission = ({ setSubmissions }) => {
       }
       , {
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
         }
       })
     }catch (error) {

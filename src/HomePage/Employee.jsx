@@ -101,7 +101,8 @@ export default function Employee() {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                     'X-Tenant-ID':localStorage.getItem('company')
                 }
             });
             console.log(response.data);
@@ -150,7 +151,8 @@ export default function Employee() {
             const response = await fetch(`${url}/api/v1/employeeManager/employees/${employeeId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                     'X-Tenant-ID':localStorage.getItem('company')
                 }
             });
 

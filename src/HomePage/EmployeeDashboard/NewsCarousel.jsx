@@ -22,7 +22,8 @@ export default function NewsCarousel() {
     try {
       const response = await axios.get(`${url}/apis/employees/companyNews/getAllNews`, {
         headers: {
-          "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+          "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
         }
       });
       console.log(response.data);
@@ -65,7 +66,8 @@ export default function NewsCarousel() {
     try{
       await axios.delete(`${url}/apis/employees/companyNews/deleteNewsById/${id}`, {
         headers: {
-          "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+          "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
         }
       })
       await fetchData();

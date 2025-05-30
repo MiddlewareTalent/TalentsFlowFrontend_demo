@@ -19,7 +19,8 @@ const LeavePerformance = () => {
       try {
         const response = await axios.get(`${url}/api/leaves/getStatus/${employeeId}`, {
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')
           }
         });
         console.log(response);

@@ -16,7 +16,8 @@ const Holiday = () => {
             const response = await axios.get(`${url}/api/holiday/getAllHolidays`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+            'X-Tenant-ID':localStorage.getItem('company')
                 }
             });
             
@@ -73,6 +74,7 @@ const Holiday = () => {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
+            "X-Tenant-ID":localStorage.getItem('company')
                     }
                 }
             );

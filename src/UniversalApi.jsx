@@ -1,2 +1,2 @@
-const url="http://localhost:8085";
+const url="https://companyproductbackend.azurewebsites.net";
 export default url;

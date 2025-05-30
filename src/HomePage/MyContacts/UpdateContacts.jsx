@@ -37,7 +37,8 @@ const UpdateContacts = () => {
           try {
             const response = await axios.get(`${url}/apis/employees/contacts/contacts/${contactId}`,{
                 headers: {
-                  "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+                  "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
                 }
               });
             console.log(response.data);
@@ -64,7 +65,8 @@ const UpdateContacts = () => {
         setIsAdding(true);
         await axios.put(`${url}/apis/employees/contacts/contacts/${contactId}`, formData,{
             headers: {
-              "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+              "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
             }
           });
         setIsAdding(false);
