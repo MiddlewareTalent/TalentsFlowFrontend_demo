@@ -123,7 +123,7 @@ const Register = () => {
             });
 
             if (response.status === 200) {
-                navigate('/login');
+                navigate(`/${company}/login`);
             }
         } catch (err) {
             if (err.response) {
