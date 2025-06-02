@@ -45,7 +45,8 @@ const ManagerTimesheets = () => {
  
       const response = await axios.get(api, {
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
         }
       });
       // setCurrentPage(1);
@@ -92,7 +93,8 @@ const ManagerTimesheets = () => {
     try {
       await axios.put(`${url}/api/timesheets/Approve/${id}/status/APPROVED`, null, {
         headers: {
-          "Authorization": `Bearer ${token}`,  // Ensure token is valid
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')  // Ensure token is valid
         },
         // Ensure credentials (cookies) are sent
       });
@@ -112,7 +114,8 @@ const ManagerTimesheets = () => {
       }
       , {
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
         }
       })
     }catch (error) {
@@ -129,7 +132,8 @@ const ManagerTimesheets = () => {
     try {
       await axios.put(`${url}/api/timesheets/reject/${currentId}/status/REJECTED/comments/${comments}`, null, {
         headers: {
-          "Authorization": `Bearer ${token}`,  // Ensure the token is valid
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')  // Ensure the token is valid
         } // Ensure credentials (cookies) are sent
       });
       fetchSubmissions(); // Refresh the submissions after rejecting the timesheet
@@ -148,7 +152,8 @@ const ManagerTimesheets = () => {
       }
       , {
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
         }
       })
     }catch (error) {

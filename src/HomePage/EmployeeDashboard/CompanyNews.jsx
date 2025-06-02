@@ -26,7 +26,8 @@ const CompanyNews = () => {
                 createdAt: new Date()
             }, {
                 headers: {
-                  "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+                  "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
                 }});
     
             // Reset the form or inputs after successfully posting the news

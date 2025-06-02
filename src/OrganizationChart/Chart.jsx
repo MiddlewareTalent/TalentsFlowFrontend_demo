@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef,useContext } from "react";
 import axios from "axios";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -49,7 +48,8 @@ export default function Chart() {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+            'X-Tenant-ID':localStorage.getItem('company')
               }
             })
           ]);
@@ -76,7 +76,8 @@ export default function Chart() {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+            'X-Tenant-ID':localStorage.getItem('company')
               }
             }),
           ]);
@@ -104,7 +105,8 @@ export default function Chart() {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+            'X-Tenant-ID':localStorage.getItem('company')
               }
             })
           ]);
@@ -139,7 +141,8 @@ export default function Chart() {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+            'X-Tenant-ID':localStorage.getItem('company')
               }
             }),
           ]);
@@ -166,7 +169,7 @@ export default function Chart() {
  
  
   }, [employeeId, filterCountry]); // This effect runs when the employeeId changes
-
+ 
   if(!state.organizationChart){
     navigate("/dashboard");
   }
@@ -293,7 +296,7 @@ export default function Chart() {
             </div>
             {searchData.length === 0 && searchError && (
               <div className=" absolute z-10 w-96 bg-white border border-gray-300 mt-20 rounded-md max-h-60  shadow-lg text-center">
-                
+               
                 <p className="text-gray-600">No results found</p>
               </div>
             )}

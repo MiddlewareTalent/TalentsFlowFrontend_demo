@@ -55,6 +55,7 @@ export default function LeaveApprovalDashboard() {
               headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
               },
             }
         );
@@ -97,6 +98,7 @@ export default function LeaveApprovalDashboard() {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
         },
       });
       const response = await axios.get(
@@ -105,6 +107,7 @@ export default function LeaveApprovalDashboard() {
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
             },
           }
       );
@@ -152,6 +155,7 @@ export default function LeaveApprovalDashboard() {
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
             },
           }
       );
@@ -161,6 +165,7 @@ export default function LeaveApprovalDashboard() {
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
             },
           }
       );

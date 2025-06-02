@@ -30,6 +30,7 @@ const EmployeesList = props => {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
+            'X-Tenant-ID':localStorage.getItem('company')
           },
         });
 

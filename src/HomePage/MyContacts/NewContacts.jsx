@@ -46,7 +46,8 @@ const NewContacts = () => {
             setIsAdding(true);
         await axios.post(`${url}/apis/employees/contacts/contacts`, formData,{
             headers: {
-              "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+              "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
             }
           });
         setIsAdding(false);

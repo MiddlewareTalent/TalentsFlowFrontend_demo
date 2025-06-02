@@ -62,7 +62,8 @@ export default function EmployeeDetails() {
                     method:'GET',
                     headers:{
                         'Authorization':`Bearer ${token}`,
-                        'Content-Type':'application/json'
+                        'Content-Type':'application/json',
+                        "X-Tenant-ID":localStorage.getItem('company')
                     }
                 });
                 console.log(response.data);
@@ -76,7 +77,8 @@ export default function EmployeeDetails() {
             try {
                 const response = await axios.get(`${url}/apis/employees/contacts/contactsBy/${employeeId}`,{
                   headers: {
-                    "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+                    "Authorization": `Bearer ${token}`,
+                    "X-Tenant-ID":localStorage.getItem('company')  
                   }
                 });
                 

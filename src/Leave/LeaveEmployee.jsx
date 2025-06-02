@@ -48,6 +48,7 @@ export default function LeaveEmployee() {
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
                     },
                 }
             );
@@ -198,6 +199,7 @@ export default function LeaveEmployee() {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                     },
                 }
             );
@@ -234,6 +236,7 @@ export default function LeaveEmployee() {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                     },
                 }
             );
@@ -246,6 +249,7 @@ export default function LeaveEmployee() {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                         },
                     }
                 );

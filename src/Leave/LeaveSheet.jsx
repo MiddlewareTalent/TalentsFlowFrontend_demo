@@ -33,6 +33,7 @@ const LeaveSheet = () => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                 },
             });
             if (response.data.length > 0) {
@@ -67,6 +68,7 @@ const LeaveSheet = () => {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                         },
                     }
                 );
@@ -82,6 +84,7 @@ const LeaveSheet = () => {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             "Content-Type": "application/json",
+            "X-Tenant-ID":localStorage.getItem('company')
                         },
                     }
                 );

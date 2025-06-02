@@ -23,7 +23,8 @@ const TimesheetPerformance = () => {
       try {
         const response = await axios.get(`${url}/api/timesheets/employeeId/${employeeId}/total/timesheets`, {
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')
           }
         });
 

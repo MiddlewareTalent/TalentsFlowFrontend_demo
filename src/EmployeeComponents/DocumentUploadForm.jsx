@@ -72,7 +72,8 @@ const DocumentUploadForm = ({ formData, onNext, onBack, onCancel, onFormDataChan
                 headers: {
                     'Content-Type': 'multipart/form-data',
 
-                    'Authorization': `Bearer ${token}` // Add Authorization header with JWT token
+                    'Authorization': `Bearer ${token}`, // Add Authorization header with JWT token
+                    'X-Tenant-ID':localStorage.getItem('company')
 
                 }
 

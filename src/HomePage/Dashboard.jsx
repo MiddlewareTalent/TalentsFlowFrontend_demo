@@ -39,7 +39,7 @@ const Dashboard = () => {
              // Reload the entire application
 
             // If user is not logged in, redirect to login page
-            navigate('/login');
+            navigate('/register');
         }
     }, [navigate]);
 

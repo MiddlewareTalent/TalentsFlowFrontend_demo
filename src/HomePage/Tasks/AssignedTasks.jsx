@@ -54,7 +54,8 @@ const AssignedTasks = (props) => {
         
         const response = await axios.get(api, {
           headers: {
-            "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+            "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')
           }
         });
         console.log(response.data);
@@ -90,7 +91,8 @@ const AssignedTasks = (props) => {
     const id = deleteId;
     await axios.delete(`${url}/apis/employees/tasks/${id}`,{
       headers: {
-        "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+        "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
       }
     });
 
@@ -108,7 +110,8 @@ const AssignedTasks = (props) => {
       try {
         const response = await axios.get(api,{
           headers: {
-            "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+            "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
           }
         });
         setData(response.data.reverse());
@@ -128,7 +131,8 @@ const AssignedTasks = (props) => {
       try {
         const response = await axios.get(`${url}/apis/employees/tasks/${taskId}`,{
           headers: {
-            "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+            "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
           }
         });
         setTaskData(response.data);
@@ -152,7 +156,8 @@ const AssignedTasks = (props) => {
         try {
           const response = await axios.get(api,{
             headers: {
-              "Authorization": `Bearer ${token}`  // Add the token to the Authorization header
+              "Authorization": `Bearer ${token}`,
+            'X-Tenant-ID':localStorage.getItem('company')  // Add the token to the Authorization header
             }
           }
           );

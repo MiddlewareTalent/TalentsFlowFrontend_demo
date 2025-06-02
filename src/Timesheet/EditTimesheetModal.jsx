@@ -91,6 +91,7 @@ const EditTimesheetModal = ({ submission, onClose }) => {
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "X-Tenant-ID":localStorage.getItem('company')
             },
           }
         );
@@ -104,7 +105,8 @@ const EditTimesheetModal = ({ submission, onClose }) => {
         }
         , {
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            "X-Tenant-ID":localStorage.getItem('company')
           }
         });
 
