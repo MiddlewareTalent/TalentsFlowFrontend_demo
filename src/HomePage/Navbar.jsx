@@ -9,6 +9,7 @@ import Loader from "../Assets/Loader";
 import { MyContext } from "../MyProvider/MyProvider";
 import url from "../UniversalApi";
 import TalentFlowLogo from "../Assets/TalentFlowLogo.png"
+import profileLogo from "../Assets/profileLogo.jpg"
 
 
 function classNames(...classes) {
@@ -240,6 +241,7 @@ if (role === "admin" || role === "Admin") {
                 className="h-full w-full object-cover rounded-full"
                 src={employee.profilePhoto}
                 alt={initials}
+                onError={(e) => { e.currentTarget.src = profileLogo; }}
               />
             </div>
               </Menu.Button>

@@ -25,11 +25,16 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-datepicker": "^7.6.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-easy-crop": "^5.4.2",
+=======
+    "react-easy-crop": "^5.4.1",
+>>>>>>> 0e73392a64af254b62f2c0c08935b709483a440e
     "react-icons": "^5.1.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.22.3",
     "react-scripts": "^5.0.1",
+    "react-toastify": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
