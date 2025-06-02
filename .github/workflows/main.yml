@@ -3,7 +3,7 @@ name: Build and Deploy React App to Azure Web Apps
 on:
   push:
     branches:
-      - multi-tenant-for-blobs
+      - main
   workflow_dispatch:
  
 jobs:
