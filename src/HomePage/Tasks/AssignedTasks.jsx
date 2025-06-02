@@ -50,7 +50,7 @@ const AssignedTasks = (props) => {
       }
 
       try {
-          
+          // Retrieve the token from localStorage
         
         const response = await axios.get(api, {
           headers: {
