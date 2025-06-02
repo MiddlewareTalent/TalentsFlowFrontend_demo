@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 import React, { useCallback, useEffect, useState } from "react";
 import {Link} from "react-router-dom";
-=======
- 
-import React, { useCallback, useEffect, useState } from "react";
-import {Link} from "react-router-dom";
-import { toast } from 'react-toastify';
->>>>>>> 0e73392a64af254b62f2c0c08935b709483a440e
 import { FaTimes, FaCheckCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Cropper from 'react-easy-crop';
@@ -96,7 +89,7 @@ export default function ProfileCard() {
                     headers:{
                         'Authorization':`Bearer ${token}`,
                         'Content-Type':'application/json',
-                        "X-Tenant-ID": localStorage.getItem('company'), 
+                        "X-Tenant-ID": localStorage.getItem('company'),
                     }
                 });
                 console.log("object: ",response.data);
@@ -216,12 +209,8 @@ const handleFileChange = async (e) => {
                 {
                     headers: {
                          'Content-Type': 'multipart/form-data',
-<<<<<<< HEAD
                         "Authorization": `Bearer ${token}`,
                         "X-Tenant-ID": localStorage.getItem('company'),
-=======
-                        "Authorization": `Bearer ${token}`
->>>>>>> 0e73392a64af254b62f2c0c08935b709483a440e
                     },
                 }
             );
@@ -259,12 +248,8 @@ const handleFileChange = async (e) => {
                
                     headers: {
                         // 'Content-Type': 'multipart/form-data',
-<<<<<<< HEAD
                         "Authorization": `Bearer ${token}`,
                         "X-Tenant-ID": localStorage.getItem('company'),
-=======
-                        "Authorization": `Bearer ${token}`
->>>>>>> 0e73392a64af254b62f2c0c08935b709483a440e
                     },
                
             })
@@ -361,19 +346,11 @@ const handleFileChange = async (e) => {
                                 alt="Employee profile"
                                 onError={(e) => { e.currentTarget.src = profileLogo; }}
                                 />
-<<<<<<< HEAD
  
  
                             </div>
  
  
-=======
-
-
-                            </div>
-
-
->>>>>>> 0e73392a64af254b62f2c0c08935b709483a440e
  
                                 {/* Modal */}
                                 {isModalOpen && (
@@ -598,12 +575,5 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
  
 function getFileSize(fileUrl) {
     return "1.2 MB";
-<<<<<<< HEAD
-}
-=======
 }
  
- 
- 
- 
->>>>>>> 0e73392a64af254b62f2c0c08935b709483a440e
