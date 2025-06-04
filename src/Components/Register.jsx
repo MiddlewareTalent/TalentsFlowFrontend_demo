@@ -73,12 +73,7 @@ const Register = () => {
             setCompanyError("");
         }
 
-         if (!employeeId) {
-            setEmployeeIdError("* Please fill in the employee id.");
-            isValid = false;
-        } else {
-            setEmployeeIdError("");
-        }
+        
 
         if (!password) {
             setPasswordError("* Please fill in the password.");
@@ -112,7 +107,11 @@ const Register = () => {
         formData.append("lastName", last_name);
         formData.append("email", email);
         formData.append("password", password);
-        formData.append("employeeId", employeeId)
+        formData.append("task",true);
+        formData.append("timeSheet",true);
+        formData.append("organizationChart",true);
+        formData.append("leaveManagement",true);
+    
 
         try {
             console.log("Sending registration request to API"); // Debug message
@@ -184,13 +183,13 @@ const Register = () => {
                         </label>
                         {companyError && <p className="error-message">{companyError}</p>}
 
-                        <label className="inp">
+                        {/* <label className="inp">
                             <input type="text" className="input-text" placeholder="&nbsp;"
                                    value={employeeId}
                                    onChange={(e) => setEmployeeId(e.target.value)} />
                             <span className="label">Employee Id</span>
                             <span className="input-icon"></span>
-                        </label>
+                        </label> */}
                         {employeeIdError && <p className="error-message">{employeeIdError}</p>}
 
                         <label className="inp">

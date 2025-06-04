@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import countries from '../Assets/countries.json'
 
 const BasicDetailsForm = ({ onNext, onCancel, formData: initialData = {}, onFormDataChange }) => {
     const [formData, setFormData] = useState({
@@ -10,9 +11,11 @@ const BasicDetailsForm = ({ onNext, onCancel, formData: initialData = {}, onForm
         region: initialData.region || '',
         postalCode: initialData.postalCode || '',
         dateOfBirth: initialData.dateOfBirth || '',
-        dateOfJoining : initialData.dateOfJoining || ''
+        dateOfJoining: initialData.dateOfJoining || ''
     });
     const [errors, setErrors] = useState({});
+
+
 
     useEffect(() => {
         // Update local state when initialData changes
@@ -42,7 +45,7 @@ const BasicDetailsForm = ({ onNext, onCancel, formData: initialData = {}, onForm
         if (!formData.country) {
             newErrors.country = "*Country is required.";
         }
-        if(!formData.dateOfBirth ){
+        if (!formData.dateOfBirth) {
             newErrors.dateOfBirth = "*Date of Birth is required"
         }
         if (!formData.streetAddress) {
@@ -57,7 +60,7 @@ const BasicDetailsForm = ({ onNext, onCancel, formData: initialData = {}, onForm
         if (!formData.postalCode || !postalCodePattern.test(formData.postalCode)) {
             newErrors.postalCode = "*ZIP / Postal code must contain only numbers.";
         }
-        
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -121,7 +124,7 @@ const BasicDetailsForm = ({ onNext, onCancel, formData: initialData = {}, onForm
                             </label>
                             <div className="mt-2">
                                 <select
-                                    id="country"
+                                   id="country"
                                     name="country"
                                     autoComplete="country-name"
                                     className={`block w-full rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-base sm:leading-6 ${errors.country ? 'border-red-500' : ''}`}
@@ -129,15 +132,17 @@ const BasicDetailsForm = ({ onNext, onCancel, formData: initialData = {}, onForm
                                     onChange={handleChange}
                                 >
                                     <option value="">Select a country</option>
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
-                                    <option>India</option>
-                                    <option>UK</option>
+                                    {countries.map((country, index) => (
+                                        <option key={index} value={country}>
+                                            {country}
+                                        </option>
+                                    ))}
                                 </select>
                                 {errors.country && <p className="text-lg text-red-500">{errors.country}</p>}
                             </div>
                         </div>
+
+
 
                         <div className="sm:col-span-3">
                             <label htmlFor="date-of-birth" className="block text-lg font-medium leading-6 text-gray-900">
@@ -159,7 +164,7 @@ const BasicDetailsForm = ({ onNext, onCancel, formData: initialData = {}, onForm
 
                         <div className="col-span-full">
                             <label htmlFor="street-address"
-                                   className="block text-lg font-medium leading-6 text-gray-900">
+                                className="block text-lg font-medium leading-6 text-gray-900">
                                 Street address
                             </label>
                             <div className="mt-2">
