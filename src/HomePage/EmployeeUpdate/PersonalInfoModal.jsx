@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import countries from '../../Assets/countries.json'
 
 export default function PersonalInfoModal({
   isOpen,
@@ -124,11 +125,11 @@ export default function PersonalInfoModal({
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
               >
                 <option value="">Select a country</option>
-                <option value="US">United States</option>
-                <option value="UK">United Kingdom</option>
-                <option value="CA">Canada</option>
-                <option value="Mexico">Mexico</option>
-                <option value="India">India</option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country}>
+                    {country}
+                  </option>
+                ))}
               </select>
               {errors.country && (
                 <p className="text-sm text-red-500">{errors.country}</p>

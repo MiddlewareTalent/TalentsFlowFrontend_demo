@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import url from "../UniversalApi";
+import countries from '../Assets/countries.json'
 
 const ProfessionalDetailsForm = ({
   formData,
@@ -211,12 +212,12 @@ const ProfessionalDetailsForm = ({
                   }
                   className="block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6"
                 >
-                  <option value="">Select a country</option>
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                  <option>India</option>
-                  <option>UK</option>
+                 <option value="">Select a country</option>
+                                    {countries.map((country, index) => (
+                                        <option key={index} value={country}>
+                                            {country}
+                                        </option>
+                                    ))}
                 </select>
                 {errors.workingCountry && (
                   <p className="text-sm text-red-600">

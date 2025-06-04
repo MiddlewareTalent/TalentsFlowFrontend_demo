@@ -53,7 +53,7 @@ console.log(company);
       <Router>
       <Routes>
         <Route path="/:company/login" element={isLoggedIn ? <Navigate to="/:company/dashboard" /> : <Login />} />
-        <Route path="/register" element={isLoggedIn ? <Navigate to="/:company/dashboard" /> : <Register />} />
+        <Route path="/register" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Register />} />
         {/* Redirect to login if not logged in */}
         <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/register" />} />
         <Route path="/*" element={<Main submissions={submissions} setSubmissions={setSubmissions} />} />

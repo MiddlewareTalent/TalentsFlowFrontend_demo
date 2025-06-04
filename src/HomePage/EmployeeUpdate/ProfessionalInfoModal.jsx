@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import url from "../../UniversalApi";
+import countries from '../../Assets/countries.json'
 
 export default function ProfessionalInfoModal({
   isOpen,
@@ -177,11 +178,11 @@ export default function ProfessionalInfoModal({
                     className="block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6"
                   >
                     <option value="">Select a country</option>
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                    <option>India</option>
-                    <option>UK</option>
+                                    {countries.map((country, index) => (
+                                      <option key={index} value={country}>
+                                        {country}
+                                      </option>
+                                    ))}
                   </select>
                 </div>
               </div>
@@ -194,7 +195,7 @@ export default function ProfessionalInfoModal({
                   name="employeeId"
                   value={formData.employeeId || ""}
                   onChange={handleChange}
-                  disabled
+              
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                 />
               </div>

@@ -100,9 +100,10 @@ console.log(tenantId);
     localStorage.removeItem("firstName");
     localStorage.removeItem("lastName");
     localStorage.removeItem("employeeId");
-    localStorage.clear();
+    
 
     navigate(`/${localStorage.getItem('company')}/login`);
+    localStorage.clear();
     window.location.reload();
   };
 
