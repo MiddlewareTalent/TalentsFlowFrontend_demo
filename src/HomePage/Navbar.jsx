@@ -3,12 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import { Dialog, Popover, Transition, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import MTLogo from "../Assets/MTlogo.svg";
+  
 import axios from "axios";
 import Loader from "../Assets/Loader";
 import { MyContext } from "../MyProvider/MyProvider";
 import url from "../UniversalApi";
-import TalentFlowLogo from "../Assets/TalentFlowLogo.png"
+import TalentFlowLogo1 from "../Assets/TalentFlowLogo.png"
 import profileLogo from "../Assets/profileLogo.jpg"
 
 
@@ -161,7 +161,7 @@ if (role === "admin" || role === "Admin") {
         <div className="flex lg:flex-1">
           <Link to="/dashboard" className="-m-1.5 p-1.5">
             <span className="sr-only">Middleware</span>
-            <img className="h-20 w-auto" src={TalentFlowLogo} alt="Logo" />
+            <img className="h-20 w-auto" src={TalentFlowLogo1} alt="Logo" />
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -337,7 +337,7 @@ if (role === "admin" || role === "Admin") {
               <span className="sr-only">Middleware</span>
               <img
                 className="h-8 w-auto"
-                src={MTLogo}
+                src={TalentFlowLogo1}
                 alt="Middleware"
               />
             </Link>

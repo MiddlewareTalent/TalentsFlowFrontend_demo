@@ -25,13 +25,13 @@ const LeavePerformance = () => {
         });
         console.log(response);
         setPerformanceData(response.data);
-        console.log(performanceData)
+        console.log("leave performance")
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, [performanceData, token]);
+  }, [token]);
   return (
     <div className="relative max-lg:row-start-1 p-6"> {/* Added padding */}
       <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem]"></div>

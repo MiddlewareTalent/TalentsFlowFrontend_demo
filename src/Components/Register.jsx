@@ -14,18 +14,32 @@ const Register = () => {
     const [emailError, setEmailError] = useState("");
     const [company, setCompany] = useState("");
     const [companyError, setCompanyError] = useState("");
-    const [employeeId, setEmployeeId] = useState("");
-    const [employeeIdError, setEmployeeIdError] = useState("");
+    
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [loading, setLoading] = useState(false);
     const [emailExistsError, setEmailExistsError] = useState("");
-    
+    const [captcha, setCaptcha] = useState("");
+    const [userInput, setUserInput] = useState("");
+    const [userInputError, setUserInputError]=useState();
+
 
     const navigate = useNavigate();
 
+    const generateCaptcha = () => {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let captcha = "";
+        for (let i = 0; i < 5; i++) {
+            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return captcha;
+    };
+
     useEffect(() => {
         document.title = 'Register: Create an Account';
+        setCaptcha(generateCaptcha());
         return () => {
             document.title = 'Access HR';
         };
@@ -73,12 +87,27 @@ const Register = () => {
             setCompanyError("");
         }
 
-        
+
 
         if (!password) {
             setPasswordError("* Please fill in the password.");
             isValid = false;
         } else {
+            setPasswordError("");
+        }
+
+        if (!confirmPassword || password !== confirmPassword) {
+            setConfirmPasswordError("Confirm password must match the password.");
+            isValid = false;
+        } else {
+            setPasswordError("");
+        }
+        if (!userInput || userInput!==captcha){
+            setUserInputError("Captcha does not match. Try again.");
+            setCaptcha(generateCaptcha());
+            isValid = false;
+        }
+        else {
             setPasswordError("");
         }
 
@@ -100,18 +129,18 @@ const Register = () => {
             setPasswordError("");
         }
 
-        setLoading(true); 
+        setLoading(true);
 
         const formData = new FormData();
         formData.append("firstName", employee_name);
         formData.append("lastName", last_name);
         formData.append("email", email);
         formData.append("password", password);
-        formData.append("task",true);
-        formData.append("timeSheet",true);
-        formData.append("organizationChart",true);
-        formData.append("leaveManagement",true);
-    
+        formData.append("task", true);
+        formData.append("timeSheet", true);
+        formData.append("organizationChart", true);
+        formData.append("leaveManagement", true);
+
 
         try {
             console.log("Sending registration request to API"); // Debug message
@@ -148,8 +177,8 @@ const Register = () => {
                     <form className="signup-form" onSubmit={save}>
                         <label className="inp">
                             <input type="text" className="input-text" placeholder="&nbsp;"
-                                   value={employee_name}
-                                   onChange={(e) => setEmployeename(e.target.value)} />
+                                value={employee_name}
+                                onChange={(e) => setEmployeename(e.target.value)} />
                             <span className="label">First Name</span>
                             <span className="input-icon"></span>
                         </label>
@@ -157,8 +186,8 @@ const Register = () => {
 
                         <label className="inp">
                             <input type="text" className="input-text" placeholder="&nbsp;"
-                                   value={last_name}
-                                   onChange={(e) => setLastName(e.target.value)} />
+                                value={last_name}
+                                onChange={(e) => setLastName(e.target.value)} />
                             <span className="label">Last Name</span>
                             <span className="input-icon"></span>
                         </label>
@@ -166,8 +195,8 @@ const Register = () => {
 
                         <label className="inp">
                             <input type="email" className="input-text" placeholder="&nbsp;"
-                                   value={email}
-                                   onChange={(e) => setEmail(e.target.value)} />
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)} />
                             <span className="label">Email</span>
                             <span className="input-icon"></span>
                         </label>
@@ -176,8 +205,8 @@ const Register = () => {
 
                         <label className="inp">
                             <input type="text" className="input-text" placeholder="&nbsp;"
-                                   value={company}
-                                   onChange={(e) => setCompany(e.target.value)} />
+                                value={company}
+                                onChange={(e) => setCompany(e.target.value)} />
                             <span className="label">Company</span>
                             <span className="input-icon"></span>
                         </label>
@@ -190,16 +219,54 @@ const Register = () => {
                             <span className="label">Employee Id</span>
                             <span className="input-icon"></span>
                         </label> */}
-                        {employeeIdError && <p className="error-message">{employeeIdError}</p>}
+                        {/* {employeeIdError && <p className="error-message">{employeeIdError}</p>} */}
 
                         <label className="inp">
                             <input type="password" className="input-text" placeholder="&nbsp;"
-                                   value={password}
-                                   onChange={(e) => setPassword(e.target.value)} />
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} />
                             <span className="label">Password</span>
                             <span className="input-icon input-icon-password"></span>
                         </label>
                         {passwordError && <p className="error-message">{passwordError}</p>}
+
+                        <label className="inp">
+                            <input type="password" className="input-text" placeholder="&nbsp;"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)} />
+                            <span className="label">Confirm Password</span>
+                            <span className="input-icon input-icon-password"></span>
+                        </label>
+                        {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
+                        <div style={{ marginTop: 10 }}>
+                            <strong>Captcha:</strong>
+                            <div
+                                style={{
+                                    backgroundColor: "#f0f0f0",
+                                    display: "inline-block",
+                                    padding: "8px 16px",
+                                    marginLeft: 10,
+                                    fontFamily: "monospace",
+                                    fontSize: "20px",
+                                    letterSpacing: "2px",
+                                    border: "1px solid #ccc"
+                                }}
+                            >
+                                {captcha}
+                            </div>
+                            <button type="button" onClick={() => setCaptcha(generateCaptcha())} style={{ marginLeft: 10 }}>
+                                Refresh
+                            </button>
+                        </div>
+
+                        <label className="inp">
+                            <input type="text" className="input-text" placeholder="&nbsp;"
+                                value={userInput}
+                                onChange={(e) => setUserInput(e.target.value)} />
+                            <span className="label">Enter Captcha</span>
+                            <span className="input-icon"></span>
+                        </label>
+                        { userInputError&& <p className="error-message">{userInputError}</p>}
 
                         <button className="btn btn-login" type="submit" disabled={loading}>
                             {loading ? "Loading..." : "Register →"}
