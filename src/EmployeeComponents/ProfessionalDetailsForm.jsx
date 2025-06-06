@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import url from "../UniversalApi";
 import countries from '../Assets/countries.json'
+import axios from "axios";
 
 const ProfessionalDetailsForm = ({
   formData,
@@ -13,6 +14,7 @@ const ProfessionalDetailsForm = ({
   const [employees, setEmployees] = useState([]);
   // const [ setLoading] = useState(false);
   const [employeeExists, setEmployeeExists] = useState(false);
+  const [jobRoles,setJobRoles]=useState([]);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -42,7 +44,27 @@ const ProfessionalDetailsForm = ({
     };
 
     fetchEmployees();
+    fetchJobRoles();
   }, []);
+
+  const fetchJobRoles = async () => {
+    const token=localStorage.getItem("token");
+    const tenantId=localStorage.getItem("company");
+
+      try {
+        const response = await axios.get(`${url}/apis/employees/jobRoles/jobRoles`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-Tenant-ID': tenantId,
+          },
+        });
+        setJobRoles(response.data);
+      } catch (err) {
+        
+      } finally {
+      }
+    };
 
   const giveAccessEmployee = () => {
     onFormDataChange({ task: false });
@@ -324,11 +346,11 @@ const ProfessionalDetailsForm = ({
                   className="block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-lg sm:leading-6"
                 >
                   <option value="">Select Job Role</option>
-                  <option value="CEO">CEO</option>
-                  <option value="Software Developer">Software Developer</option>
-                  <option value="Product Manager">Product Manager</option>
-                  <option value="Designer">Designer</option>
-                  <option value="HR">HR</option>
+                  {jobRoles.map((each, index) => (
+                                        <option key={index} value={each.jobRole}>
+                                            {each.jobRole}
+                                        </option>
+                                    ))}
                 </select>
                 {errors.jobRole && (
                   <p className="text-sm text-red-600">{errors.jobRole}</p>

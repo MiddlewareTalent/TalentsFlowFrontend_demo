@@ -15,6 +15,8 @@ import UpdateEmployeeModal from './EmployeeUpdate/UpdateEmployeeModal';
 import ChangePass from '../HomePage/ChangePass'
 import url from '../UniversalApi';
 import countries from '../Assets/countries.json'
+import  JobRoles  from './JobRoles/JobRoles';
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 
 export default function Employee() {
@@ -33,6 +35,7 @@ export default function Employee() {
     const [isReset, setIsReset] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterCountry, setFilterCountry] = useState("");
+    const [isJobRoleModalOpen, setIsJobRoleModalOpen]=useState(false);
 
 
     useEffect(() => {
@@ -283,13 +286,22 @@ export default function Employee() {
 
                         {/*here*/}
 
-                        <button
-                            onClick={handleOpenModal}
+                        {localStorage.getItem("employeeId")!=="null"&&
+                        <div>
+                            <button
+                            onClick={()=>setIsJobRoleModalOpen(true)}
                             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                             <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-                            Add Employee
+                            Add Job Roles
                         </button>
+                        <button
+                            onClick={handleOpenModal}
+                            className="ml-5 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                            Add Employee
+                        </button></div>}
                     </div>
                     {loading ? (
                         <div className="text-center py-4">
@@ -516,9 +528,21 @@ export default function Employee() {
                 </div>
             </div>
 
+            {localStorage.getItem("employeeId")==="null" && <div className="fixed bottom-0 w-full bg-white shadow-md z-50 p-4 text-center">
+  <p>Click 'Update' and provide the required details to get full access. After that, please sign out and sign in again to apply the changes.</p>
+</div>}
+
+
             {/* Add Employee Modal */}
             <ModalWrapper open={isModalOpen} onClose={handleCloseModal}>
                 <MultiStepForm onSubmit={handleEmployeeAdded} handleLoadings={handleLoadings} onCancel={handleCloseModal} />
+            </ModalWrapper>
+
+            <ModalWrapper open={isJobRoleModalOpen}>
+                <button onClick={() => setIsJobRoleModalOpen(false)} className="text-gray-400 hover:text-gray-500">
+                                <IoCloseCircleOutline className="h-8 w-8" />
+                              </button>
+                <JobRoles/>
             </ModalWrapper>
 
 

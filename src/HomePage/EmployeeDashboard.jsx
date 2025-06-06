@@ -7,6 +7,7 @@ import CompanyNews from './EmployeeDashboard/CompanyNews'
 import Notification from './EmployeeDashboard/Notification'
 import { motion } from "framer-motion"
 import { MyContext } from '../MyProvider/MyProvider'
+import { useNavigate } from 'react-router-dom'
 import Holiday from './EmployeeDashboard/Holiday'
 
 import profileLogo from '../Assets/profileLogo.jpg'
@@ -30,8 +31,10 @@ export default function EnhancedDashboard() {
 
   const [initials, setInitials] = useState('');  // New state to store initials
   const { state } = useContext(MyContext);
+  const navigate=useNavigate("");
 
   console.log("state data: ", state);
+  console.log("Dashboard")
 
   useEffect(() => {
 
@@ -44,6 +47,13 @@ export default function EnhancedDashboard() {
       }
     }
   }, [state.email, state.firstName, state.lastName])
+
+  console.log("emp",localStorage.getItem("employeeId"));
+
+  if(localStorage.getItem("employeeId")==="null"){
+    console.log("Dashboards")
+    navigate("/employee")
+  }
 
 
 

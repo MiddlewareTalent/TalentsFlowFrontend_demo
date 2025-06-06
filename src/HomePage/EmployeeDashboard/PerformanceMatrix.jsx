@@ -11,6 +11,7 @@ const Performance = () => {
     completedTasks: 0,
     tasksEfficiency: 0
   })
+  const employeeId = localStorage.getItem('employeeId');
 
   const {state}=useContext(MyContext);
 
@@ -18,7 +19,7 @@ const Performance = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const fetchData = async () => {
-      const employeeId = localStorage.getItem('employeeId');
+      
       try {
         const response = await axios.get(`${url}/apis/employees/TasksDetails/PersonId/${employeeId}`, {
           headers: {
@@ -28,14 +29,14 @@ const Performance = () => {
         });
 
         setPerformanceData(response.data);
-        console.log(performanceData)
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, [performanceData]);
+  },[employeeId]);
   return (
     <div className="relative max-lg:row-start-1 p-6"> {/* Added padding */}
       <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem]"></div>
