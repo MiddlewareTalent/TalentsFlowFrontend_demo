@@ -17,6 +17,7 @@ import url from '../UniversalApi';
 import countries from '../Assets/countries.json'
 import  JobRoles  from './JobRoles/JobRoles';
 import { IoCloseCircleOutline } from "react-icons/io5";
+import axios from 'axios';
 
 
 export default function Employee() {
@@ -36,6 +37,7 @@ export default function Employee() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterCountry, setFilterCountry] = useState("");
     const [isJobRoleModalOpen, setIsJobRoleModalOpen]=useState(false);
+    const [planUpdateModal, setIsPlanUpdateModal]=useState(false);
 
 
     useEffect(() => {
@@ -173,6 +175,32 @@ export default function Employee() {
         }
     };
 
+    const checkEmployeeLimit=async()=>{
+        const token = localStorage.getItem('token');
+        setLoading(true);
+         try {
+            const response = await axios.get(`${url}/api/v1/employeeManager/checkEmployeesLimit/${localStorage.getItem('company')}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'X-Tenant-ID': localStorage.getItem('company')
+                }
+            });
+
+            console.log(response)
+
+            if (response.data) {
+                handleOpenModal();
+
+            } else {
+                setIsPlanUpdateModal(true);
+            }
+        } catch (error) {
+            console.error("Error while deleting employee:", error.message);
+        }
+        setLoading(false);
+    }
+
     const handleEmployeeAdded = () => {
         fetchEmployees();
         setIsModalOpen(false);
@@ -296,7 +324,7 @@ export default function Employee() {
                             Add Job Roles
                         </button>
                         <button
-                            onClick={handleOpenModal}
+                            onClick={checkEmployeeLimit}
                             className="ml-5 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                             <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
@@ -596,6 +624,36 @@ export default function Employee() {
                         >
                             Close
                         </button>
+                    </div>
+                </ModalWrapper>
+
+            )}
+
+            {planUpdateModal && (
+                <ModalWrapper open={planUpdateModal} >
+                    <div className="p-4 text-center flex flex-col items-center justify-center">
+                         {/* Increased font size */}
+                        <p className="text-lg text-gray-500 mb-6"> {/* Adjusted margin */}
+                            You’ve reached the maximum number of employees allowed in your current plan.
+                        </p>
+                        <h2 className="text-2xl font-semibold mb-4 text-red-600">To add more employees, please upgrade your subscription.</h2>
+                        
+                        <div className='flex flex-row gap-5'>
+                            <button
+                            type="button"
+                            onClick={() => setIsPlanUpdateModal(false)}
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded float-right"
+                        >
+                            Close
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate("/update-plan")}
+                            className="bg-gray-200 hover:bg-blue-400 text-gray-800 font-bold py-3 px-6 rounded float-right"
+                        >
+                            Update plan
+                        </button>
+                        </div>
                     </div>
                 </ModalWrapper>
 

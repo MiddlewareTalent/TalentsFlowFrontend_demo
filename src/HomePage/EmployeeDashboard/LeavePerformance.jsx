@@ -42,7 +42,7 @@ const LeavePerformance = () => {
             Track every minute to refine and maximize your performance. {/* Example content */}
           </p>
         </div>
-        {state.leaveManagement? <div className="mt-5 ">
+        {state!==null && state.leaveManagement? <div className="mt-5 ">
           <div>
             <h1 className=" mt-2 text-xl font-semibold text-gray-900">Pending Leaves:<span className="ml-10 text-blue-600">{performanceData.pending}</span></h1>
             <h1 className="mt-2 text-xl font-semibold text-gray-900">Approved Leaves:<span className="ml-6 text-green-600">{performanceData.approved}</span></h1>

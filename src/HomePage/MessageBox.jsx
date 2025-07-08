@@ -17,9 +17,12 @@ const CelebrationCard = ({ state }) => {
   const audioRef = useRef(null)
 
   const today = new Date()
-  const doj = new Date(state.dateOfJoining)
-  const dob = new Date(state.dateOfBirth)
-
+  let doj;
+  let dob;
+  if(state!==null){
+    doj = new Date(state?.dateOfJoining)
+  dob = new Date(state.dateOfBirth)
+  }
   const isWorkAnniversary = today.getMonth() === doj.getMonth() && today.getDate() === doj.getDate()
   const isBirthday = today.getMonth() === dob.getMonth() && today.getDate() === dob.getDate()
 

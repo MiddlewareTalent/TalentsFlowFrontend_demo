@@ -47,7 +47,7 @@ const Performance = () => {
             Monitor your performance metrics and improve your efficiency. {/* Example content */}
           </p>
         </div>
-        {state.task? <div className="mt-5 ">
+        {state!==null && state.task? <div className="mt-5 ">
           <div>
             <h1 className=" mt-2 text-xl font-semibold text-gray-900">Overdue Tasks: <span className="ml-10 text-red-600">{performanceData.overDueTasks}</span></h1>
             <h1 className="mt-2 text-xl font-semibold text-gray-900">Pending Tasks: <span className="ml-10 text-orange-600">{performanceData.pendingTasks}</span></h1>
