@@ -14,7 +14,10 @@ const Register = () => {
     const [emailError, setEmailError] = useState("");
     const [company, setCompany] = useState("");
     const [companyError, setCompanyError] = useState("");
-    
+    const [country, setCountry] = useState("");
+    const [countryError, setCountryError] = useState("");
+    const [noOfEmployes, setNoOfEmployes] = useState(0);
+    const [noOfEmployeesError, setNoOfEmployeesError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -23,7 +26,7 @@ const Register = () => {
     const [emailExistsError, setEmailExistsError] = useState("");
     const [captcha, setCaptcha] = useState("");
     const [userInput, setUserInput] = useState("");
-    const [userInputError, setUserInputError]=useState();
+    const [userInputError, setUserInputError] = useState();
 
 
     const navigate = useNavigate();
@@ -102,7 +105,7 @@ const Register = () => {
         } else {
             setPasswordError("");
         }
-        if (!userInput || userInput!==captcha){
+        if (!userInput || userInput !== captcha) {
             setUserInputError("Captcha does not match. Try again.");
             setCaptcha(generateCaptcha());
             isValid = false;
@@ -140,18 +143,23 @@ const Register = () => {
         formData.append("timeSheet", true);
         formData.append("organizationChart", true);
         formData.append("leaveManagement", true);
+        formData.append("country",country);
+        formData.append("noOfEmployes",noOfEmployes);
 
 
         try {
             console.log("Sending registration request to API"); // Debug message
+            console.log(formData);
             const response = await axios.post(`${url}/api/v1/employeeManager/register/${company}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
+            console.log(response);
+
             if (response.status === 200) {
-                navigate(`/${company}/login`);
+                navigate(`/${response.data}/login`);
             }
         } catch (err) {
             if (err.response) {
@@ -212,6 +220,29 @@ const Register = () => {
                         </label>
                         {companyError && <p className="error-message">{companyError}</p>}
 
+                        <label className="inp">
+                            <select
+                                className="input-text"
+                                value={country}
+                                onChange={(e) => setCountry(e.target.value)}
+                            >
+                                <option value="" disabled hidden>&nbsp;</option>
+                                <option value="UK">UK</option>
+                                <option value="India">India</option>
+                            </select>
+                            <span className="label">Country</span>
+                            <span className="input-icon"></span>
+                        </label>
+
+                         <label className="inp">
+                            <input type="number" className="input-text" placeholder="&nbsp;"
+                                value={noOfEmployes}
+                                onChange={(e) => setNoOfEmployes(e.target.value)} />
+                            <span className="label">No Of Employees</span>
+                            <span className="input-icon"></span>
+                        </label>
+                        {/* {companyError && <p className="error-message">{companyError}</p>} */}
+
                         {/* <label className="inp">
                             <input type="text" className="input-text" placeholder="&nbsp;"
                                    value={employeeId}
@@ -266,7 +297,7 @@ const Register = () => {
                             <span className="label">Enter Captcha</span>
                             <span className="input-icon"></span>
                         </label>
-                        { userInputError&& <p className="error-message">{userInputError}</p>}
+                        {userInputError && <p className="error-message">{userInputError}</p>}
 
                         <button className="btn btn-login" type="submit" disabled={loading}>
                             {loading ? "Loading..." : "Register →"}

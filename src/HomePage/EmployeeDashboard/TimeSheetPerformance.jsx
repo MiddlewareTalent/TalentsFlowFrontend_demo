@@ -47,7 +47,7 @@ const TimesheetPerformance = () => {
             Track your work hours and manage your productivity with a timesheet. {/* Example content */}
           </p>
         </div>
-        {state.timeSheet ? <div className="mt-5 ">
+        {state!==null && state.timeSheet ? <div className="mt-5 ">
           <div>
             <h1 className=" mt-2 text-xl font-semibold text-gray-900">Pending Timesheets:<span className="ml-8 text-blue-600">{performanceData.pending}</span></h1>
             <h1 className="mt-2 text-xl font-semibold text-gray-900">Approved Timesheets:<span className="ml-4 text-green-600">{performanceData.approve}</span></h1>
