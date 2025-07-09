@@ -1,14 +1,13 @@
+
 import React, { useCallback, useEffect, useState } from "react";
 import {Link} from "react-router-dom";
-import { FaTimes, FaCheckCircle } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from "../utils/getCroppedImg";
-//import Cropper from "react-cropper";
-//import "cropperjs";
-//import ImageCropModal from "../utils/ImageCropModal"; // adjust path as needed
-//import getCroppedImg from "../utils/getCroppedImg"; // already used inside modal
-import profileLogo from "../Assets/profileLogo.jpg"
+import Logo from "../Assets/Logo.png"
+
  
 import {
     UserCircleIcon,
@@ -59,20 +58,13 @@ export default function ProfileCard() {
     const token= localStorage.getItem('token');
       const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
         const [updateEmployeeId, setUpdateEmployeeId] = useState(null);
-          // const fileInputRef = useRef(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [selectedFile, setSelectedFile] = useState(null);
     // cropped states
     const [imageSrc, setImageSrc] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
-     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-    //const [cropper, setCropper] = useState(null);
-//     const [cropModalOpen, setCropModalOpen] = useState(false);
-// const [previewImage, setPreviewImage] = useState(null);
-// const [croppedImageFile, setCroppedImageFile] = useState(null);
- 
- 
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [newImgSelected, setNewImgSelected] = useState(false);
    
  
@@ -127,29 +119,12 @@ export default function ProfileCard() {
     useEffect(() => {
         fetchEmployee();
     }, [fetchEmployee]);
+
  
     const handleIconClick = () => {
+        console.log("photo: ", employee.profilePhoto)
         setIsModalOpen(true);
     }
- 
-    // const handleFileChange = async (e) => {
-    //     const file = e.target.files[0];
-    //     console.log("file: ", file);
-    //     if (file) {
-    //         //setSelectedFile(file);
-    //          const reader = new FileReader();
-    //          reader.readAsDataURL(file);
-    //         // console.log("reader : ", reader);
-    //          reader.onload = () => {
-    //              setImageSrc(reader.result);
-    //              setIsModalOpen(true);
-    //              setNewImgSelected(true);
-    //          }
-           
-           
-    //     }
-    // };
- 
    
 const handleFileChange = async (e) => {
   const file = e.target.files[0];
@@ -166,38 +141,10 @@ const handleFileChange = async (e) => {
   reader.readAsDataURL(file);
 };
  
- 
-// const handleFileChange = (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
- 
-//     const reader = new FileReader();
-   
-//     reader.onloadend = () => {
-//       setPreviewImage(reader.result);
-//       setCropModalOpen(true);
-//     };
-//     reader.readAsDataURL(file);
-//   };
- 
-//   const handleCropDone = (croppedFile) => {
-//     setCroppedImageFile(croppedFile);
-//    // setImageSrc(URL.createObjectURL(croppedFile));
-//     setNewImgSelected(true);
-//   };
- 
     const handleSubmit = async () => {
-       
-        //if (!selectedFile) return;
        if(!imageSrc || !croppedAreaPixels) return;
         try {
          const croppedBlob = await getCroppedImg(imageSrc, croppedAreaPixels);
-//             console.log("Cropped image:", croppedBlob); // should be a Blob
-// console.log("Type check:", croppedBlob instanceof Blob); // should be true
-//             console.log("image: ", imageSrc);
-           
- 
- 
             const formData = new FormData();
             formData.append('employeeId', employeeId);
             formData.append('profilePhoto', croppedBlob);
@@ -221,7 +168,7 @@ const handleFileChange = async (e) => {
             setIsModalOpen(false);
             setNewImgSelected(false);
             setImageSrc(null);
-            setCrop({ x: 0, y: 0 });       // ❗ Reset crop
+            setCrop({ x: 0, y: 0 });       //  ❗  Reset crop
             setZoom(1);
             setCroppedAreaPixels(null);
             window.location.reload();
@@ -255,10 +202,18 @@ const handleFileChange = async (e) => {
             })
             console.log("del: ", delResponse);
             if (delResponse.status === 200) {
-      alert("Profile photo deleted successfully!");
+      //alert("Profile photo deleted successfully!");
+     
       setNewImgSelected(false);
+//       setEmployee(prev => ({
+//   ...prev,
+//   profilePhoto: null,
+// }));
+
+      console.log("del : ", employee.profilePhoto);
       //    setImageSrc(null);
       setIsModalOpen(false);
+      setShowDeleteModal(true);
        window.location.reload();
       // Refresh employee data (optional but recommended)
       fetchEmployee();
@@ -304,21 +259,13 @@ const handleFileChange = async (e) => {
     employeeMentDuration=years+" " +(years > 1 ? "Years ": "Year ")+months+" "+(months>1? "Months ":"Month ")+days+" "+(days>1? "Days.":"Day.")
  
     }
- 
-    return (
+
+
+ return (
         <div className="flex flex-col min-h-screen bg-gray-50">
             <header className="bg-white shadow-sm w-full">
                 <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                     <h1 className="text-4xl font-semibold text-gray-900">My Information</h1>
-                    {/* <button
-                          onClick={() => updateEmployeeDetails(employee.employeeId)}
-                                      className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
-                                  aria-label="Edit employee">
-                                               
-                                                      <PencilIcon className="h-5 w-5" />  
-                       
-                                                    </button> */}
-                   
                 </div>
             </header>
             <ScrollArea className="flex-grow">
@@ -326,10 +273,6 @@ const handleFileChange = async (e) => {
                     <div className="bg-white shadow-md rounded-lg overflow-hidden">
                         <div className="p-8 space-y-8">
                         <div className="flex flex-row justify-end">
-                                {/* <button className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100" onClick={handleIconClick}>
-                                         <PencilIcon className="w-5 h-5 ml-80" />
-                                 </button> */}
- 
                                 <button
                                     onClick={() => updateEmployeeDetails(employee.employeeId)}
                                     className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
@@ -338,24 +281,19 @@ const handleFileChange = async (e) => {
                                 </button>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                               <div className="flex h-80 w-80 items-center justify-center rounded-full relative">
+                               <div className="relative h-80 w-80">
                            <img
                                 onClick={handleIconClick}
-                                className="h-full w-full object-cover rounded-full cursor-pointer"
+                                className="h-full w-full object-cover rounded-full cursor-pointer transition duration-300 hover:border-4 hover:border-blue-400"
                                 src={`${employee.profilePhoto}?t=${new Date().getTime()}`}
                                 alt="Employee profile"
-                                onError={(e) => { e.currentTarget.src = profileLogo; }}
+                                onError={(e) => { e.currentTarget.src = Logo; }}
                                 />
- 
- 
                             </div>
- 
- 
- 
                                 {/* Modal */}
                                 {isModalOpen && (
                                     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-                                        <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+                                        <div className="bg-white p-6 rounded-xl w-100 h-100 shadow-lg">
  
                                             <button className=" p-2" onClick={() => setIsModalOpen(false)} >
                                                 <FaTimes className="w-5 h-5 ml-80" />
@@ -368,14 +306,43 @@ const handleFileChange = async (e) => {
                                                     <img src={`${employee.profilePhoto}?t=${new Date().getTime()}`}
                                                         alt="Current"
                                                         className="w-48 h-48 rounded-full object-cover mb-4"
-                                                        onError={(e) => { e.currentTarget.src = profileLogo; }}
+                                                        onError={(e) => { e.currentTarget.src = Logo; }}
                                                     />
                                                    
-                                                    <div className=" flex flex-row mt-10">
+                                                    <div className=" flex flex-col mt-10">
                                                         <label htmlFor="profile-photo">
-                                                            <PencilIcon className="h-8 w-8 cursor-pointer mr-10" />
+                                                            <div className="flex flex-row">
+                                                            <AiOutlineCloudUpload className="h-10 w-10 cursor-pointer  mb-4 text-blue-500" />
+                                                            <p className="text-blue-500 ml-4 cursor-pointer">Add a photo</p>
+                                                            </div>
                                                         </label>
-                                                        <MdDelete className="text-red-500 h-10 w-10" onClick={handleDelete} />
+                                                        <div className="flex flex-row items-center">
+  <MdDelete
+    className={`h-10 w-10 ${
+      employee.profilePhoto ? "text-red-500 cursor-pointer" : "text-gray-400 cursor-not-allowed"
+    }`}
+   onClick={() => {
+    //{employee.profilePhoto ? handleDelete: null} ;
+    setShowDeleteModal(true);
+    setIsModalOpen(false);
+    
+   }}
+     
+  />
+  <p
+    className={`ml-4 ${
+      employee.profilePhoto ? "text-red-500 cursor-pointer" : "text-gray-400 cursor-not-allowed"
+    }`}
+    onClick={() => {
+         setShowDeleteModal(true);
+         setIsModalOpen(false);
+    }}
+    //{employee.profilePhoto ? handleDelete : null}
+  >
+    Delete photo
+  </p>
+</div>
+
                                                     </div>
                                                     <input
                                                         id="profile-photo"
@@ -401,53 +368,81 @@ const handleFileChange = async (e) => {
                                                     </div>
  
  
-                                                    <div className="flex justify-between mt-4">
-                                                        <button onClick={handleSubmit} className="px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700">
-                                                            <FaCheckCircle />
+                                                    <div className="flex flex-col justify-between mt-4">
+                                                        
+                                                         <label htmlFor="profile-photo">
+                                                            <div className="flex flex-row">
+                                                            <AiOutlineCloudUpload className="h-10 w-10 cursor-pointer  mb-4 text-blue-500" />
+                                                            <p className="text-blue-500 ml-4 cursor-pointer">Change photo</p>
+                                                            </div>
+                                                        </label>
+                                                         <input
+                                                        id="profile-photo"
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={handleFileChange}
+                                                        className="hidden"
+                                                    />
+                                                  
+                                                    
+                                                    <div className="flex flex-row mt-4 justify-end">
+                                                        <button onClick={handleSubmit} className="px-6 py-2 mr-4 bg-blue-500 text-white rounded-full hover:bg-blue-700">
+                                                           Save
                                                         </button>
                                                         <button onClick={() => {
-                                                            setNewImgSelected(false);
-                                                            setImageSrc(null);
+                                                             setNewImgSelected(false);
+                                                             setImageSrc(null);
+                                                             setIsModalOpen(false);
                                                         }} className="px-4 py-2 bg-gray-300 rounded-full hover:bg-gray-400">
                                                             Cancel
                                                         </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )}
- 
+
                                            
-                                            <div className="mb-4 mt-8 flex flex-row justify-evenly">
- 
-                                                {/* <input
-                                                    id="profile-photo"
-                                                    type="file"
-                                                    accept="image/*"
-                                                    ref={fileInputRef}
-                                                    onChange={handleFileChange}
-                                                    className="mb-4 hidden"
-                                                />
-                                                <label htmlFor="profile-photo"><PencilIcon className="h-8 w-8 cursor-pointer" /> </label> */}
- 
- 
-                                                {/* <MdDelete className="text-red-500 h-10 w-10" /> */}
-                                                {/* <button
-                                                    className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700"
-                                                    onClick={handleSubmit}
-                                                >
-                                                    <FaCheckCircle />
-                                                </button> */}
-                                            </div>
+
                                         </div>
                                     </div>
                                 )}
-                            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                               <div className="flex h-80 w-80 items-center justify-center rounded-full">
-                                <img
-                                    className="h-full w-full object-cover rounded-full"
-                                    src={employee.profilePhoto}
-                                    alt={employee.name ? `Profile photo of ${employee.name}` : 'Profile photo not available'}
-                                />
-                                </div> */}
+
+                                 {showDeleteModal && (
+  <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+    <div className="bg-white p-6 rounded-xl shadow-lg w-100 h-100 text-center">
+        <div className="flex">
+            <p className="text-md font-bold">Remove photo</p>
+            <button className=" p-2" onClick={() => setShowDeleteModal(false)} >
+                                                <FaTimes className="w-5 h-5 ml-80" />
+                                            </button>
+            </div>
+         <img src={`${employee.profilePhoto}?t=${new Date().getTime()}`}
+                                                        alt="Current"
+                                                        className="w-48 h-48 rounded-full object-cover mb-4 mt-4 ml-40"
+                                                        onError={(e) => { e.currentTarget.src = Logo; }}
+                                                    />
+                                                    
+      <h2 className="text-md mb-4">Are you sure you want to delete the photo?</h2>
+      <div className="flex justify-center space-x-4">
+        <button
+          onClick={() => {
+            handleDelete();           // your delete logic
+            setShowDeleteModal(false);
+          }}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Delete
+        </button>
+        <button
+          onClick={() => setShowDeleteModal(false)}
+          className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-96 gap-y-10 ">
                                 <InfoItem icon={<UserCircleIcon />} label="Full name" value={`${employee.firstName || 'N/A'} ${employee.lastName || ''}`} />
                                 {/* <InfoItem icon={<BuildingOfficeIcon />} label="Company Name" value={employee.companyName || "N/A"} highlight={true} /> */}
@@ -572,8 +567,20 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
         </li>
     );
 }
+
+
+
  
 function getFileSize(fileUrl) {
     return "1.2 MB";
 }
+ 
+
+
+
+
+
+
+
+
  
