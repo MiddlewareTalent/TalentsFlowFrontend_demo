@@ -240,22 +240,18 @@ if (role === "admin" || role === "Admin") {
                                 /> */}
                 {/* <Bars3Icon className="h-9 w-9 " aria-hidden="true" /> */}
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">
-<<<<<<< HEAD
+
                <img
-=======
-              {employee!=null && <img
->>>>>>> f7fe2cb2812c85a7e8f96ea3337b1e007128161c
                 className="h-full w-full object-cover rounded-full"
                 // src={employee.profilePhoto}
                 src={`${employee.profilePhoto}?t=${new Date().getTime()}`}
                 alt={initials}
-<<<<<<< HEAD
+
                 onError={(e) => { e.currentTarget.src = Logo; }}
               />
-=======
-                onError={(e) => { e.currentTarget.src = profileLogo; }}
-              />}
->>>>>>> f7fe2cb2812c85a7e8f96ea3337b1e007128161c
+
+                
+
             </div>
               </Menu.Button>
             </div>

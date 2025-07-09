@@ -86,13 +86,10 @@ export default function EnhancedDashboard() {
                 //src={state.profilePhoto}
                 src={`${state.profilePhoto}?t=${new Date().getTime()}`}
                 alt={initials}
-<<<<<<< HEAD
                 onError={(e) => { e.currentTarget.src = Logo; }}
               />
-=======
-                onError={(e) => { e.currentTarget.src = profileLogo; }}
-              />}
->>>>>>> f7fe2cb2812c85a7e8f96ea3337b1e007128161c
+
+}
             </div>
 
             {state!==null && <div>
