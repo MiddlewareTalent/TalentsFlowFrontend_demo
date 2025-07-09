@@ -27,6 +27,7 @@ export default function Navbar() {
   const [initials, setInitials] = useState("");
   
   const [employee, setEmployee] = useState(null);
+  const [companyDetails, setCompanyDetails]=useState(null);
   const [loading, setLoading]=useState(true);
    const employeeId=localStorage.getItem("employeeId");
   
@@ -56,7 +57,7 @@ console.log(tenantId);
         console.log(token);
         console.log("upto");
 
-        const response = await axios.get(`${url}/api/v1/employeeManager/getEmployee/${employeeId}`, {
+        const response = await axios.get(`${url}/api/v1/employeeManager/getEmployeeCompanyDetails/${employeeId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -68,7 +69,8 @@ console.log(tenantId);
         console.log("employee", response);
         console.log(response.status);
 
-        setEmployee(response.data);
+        setEmployee(response.data.employeeManager);
+        setCompanyDetails(response.data.clientDetails);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching employee data:", error.response.status);
@@ -182,14 +184,14 @@ if (role === "admin" || role === "Admin") {
             >
               Dashboard
             </Link>
-            {employee.role!=="manager" && employee.role!=="employee" && <Link
+            {localStorage.getItem("role")!=="manager" && localStorage.getItem("role")!=="employee" && <Link
               key="Employees"
               to="/employee"
               className="text-2xl font-semibold leading-6 text-gray-900"
             >
               Employees
             </Link>}
-            {employee.role!=="employee" && <Link
+            {localStorage.getItem("role")!=="employee" && <Link
               key="My Team"
               to="/MyTeam"
               className="text-2xl font-semibold leading-6 text-gray-900"
@@ -197,7 +199,7 @@ if (role === "admin" || role === "Admin") {
               My Team
             </Link>}
 
-            {employee.role==="employee" && <Link
+            {localStorage.getItem("role")==="employee" && <Link
               key="My Colleague"
               to="/MyColleague"
               className="text-2xl font-semibold leading-6 text-gray-900"
@@ -205,8 +207,8 @@ if (role === "admin" || role === "Admin") {
               My Colleagues
             </Link>}
            
-          {navItems.length!==0 && navItems.map((item) => (
-            employee[item.access] && <Link
+          {companyDetails!==null && employee!==null && navItems.length!==0 && navItems.map((item) => (
+            employee[item.access] && companyDetails[item.access] &&<Link
               key={item.name}
               to={item.href}
               className="text-2xl font-semibold leading-6 text-gray-900"
@@ -238,13 +240,22 @@ if (role === "admin" || role === "Admin") {
                                 /> */}
                 {/* <Bars3Icon className="h-9 w-9 " aria-hidden="true" /> */}
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">
+<<<<<<< HEAD
                <img
+=======
+              {employee!=null && <img
+>>>>>>> f7fe2cb2812c85a7e8f96ea3337b1e007128161c
                 className="h-full w-full object-cover rounded-full"
                 // src={employee.profilePhoto}
                 src={`${employee.profilePhoto}?t=${new Date().getTime()}`}
                 alt={initials}
+<<<<<<< HEAD
                 onError={(e) => { e.currentTarget.src = Logo; }}
               />
+=======
+                onError={(e) => { e.currentTarget.src = profileLogo; }}
+              />}
+>>>>>>> f7fe2cb2812c85a7e8f96ea3337b1e007128161c
             </div>
               </Menu.Button>
             </div>
@@ -362,7 +373,7 @@ if (role === "admin" || role === "Admin") {
             >
               Dashboard
             </Link>
-            {employee.role!=="manager" && employee.role!=="employee" && <Link
+            {localStorage.getItem("role")=="manager" && localStorage.getItem("role")!=="employee" && <Link
               key="Employees"
               to="/employee"
               onClick={() => setMobileMenuOpen(false)}
@@ -370,7 +381,7 @@ if (role === "admin" || role === "Admin") {
             >
               Employees
             </Link>}
-            {employee.role!=="employee" && <Link
+            {localStorage.getItem("role")!=="employee" && <Link
               key="My Team"
               to="/MyTeam"
               onClick={() => setMobileMenuOpen(false)}

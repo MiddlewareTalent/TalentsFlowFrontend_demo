@@ -38,6 +38,7 @@ import MyTeam from './HomePage/MyTeam.jsx';
 import { MyProvider } from './MyProvider/MyProvider.jsx';
 import NotFound from './Components/NotFound.jsx';
 import MyColleague from './HomePage/MyColleague.jsx';
+import { UpdatePlan } from './HomePage/UpdatePlan.jsx';
 
 function App() {
 const [submissions, setSubmissions] = useState([]);
@@ -52,8 +53,9 @@ console.log(company);
     <MyProvider>
       <Router>
       <Routes>
-        <Route path="/:company/login" element={isLoggedIn ? <Navigate to="/:company/dashboard" /> : <Login />} />
+        <Route path="/:company/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/register" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/update-plan" element={<UpdatePlan/>}/>
         {/* Redirect to login if not logged in */}
         <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/register" />} />
         <Route path="/*" element={<Main submissions={submissions} setSubmissions={setSubmissions} />} />

@@ -39,14 +39,16 @@ export default function EnhancedDashboard() {
   useEffect(() => {
 
 
-    if (state.email) {
+   if(state!==null){
+     if (state.email) {
 
       // Get the initials (first letter of firstName and lastName)
       if (state.firstName && state.lastName) {
         setInitials(state.firstName.charAt(0).toUpperCase() + state.lastName.charAt(0).toUpperCase());
       }
     }
-  }, [state.email, state.firstName, state.lastName])
+   }
+  }, [state])
 
   console.log("emp",localStorage.getItem("employeeId"));
 
@@ -79,28 +81,33 @@ export default function EnhancedDashboard() {
 
           <div className="flex items-center space-x-4">
             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">
-              <img
+              {state!==null && <img
                 className="h-full w-full object-cover rounded-full"
                 //src={state.profilePhoto}
                 src={`${state.profilePhoto}?t=${new Date().getTime()}`}
                 alt={initials}
+<<<<<<< HEAD
                 onError={(e) => { e.currentTarget.src = Logo; }}
               />
+=======
+                onError={(e) => { e.currentTarget.src = profileLogo; }}
+              />}
+>>>>>>> f7fe2cb2812c85a7e8f96ea3337b1e007128161c
             </div>
 
-            <div>
+            {state!==null && <div>
               <p className="text-xl font-semibold text-gray-1000">{state.firstName + " " + state.lastName || 'employeeName not available'}</p>
               <p className="text-lg text-gray-900 dark:text-gray-900">{state.jobRole}</p>
               <p className="text-lg text-gray-900 dark:text-gray-900">Employee ID: {state.employeeId || 'employee Id not available'}</p>
               <p className="text-lg text-blue-900 dark:text-blue-900">{state.email || 'Email not available'}</p>
-            </div>
+            </div>}
           </div>
 
         </div>
 
 
         
-         <MessageBox state={state} />
+         {state!==null && <MessageBox state={state} />}
        
         
         {/* Performance Metrics */}
