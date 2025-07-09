@@ -10,7 +10,7 @@ import { MyContext } from '../MyProvider/MyProvider'
 import { useNavigate } from 'react-router-dom'
 import Holiday from './EmployeeDashboard/Holiday'
 
-import profileLogo from '../Assets/profileLogo.jpg'
+import Logo from "../Assets/Logo.png"
 
 import MessageBox from './MessageBox'
 
@@ -81,9 +81,10 @@ export default function EnhancedDashboard() {
             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">
               <img
                 className="h-full w-full object-cover rounded-full"
-                src={state.profilePhoto}
+                //src={state.profilePhoto}
+                src={`${state.profilePhoto}?t=${new Date().getTime()}`}
                 alt={initials}
-                onError={(e) => { e.currentTarget.src = profileLogo; }}
+                onError={(e) => { e.currentTarget.src = Logo; }}
               />
             </div>
 

@@ -41,3 +41,5 @@ function createImage(url) {
     image.src = url;
   });
 }
+
+

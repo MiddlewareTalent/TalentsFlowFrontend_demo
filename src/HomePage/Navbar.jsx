@@ -9,7 +9,7 @@ import Loader from "../Assets/Loader";
 import { MyContext } from "../MyProvider/MyProvider";
 import url from "../UniversalApi";
 import TalentFlowLogo1 from "../Assets/TalentFlowLogo.png"
-import profileLogo from "../Assets/profileLogo.jpg"
+import Logo from "../Assets/Logo.png"
 
 
 function classNames(...classes) {
@@ -238,11 +238,12 @@ if (role === "admin" || role === "Admin") {
                                 /> */}
                 {/* <Bars3Icon className="h-9 w-9 " aria-hidden="true" /> */}
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 text-2xl font-bold text-white">
-              <img
+               <img
                 className="h-full w-full object-cover rounded-full"
-                src={employee.profilePhoto}
+                // src={employee.profilePhoto}
+                src={`${employee.profilePhoto}?t=${new Date().getTime()}`}
                 alt={initials}
-                onError={(e) => { e.currentTarget.src = profileLogo; }}
+                onError={(e) => { e.currentTarget.src = Logo; }}
               />
             </div>
               </Menu.Button>
