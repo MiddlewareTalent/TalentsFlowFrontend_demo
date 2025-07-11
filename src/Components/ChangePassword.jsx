@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import url from '../UniversalApi';
-
+ 
 const ChangePassword = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ const ChangePassword = () => {
         newPassword: false,
         confirmPassword: false
     });
-
+ 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -25,40 +25,45 @@ const ChangePassword = () => {
             [name]: value,
         }));
     };
-
+ 
     const togglePasswordVisibility = (field) => {
         setShowPassword((prev) => ({
             ...prev,
             [field]: !prev[field]
         }));
     };
-
+ 
     const validatePassword = (password) => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
         return passwordRegex.test(password);
     };
-
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const { newPassword, confirmPassword } = formData;
+ 
+        const { newPassword, confirmPassword, oldPassword } = formData;
         if (newPassword !== confirmPassword) {
             setError('Passwords do not match');
             return;
         }
-
+ 
+        if(newPassword=== oldPassword){
+            setError('Please choose a different password; the new one matches your current password.')
+            return;
+        }
+ 
         if (!validatePassword(newPassword)) {
             setError('Password must have at least one uppercase, one lowercase, one number, and one special character');
             return;
         }
-
+ 
         try {
             const token = localStorage.getItem('token');
             if (!token) {
                 setError('No authorization token found');
                 return;
             }
-
+ 
             await axios.post(
                 `${url}/api/v1/employeeManager/change-password`,
                 {
@@ -67,13 +72,13 @@ const ChangePassword = () => {
                     newPassword: formData.newPassword
                 },{
                 headers: {
-                    
+                   
                     'Content-Type': 'application/json',
             "X-Tenant-ID":localStorage.getItem('company')
                 }
             }
             );
-
+ 
             navigate(`/${localStorage.getItem('company')}/login`); // Navigate to Dashboard upon success
         } catch (error) {
             console.log(error);
@@ -86,7 +91,7 @@ const ChangePassword = () => {
             }
         }
     };
-
+ 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -120,7 +125,7 @@ const ChangePassword = () => {
                                     onClick={() => togglePasswordVisibility("oldPassword")}
                                     className="absolute inset-y-0 right-3 flex items-center text-gray-600"
                                 >
-                                    {showPassword.oldPassword ? "hide" : "show"}
+                                    {/* {showPassword.oldPassword ? "hide" : "show"} */}
                                 </button>
                             </div>
                         </div>
@@ -140,7 +145,7 @@ const ChangePassword = () => {
                                     onClick={() => togglePasswordVisibility("newPassword")}
                                     className="absolute inset-y-0 right-3 flex items-center text-gray-600"
                                 >
-                                    {showPassword.newPassword ? "hide" : "show"}
+                                    {/* {showPassword.newPassword ? "hide" : "show"} */}
                                 </button>
                             </div>
                         </div>
@@ -160,13 +165,13 @@ const ChangePassword = () => {
                                     onClick={() => togglePasswordVisibility("confirmPassword")}
                                     className="absolute inset-y-0 right-3 flex items-center text-gray-600"
                                 >
-                                    {showPassword.confirmPassword ? "hide" : "show"}
+                                    {/* {showPassword.confirmPassword ? "hide" : "show"} */}
                                 </button>
                             </div>
                         </div>
-
+ 
                         {error && <div className="text-red-500 text-sm">{error}</div>}
-
+ 
                         <div className="flex justify-between mt-4">
                             <button
                                 type="button"
@@ -188,5 +193,5 @@ const ChangePassword = () => {
         </div>
     );
 };
-
+ 
 export default ChangePassword;

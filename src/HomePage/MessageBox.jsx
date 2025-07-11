@@ -1,10 +1,10 @@
 "use client"
-
+ 
 import { useState, useEffect, useRef } from "react"
 import { CalendarDays, Gift, Award, X, Star, Music, PartyPopper } from "lucide-react"
 import Confetti from "react-confetti"
 import { motion, AnimatePresence } from "framer-motion"
-
+ 
 const CelebrationCard = ({ state }) => {
   const [visible, setVisible] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
@@ -15,7 +15,7 @@ const CelebrationCard = ({ state }) => {
   const [animationComplete, setAnimationComplete] = useState(false)
   const modalRef = useRef(null)
   const audioRef = useRef(null)
-
+ 
   const today = new Date()
   let doj;
   let dob;
@@ -25,10 +25,10 @@ const CelebrationCard = ({ state }) => {
   }
   const isWorkAnniversary = today.getMonth() === doj.getMonth() && today.getDate() === doj.getDate()
   const isBirthday = today.getMonth() === dob.getMonth() && today.getDate() === dob.getDate()
-
+ 
   let message = ""
   let years = 0
-
+ 
   if (isWorkAnniversary) {
     years = today.getFullYear() - doj.getFullYear()
     if (years > 0) {
@@ -37,7 +37,7 @@ const CelebrationCard = ({ state }) => {
   } else if (isBirthday) {
     message = `Today is all about celebrating you! May your day be filled with joy, laughter, and unforgettable moments that make this birthday your best one yet.`
   }
-
+ 
   // Update window size for confetti
   useEffect(() => {
     const handleResize = () => {
@@ -46,11 +46,14 @@ const CelebrationCard = ({ state }) => {
         height: window.innerHeight,
       })
     }
-
+ 
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
-
+ 
+  const company=localStorage.getItem('company')
+  const companyName = company.split('_')[1]
+ 
   // Check localStorage to control visibility
   useEffect(() => {
     const dismissed = localStorage.getItem("celebrationCardDismissed")
@@ -66,7 +69,7 @@ const CelebrationCard = ({ state }) => {
       }, 300)
     }
   }, [message])
-
+ 
   // Handle click outside to close
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -74,16 +77,16 @@ const CelebrationCard = ({ state }) => {
         handleClose()
       }
     }
-
+ 
     if (visible) {
       document.addEventListener("mousedown", handleClickOutside)
     }
-
+ 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [visible])
-
+ 
   const handleClose = () => {
     setShowConfetti(false)
     setVisible(false)
@@ -93,16 +96,16 @@ const CelebrationCard = ({ state }) => {
       audioRef.current.currentTime = 0
     }
   }
-
+ 
   if (!message || !visible) return null
-
+ 
   const cardColors = isBirthday
     ? "from-rose-500 via-pink-500 to-purple-500"
     : "from-emerald-500 via-teal-500 to-cyan-500"
-
+ 
   const iconColor = isBirthday ? "text-pink-400" : "text-teal-400"
   const accentColor = isBirthday ? "bg-pink-400" : "bg-teal-400"
-
+ 
   return (
     <AnimatePresence>
       {visible && (
@@ -114,7 +117,7 @@ const CelebrationCard = ({ state }) => {
         >
           {/* Audio element for celebration sound */}
           <audio ref={audioRef} src="/celebration-sound.mp3" preload="auto" />
-
+ 
           {showConfetti && (
             <Confetti
               width={windowSize.width}
@@ -129,7 +132,7 @@ const CelebrationCard = ({ state }) => {
               }
             />
           )}
-
+ 
           <motion.div
             ref={modalRef}
             initial={{ scale: 0.8, y: 20, opacity: 0 }}
@@ -166,7 +169,7 @@ const CelebrationCard = ({ state }) => {
                   ease: "easeInOut",
                 }}
               />
-
+ 
               {/* Floating particles */}
               {animationComplete && (
                 <>
@@ -200,7 +203,7 @@ const CelebrationCard = ({ state }) => {
                   ))}
                 </>
               )}
-
+ 
               <div className="relative p-8">
                 {/* Close Button */}
                 <motion.button
@@ -212,7 +215,7 @@ const CelebrationCard = ({ state }) => {
                 >
                   <X className="w-5 h-5" />
                 </motion.button>
-
+ 
                 {/* Floating Icon */}
                 <motion.div
                   className="absolute top-0 right-0 -mt-4 -mr-4"
@@ -228,7 +231,7 @@ const CelebrationCard = ({ state }) => {
                 >
                   <PartyPopper className="w-14 h-14 text-yellow-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.7)]" />
                 </motion.div>
-
+ 
                 {/* Header */}
                 <motion.div
                   className="flex items-center mb-6"
@@ -265,7 +268,7 @@ const CelebrationCard = ({ state }) => {
                     <p className="text-white/80 text-sm font-medium">{state.department}</p>
                   </motion.div>
                 </motion.div>
-
+ 
                 {/* Message */}
                 <motion.div
                   className="backdrop-blur-md bg-white/20 rounded-xl p-6 shadow-lg mb-6 border border-white/30"
@@ -286,7 +289,7 @@ const CelebrationCard = ({ state }) => {
                   >
                     <Star className="w-8 h-8 text-yellow-300 drop-shadow-[0_0_5px_rgba(250,204,21,0.7)]" />
                   </motion.div>
-
+ 
                   <motion.h2
                     className="text-3xl font-bold text-white"
                     initial={{ y: 10, opacity: 0 }}
@@ -304,7 +307,7 @@ const CelebrationCard = ({ state }) => {
                     {message}
                   </motion.p>
                 </motion.div>
-
+ 
                 {/* Animated decorative line */}
                 <motion.div
                   className={`h-1 rounded-full ${accentColor} mb-6`}
@@ -312,7 +315,7 @@ const CelebrationCard = ({ state }) => {
                   animate={{ width: "100%" }}
                   transition={{ delay: 0.7, duration: 0.8 }}
                 />
-
+ 
                 {/* Footer */}
                 <motion.div
                   className="flex items-center justify-between pt-2"
@@ -326,10 +329,10 @@ const CelebrationCard = ({ state }) => {
                   </div>
                   <motion.div className="flex items-center text-white font-bold" whileHover={{ scale: 1.05 }}>
                     <Music className={`w-4 h-4 mr-2 ${iconColor}`} />
-                    <span>Middleware Talents</span>
+                    <span>{companyName}</span>
                   </motion.div>
                 </motion.div>
-
+ 
                 {/* Animated Decorative Elements */}
                 {[...Array(8)].map((_, i) => (
                   <motion.div
@@ -362,5 +365,5 @@ const CelebrationCard = ({ state }) => {
     </AnimatePresence>
   )
 }
-
+ 
 export default CelebrationCard

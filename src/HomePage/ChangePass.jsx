@@ -7,27 +7,43 @@ const ChangePasswordModal = ({ isOpen, onClose, id }) => {
  
   const [newPassword, setNewPassword] = useState("");
   const employeeId=id;
+  const [error,setError] = useState('');
   console.log("empId"+employeeId);
  
   const handleSubmit = async (e) => {
     e.preventDefault();
  
     // Get the token from localStorage
-    
+     const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+        return passwordRegex.test(password);
+    };
+ 
+     if (!validatePassword(newPassword)) {
+            setError('Password must have at least one uppercase, one lowercase, one number, and one special character');
+            return;
+        }
+   
    
     // Make sure newPassword is not empty
     if (!newPassword) {
-        alert("Please enter a new password.");
+       setError("Please enter a new password.");
         return;
     }
+ 
+ 
+ 
+          const token = localStorage.getItem('token')
  
     try {
         // Perform the API request to change the password
         const response = await axios.post(
             `${url}/api/v1/employeeManager/reset-password/${employeeId}/${newPassword}`,
-            
+            null,
+           
             {
                 headers: {
+                  "Authorization":`Bearer ${token}`,
                     'Content-Type': 'application/json',
             "X-Tenant-ID":localStorage.getItem('company')
                 }
@@ -49,17 +65,17 @@ const ChangePasswordModal = ({ isOpen, onClose, id }) => {
         // If the error is a response from the server (e.g., validation error, 400)
         if (error.response) {
             console.error("Error response from server:", error.response.data);
-            alert(`Error: ${error.response.data.message || "Password change failed"}`);
+            setError(`Error: ${error.response.data.message || "Password change failed"}`);
         }
         // If the error is related to the request itself (e.g., network issue, no response)
         else if (error.request) {
             console.error("No response received:", error.request);
-            alert("Network error. Please try again later.");
+            setError("Network error. Please try again later.");
         }
         // Other types of errors (e.g., wrong usage of axios)
         else {
             console.error("Error setting up request:", error.message);
-            alert("An unexpected error occurred. Please try again later.");
+           setError("An unexpected error occurred. Please try again later.");
         }
     }
 };
@@ -97,6 +113,7 @@ const ChangePasswordModal = ({ isOpen, onClose, id }) => {
               required
             />
           </div>
+          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
           <div className="flex items-center justify-between">
             <button
               type="submit"

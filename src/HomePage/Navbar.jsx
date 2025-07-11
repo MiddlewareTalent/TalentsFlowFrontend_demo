@@ -19,7 +19,7 @@ function classNames(...classes) {
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [role, setRole] = useState(null);
-  const {updateState, tenantId } = useContext(MyContext);
+  const {updateState, tenantId, updateCompanyDetails} = useContext(MyContext);
   const { company } = useParams();
 
   const navigate = useNavigate();
@@ -92,6 +92,7 @@ console.log(tenantId);
 
   if(!loading){
     updateState(employee);
+    updateCompanyDetails(companyDetails);
   }
 
 

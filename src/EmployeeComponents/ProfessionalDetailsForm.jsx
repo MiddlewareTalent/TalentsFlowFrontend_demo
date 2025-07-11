@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import url from "../UniversalApi";
 import countries from '../Assets/countries.json'
 import axios from "axios";
+import { MyContext } from "../MyProvider/MyProvider";
 
 const ProfessionalDetailsForm = ({
   formData,
@@ -15,6 +16,9 @@ const ProfessionalDetailsForm = ({
   // const [ setLoading] = useState(false);
   const [employeeExists, setEmployeeExists] = useState(false);
   const [jobRoles,setJobRoles]=useState([]);
+  const {state, companyDetails}=useContext(MyContext);
+
+  console.log("state",companyDetails);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -514,7 +518,7 @@ const ProfessionalDetailsForm = ({
                   <div>
                     <p className="text-sm font-bold">Give Access</p>
                     <div className="mt-10 grid grid-cols-1 gap-x-40 gap-y-8 sm:grid-cols-6  ">
-                      <div className="flex items-center gap-x-3">
+                      {companyDetails.leaveManagement && <div className="flex items-center gap-x-3">
                         <input
                           id="Leave-Management"
                           name="leaveManagement"
@@ -529,8 +533,8 @@ const ProfessionalDetailsForm = ({
                         >
                           Leave Management
                         </label>
-                      </div>
-                      <div className="flex items-center gap-x-3">
+                      </div>}
+                      {companyDetails.timeSheet&&<div className="flex items-center gap-x-3">
                         <input
                           id="Time-sheet"
                           name="timeSheet"
@@ -545,8 +549,8 @@ const ProfessionalDetailsForm = ({
                         >
                           TimeSheet
                         </label>
-                      </div>
-                      <div className="flex items-center gap-x-3">
+                      </div>}
+                      {companyDetails.task && <div className="flex items-center gap-x-3">
                         <input
                           id="Task-Manager"
                           name="task"
@@ -561,8 +565,8 @@ const ProfessionalDetailsForm = ({
                         >
                           Task Management
                         </label>
-                      </div>
-                      <div className="flex items-center gap-x-3">
+                      </div>}
+                      {companyDetails.organizationChart&&<div className="flex items-center gap-x-3">
                         <input
                           id="org-chart"
                           name="organizationChart"
@@ -577,7 +581,7 @@ const ProfessionalDetailsForm = ({
                         >
                           Organization Chart
                         </label>
-                      </div>
+                      </div>}
                     </div>
                   </div>
                 )}
